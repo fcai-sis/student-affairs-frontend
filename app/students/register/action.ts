@@ -1,19 +1,12 @@
 "use server";
 
-export default async function uploadFileAction(prevState: any, formData: FormData) {
-  // make POST request to express server  at localhost:3001/start
-  // with the file as the body of the request, content-type: multipart/form-data
-  console.log(formData);
+import { redirect } from "next/navigation";
 
-  const response = await fetch("http://localhost:3001/start", {
+export default async function uploadFileAction(_: any, formData: FormData) {
+  await fetch(`${process.env.STUDENT_REGISTRATION_API}/start`, {
     method: "POST",
     body: formData,
   });
 
-  // get the response as JSON
-  const data = await response.json();
-
-  console.log(data);
-
-  return data;
+  redirect("/table");
 }

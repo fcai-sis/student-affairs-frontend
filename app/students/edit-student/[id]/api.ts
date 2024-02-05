@@ -1,9 +1,9 @@
 import { TODO } from "../../TODO";
 
 export default async function fetchStudentData(id: string) {
-  const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/find/${id}`
-  );
+  const response = await fetch(`http://127.0.0.1:3000/students/find/${id}`);
+  console.log(process.env.STUDENT_REGISTRATION_API);
+
   const data = await response.json();
 
   return data.student;
@@ -13,16 +13,13 @@ export async function updateStudentApi(
   id: FormDataEntryValue | null,
   student: TODO
 ) {
-  const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/update/${id}`,
-    {
-      method: "PATCH",
-      body: JSON.stringify(student.data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetch(`http://127.0.0.1:3000/students/update/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(student.data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   const data = await response.json();
 

@@ -2,9 +2,9 @@
 
 import { redirect, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import fetchStudentData from "./api";
+import fetchStudentData from "../api";
 import { useFormState } from "react-dom";
-import { updateStudent } from "./action";
+import { updateStudent } from "../action";
 import toast from "react-hot-toast";
 import { UpdateButton } from "../update-button";
 import { CancelButton } from "../cancel-button";

@@ -1,6 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { StudentSchema } from "../../lib/types";
+import { StudentSchema } from "../lib/types";
 import { updateStudentApi } from "./api";
 
 export async function updateStudent(_: any, formData: FormData) {

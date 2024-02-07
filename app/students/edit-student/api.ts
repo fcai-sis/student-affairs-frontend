@@ -1,4 +1,4 @@
-import { TODO } from "../../TODO";
+import { TODO } from "../TODO";
 
 export default async function fetchStudentData(id: string) {
   const response = await fetch(`http://127.0.0.1:3000/students/find/${id}`);

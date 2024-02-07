@@ -1,7 +1,7 @@
 import { readStudents } from "./action";
 import Link from "next/link";
-import { AddBtn, DeleteBtn, EditBtn } from "./action-btn";
-import { DeleteStudentForm } from "./deleteStudentForm";
+import { AddBtn, EditBtn } from "./action-btn";
+import { DeleteStudentForm } from "../delete-student/deleteStudentForm";
 
 export default async function ReadStudents() {
   const students = await readStudents(1);

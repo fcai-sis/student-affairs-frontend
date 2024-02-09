@@ -5,14 +5,13 @@ import { getI18n } from '@/locales/server';
 
 const rubik = Rubik({ subsets: ["latin", "arabic"] });
 
-export async function generateMetadata() {
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   const t = await getI18n();
 
   console.log("generating metadata");
 
   return {
-    title: t("hello"),
-    description: t("welcome", { name: "John" }),
+    title: t("welcome", { name: locale == "ar" ? "عالم" : "World" }),
   }
 }
 

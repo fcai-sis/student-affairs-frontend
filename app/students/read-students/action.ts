@@ -1,23 +1,24 @@
 "use server";
+import { PAGE_SIZE } from "../constants";
 export async function readStudents(page: number) {
-  const searchParams = new URLSearchParams({ page: `${page}`, pageSize: "5" });
+  const searchParams = new URLSearchParams({
+    page: `${page}`,
+    pageSize: `${PAGE_SIZE}`,
+  });
 
   const response = await fetch(
     `${process.env.STUDENT_REGISTRATION_API}/read?${searchParams}`,
     {
       cache: "no-store",
       method: "GET",
-      headers: {
-        "Content-Type": "text/plain",
-      },
     }
   );
 
   const studentData = await response.json();
-  const studentNum = await countStudents();
 
   const students = studentData.students;
-  const totalStudents = studentNum.count;
+  const totalStudents = studentData.count;
+  console.log(totalStudents);
 
   if (response.status === 200) {
     return {
@@ -25,31 +26,11 @@ export async function readStudents(page: number) {
       totalStudents,
     };
   } else if (response.status == 400) {
-    console.log("Error: 400");
+    return studentData.error;
   }
 
-  return [];
-}
-
-export async function countStudents() {
-  const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/count`,
-    {
-      cache: "no-store",
-      method: "GET",
-      headers: {
-        "Content-Type": "text/plain",
-      },
-    }
-  );
-
-  const data = await response.json();
-
-  if (response.status === 200) {
-    return data;
-  } else if (response.status == 400) {
-    console.log("Error: 400");
-  }
-
-  return 0;
+  return {
+    students: [],
+    totalStudents,
+  };
 }

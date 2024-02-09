@@ -16,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
+    <html lang='ar'>
+      <body dir='rtl' className={inter.className}>
         {children}
         <Toaster position='top-right' />
       </body>

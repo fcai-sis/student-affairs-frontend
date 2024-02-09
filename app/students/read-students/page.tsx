@@ -5,8 +5,9 @@ import { DeleteStudentForm } from "../delete-student/deleteStudentForm";
 import { TODO } from "../TODO";
 import Pagination from "./pagination";
 import { redirect } from "next/navigation";
+import { PAGE_SIZE } from "../constants";
 
-export default async function ReadStudents({
+export default async function Page({
   searchParams,
 }: {
   searchParams: { page: string };
@@ -14,9 +15,9 @@ export default async function ReadStudents({
   let page = parseInt(searchParams.page, 10);
   if (!page || page < 1) page = 1;
 
-  const data: TODO = await readStudents(page);
+  const data : TODO = await readStudents(page);
 
-  const totalPages = Math.ceil(data.totalStudents / 3);
+  const totalPages = Math.ceil(data.totalStudents / PAGE_SIZE);
   if (data.students.length === 0) {
     redirect(`/students/read-students?page=${totalPages}`);
   }

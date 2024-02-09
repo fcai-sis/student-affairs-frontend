@@ -10,16 +10,16 @@ const UploadIcon = () => {
       <path
         d='M16 53.834H48'
         stroke='#1E293B'
-        stroke-width='3'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='3'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
       <path
         d='M31.9998 43.166V11.166M31.9998 11.166L41.3332 20.4993M31.9998 11.166L22.6665 20.4993'
         stroke='#1E293B'
-        stroke-width='3'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='3'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );

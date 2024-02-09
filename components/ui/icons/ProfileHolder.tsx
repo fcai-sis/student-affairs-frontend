@@ -7,7 +7,7 @@ const ProfileHolder = () => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <g clip-path='url(#clip0_467_578)'>
+      <g clipPath='url(#clip0_467_578)'>
         <g filter='url(#filter0_d_467_578)'>
           <path
             d='M32.0002 5.33398C17.2726 5.33398 5.3335 17.2731 5.3335 32.0006C5.3335 46.7281 17.2726 58.6673 32.0002 58.6673C46.7276 58.6673 58.6668 46.7281 58.6668 32.0006C58.6668 17.2731 46.7276 5.33398 32.0002 5.33398Z'
@@ -31,9 +31,9 @@ const ProfileHolder = () => {
           width='61.3335'
           height='61.334'
           filterUnits='userSpaceOnUse'
-          color-interpolation-filters='sRGB'
+          colorInterpolationFilters='sRGB'
         >
-          <feFlood flood-opacity='0' result='BackgroundImageFix' />
+          <feFlood floodOpacity='0' result='BackgroundImageFix' />
           <feColorMatrix
             in='SourceAlpha'
             type='matrix'

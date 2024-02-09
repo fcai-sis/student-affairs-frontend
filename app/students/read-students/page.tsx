@@ -2,9 +2,25 @@ import { readStudents } from "./action";
 import Link from "next/link";
 import { AddBtn, EditBtn } from "./action-btn";
 import { DeleteStudentForm } from "../delete-student/deleteStudentForm";
+import { TODO } from "../TODO";
+import Pagination from "./pagination";
+import { redirect } from "next/navigation";
 
-export default async function ReadStudents() {
-  const students = await readStudents(1);
+export default async function ReadStudents({
+  searchParams,
+}: {
+  searchParams: { page: string };
+}) {
+  let page = parseInt(searchParams.page, 10);
+  if (!page || page < 1) page = 1;
+
+  const data: TODO = await readStudents(page);
+
+  const totalPages = Math.ceil(data.totalStudents / 3);
+  if (data.students.length === 0) {
+    redirect(`/students/read-students?page=${totalPages}`);
+  }
+  const students = data.students;
 
   return (
     <div className='flex flex-col items-center'>
@@ -38,7 +54,7 @@ export default async function ReadStudents() {
           ))}
         </tbody>
       </table>
-
+      <Pagination currentPage={page} totalPages={totalPages} />
       <Link href='/students/add-student'>
         <AddBtn />
       </Link>

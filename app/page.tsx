@@ -1,7 +1,12 @@
+import Navbar from "@/components/Navbar";
+import RegisterButtons from "@/components/RegisterButtons";
+
 export default function Home() {
   return (
     <div>
-      <h1>Next.js Image Component</h1>
+      <Navbar />
+      
+      <RegisterButtons />
     </div>
   );
 }

@@ -9,10 +9,7 @@ export default async function fetchStudentData(id: string) {
   return data.student;
 }
 
-export async function updateStudentApi(
-  id: FormDataEntryValue | null,
-  student: TODO
-) {
+export async function updateStudentApi(id: FormDataEntryValue, student: TODO) {
   const response = await fetch(`http://127.0.0.1:3000/students/update/${id}`, {
     method: "PATCH",
     body: JSON.stringify(student.data),

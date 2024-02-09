@@ -12,14 +12,27 @@ export type Mapping = {
   [key: string]: string,
 };
 
-export default async function Page() {
+function getPageFromSearchParams(searchParams: { page: string }) {
+  const page = parseInt(searchParams.page, 10);
+  if (isNaN(page)) return 1;
+  return page;
+}
+
+// get page from URL
+export default async function Page({ searchParams }: { searchParams: { page: string } }) {
+  const page = getPageFromSearchParams(searchParams);
+
+  if (page < 1) {
+    return redirect("/table?page=1");
+  }
+
   const activeRegistrationSession = await readActiveRegistrationSession();
 
   if (!activeRegistrationSession) {
     return redirect("/students/register");
   }
 
-  const stagedStudents = await readMappedStudents(1);
+  const stagedStudents = await readMappedStudents(page);
 
   return (
     <>
@@ -47,6 +60,14 @@ export default async function Page() {
           ))
         }
       </div>
+
+      <Link href={`/table?page=${Math.max(page - 1, 1)}`}>
+        Previous
+      </Link>
+
+      <Link href={`/table?page=${page + 1}`}>
+        Next
+      </Link>
 
       <Link href="/students/register/mapping">
         Update mapping

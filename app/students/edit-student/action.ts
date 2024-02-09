@@ -11,6 +11,12 @@ export async function updateStudent(_: any, formData: FormData) {
     _id: formData.get("_id"),
   };
 
+  if (rawFormData._id === null) {
+    return {
+      error: "Student ID is required",
+    };
+  }
+
   const parsedStudent = StudentSchema.safeParse(rawFormData);
 
   if (parsedStudent.success === false) {

@@ -1,5 +1,4 @@
 export default {
-  'hello': 'مرحباً',
-  'hello.world': 'مرحباً بالعالم',
-  'welcome': 'أهلا {name}!'
+  'search': 'بحث',
+  'clickMe': 'اضغط هنا',
 } as const

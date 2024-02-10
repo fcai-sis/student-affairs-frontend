@@ -21,7 +21,7 @@ export default async function Page({ params: { locale } }: Readonly<{ params: { 
             <TextInputField obscure placeholder={t("passwordHint")} />
           </div>
         </div>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" >
           {t("login")}
         </Button>
       </div>

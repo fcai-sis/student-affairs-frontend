@@ -1,17 +1,13 @@
 import Locale from 'intl-locale-textinfo-polyfill'
 import { Rubik } from "next/font/google";
 import "../globals.css";
-import { getI18n } from '@/locales/server';
 import ChangeLanguageButton from '@/components/ChangeLanguageButton';
+import { Metadata } from 'next';
 
 const rubik = Rubik({ subsets: ["latin", "arabic"] });
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
-  const t = await getI18n();
-
-  return {
-    title: t("welcome", { name: locale == "ar" ? "عالم" : "World" }),
-  }
+export const metadata: Metadata = {
+  title: "lol"
 }
 
 export default function RootLayout({

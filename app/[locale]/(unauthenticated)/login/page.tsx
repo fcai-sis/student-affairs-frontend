@@ -1,9 +1,9 @@
-import Button from "@/components/Button";
 import { H1, H6 } from "@/components/H";
+import Button from "@/components/Button";
 import TextInputField from "@/components/TextInputField";
 
-import { getI18n } from "@/locales/server";
 import Image from "next/image";
+import { getI18n } from "@/locales/server";
 
 export default async function Page({ params: { locale } }: Readonly<{ params: { locale: string } }>) {
   const t = await getI18n();

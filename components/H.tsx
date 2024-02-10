@@ -1,25 +1,26 @@
-import { PropsWithChildren } from "react";
+import { cn } from "@/lib";
+import { ComponentProps } from "react";
 
-export function H1({ children }: PropsWithChildren<{}>) {
-  return <h1 className="text-4xl font-bold">{children}</h1>;
+export function H1({ children, className }: ComponentProps<"h1">) {
+  return <h1 className={cn("text-4xl font-bold", className)}>{children}</h1>;
 }
 
-export function H2({ children }: PropsWithChildren<{}>) {
-  return <h2 className="text-3xl font-bold">{children}</h2>;
+export function H2({ children, className }: ComponentProps<"h2">) {
+  return <h2 className={cn("text-3xl font-bold", className)}>{children}</h2>;
 }
 
-export function H3({ children }: PropsWithChildren<{}>) {
-  return <h3 className="text-2xl font-bold">{children}</h3>;
+export function H3({ children, className }: ComponentProps<"h3">) {
+  return <h3 className={cn("text-2xl font-bold", className)}>{children}</h3>;
 }
 
-export function H4({ children }: PropsWithChildren<{}>) {
-  return <h4 className="text-xl font-bold">{children}</h4>;
+export function H4({ children, className }: ComponentProps<"h4">) {
+  return <h4 className={cn("text-xl font-bold", className)}>{children}</h4>;
 }
 
-export function H5({ children }: PropsWithChildren<{}>) {
-  return <h5 className="text-lg font-bold">{children}</h5>;
+export function H5({ children, className }: ComponentProps<"h5">) {
+  return <h5 className={cn("text-lg font-bold", className)}>{children}</h5>;
 }
 
-export function H6({ children }: PropsWithChildren<{}>) {
-  return <h6 className="text-base font-bold">{children}</h6>;
+export function H6({ children, className }: ComponentProps<"h6">) {
+  return <h6 className={cn("text-base font-bold", className)}>{children}</h6>;
 }

@@ -3,10 +3,8 @@ import Link from "next/link";
 
 export default function Layout({
   children,
-  params: { locale }
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
 }>) {
   return (
     <>

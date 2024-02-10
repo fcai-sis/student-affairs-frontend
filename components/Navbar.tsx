@@ -7,7 +7,7 @@ const Navbar = async () => {
   const t = await getI18n();
 
   return (
-    <nav className='flex flex-wrap items-center gap-2 mb-2 mx-auto p-4 border-2 rounded-md border-b-blue-500'>
+    <nav className='flex flex-wrap items-center gap-2 mb-2 mx-auto p-4 border-2 rounded-md border-b-blue-500 top-0 fixed w-full'>
       <ProfileHolder />
       <div className='flex flex-grow gap-2'>
         <Link

@@ -4,6 +4,7 @@ import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import { getI18n } from "@/locales/server";
 import Locale from "intl-locale-textinfo-polyfill";
+import Navbar from "@/components/Navbar";
 const rubik = Rubik({ subsets: ["latin", "arabic"] });
 
 export async function generateMetadata({
@@ -28,9 +29,13 @@ export default function RootLayout({
   const { direction: dir } = new Locale(locale).textInfo;
   return (
     <html lang={locale} dir={dir}>
-      <body className={rubik.className}>
+      <body
+        className={`${rubik.className} h-screen flex justify-center items-center`}
+      >
+        <Navbar />
         {children}
-        <Toaster position='top-right' />
+
+        {/* <Toaster position='top-right' /> */}
       </body>
     </html>
   );

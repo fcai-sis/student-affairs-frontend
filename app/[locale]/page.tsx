@@ -1,4 +1,3 @@
-import RegisterButtons from "@/components/RegisterButtons";
 import PencilIcon from "@/components/ui/icons/PencilIcon";
 import UploadIcon from "@/components/ui/icons/UploadIcon";
 import { getI18n } from "@/locales/server";

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "intl-locale-textinfo-polyfill": "^2.1.1",
     "jotai": "^2.6.4",
     "next": "14.1.0",
     "next-international": "^1.2.3",

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { Mapping } from "./table/page";
+import { student } from "./students/view/page";
 
 // TODO: Move to appropriate location
 export type RegistrationSession = {
@@ -40,4 +41,15 @@ export async function readMappedStudents(page: number) {
   }
 
   return [];
+}
+
+export async function readStudent(id: string): Promise<student | null>{
+  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/find/${id}`, { cache: 'no-store' });
+
+  if (response.status === 200) {
+  const {student} = await response.json();
+    return student;
+  }
+
+  return null;
 }

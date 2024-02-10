@@ -5,13 +5,13 @@ type ButtonProps = {
 }
 
 export default function Button({ children, variant }: PropsWithChildren<ButtonProps>) {
-  const bgColor = variant === "primary" ? "blue" : "red";
+  const style = {
+    primary: "bg-blue-600 text-slate-50 hover:bg-blue-500 active:bg-blue-700",
+    danger: "bg-red-600 text-slate-50 hover:bg-red-500 active:bg-red-700",
+  }
 
   return (
-    <button
-      className={`cursor-pointer bg-${bgColor}-600 text-slate-50 p-2 rounded-lg shadow-md hover:bg-${bgColor}-500 hover:shadow-xl active:bg-${bgColor}-700 active:shadow-none`}
-      type="button"
-    >
+    <button className={`p-4 rounded-lg ${style[variant]} transition-colors duration-200 shadow-md hover:shadow-lg active:shadow-none outline-none w-fit min-w-32`}>
       {children}
     </button>
   );

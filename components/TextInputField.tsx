@@ -1,12 +1,14 @@
 type TextInputFieldProps = {
   placeholder: string,
+  obscure?: boolean
 };
 
-export default function TextInputField({ placeholder }: TextInputFieldProps) {
+export default function TextInputField({ placeholder, obscure }: TextInputFieldProps) {
   return (
     <input
-      className="outline-none placeholder:font-normal font-normal placeholder:text-base text-base placeholder:text-slate-500 text-slate-800 p-4 rounded-lg border-slate-400 border bg-slate-50 focus:border-blue-600 focus:border-2"
+      className="placeholder:text-slate-500 text-slate-800 border border-slate-300 p-4 rounded-lg bg-slate-50 transition-all duration-300 outline-none focus:border-slate-600 focus:shadow-sm focus:ring-2 focus:ring-blue-600 focus:ring-opacity-100"
       placeholder={placeholder}
-      type="text" />
+      type={obscure ? "password" : "text"}
+    />
   );
 }

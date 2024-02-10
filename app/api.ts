@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { Mapping } from "./table/page";
-import { student } from "./students/view/page";
+import { student } from "./[locale]/(authenticated)/students/view/page";
 
 // TODO: Move to appropriate location
 export type RegistrationSession = {

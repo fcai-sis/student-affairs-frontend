@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { getI18n } from "@/locales/server";
 import Locale from "intl-locale-textinfo-polyfill";
 import Navbar from "@/components/Navbar";
+import ChangeLanguageButton from "@/components/ChangeLanguageButton";
 const rubik = Rubik({ subsets: ["latin", "arabic"] });
 
 export async function generateMetadata({
@@ -34,7 +35,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
-
+        <ChangeLanguageButton />
         <Toaster position='top-right' />
       </body>
     </html>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { OFFSET_NUMBER } from "../constants";
 
 export default function Pagination({
   currentPage,
@@ -7,11 +8,19 @@ export default function Pagination({
   currentPage: number;
   totalPages: number;
 }) {
-  const prevPage = currentPage > 1 ? currentPage - 1 : 1;
+  const prevPage = currentPage - 1 > 0 ? currentPage - 1 : 1;
   const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
 
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-
+  const pageNumbers = [];
+  for (
+    let i = currentPage - OFFSET_NUMBER;
+    i <= currentPage + OFFSET_NUMBER;
+    i++
+  ) {
+    if (i >= 1 && i <= totalPages) {
+      pageNumbers.push(i);
+    }
+  }
   return (
     <div className='flex justify-center mt-8'>
       {currentPage === 1 ? (

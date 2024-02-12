@@ -1,8 +1,20 @@
 "use server";
+
+import { mappingSchema } from "./types";
+
+// either validate here or on the client and then make the api call
 export default async function validateMapping(_: any, formData: FormData) {
   const rawFormData = Object.fromEntries(formData.entries());
   console.log(rawFormData);
-  // either validate here or on the client and then make the api call
+  // check if any of the fields are empty or have the value '<unset>'
+  const mapping = mappingSchema.safeParse(rawFormData);
+
+  if (!mapping.success) {
+    console.log(mapping.success);
+
+    return null;
+  }
+
   const response = await fetch(
     `${process.env.STUDENT_REGISTRATION_API}/mapping`,
     {

@@ -1,4 +1,4 @@
-import { H1, H6 } from "@/components/H";
+import { H1, H6, P } from "@/components/H";
 import Button from "@/components/Button";
 import TextInputField from "@/components/TextInputField";
 
@@ -21,7 +21,7 @@ export default async function Page({ params: { locale } }: Readonly<{ params: { 
             <TextInputField obscure placeholder={t("passwordHint")} />
           </div>
         </div>
-        <Button variant="primary" >
+        <Button variant="primary">
           {t("login")}
         </Button>
       </div>
@@ -33,9 +33,9 @@ export default async function Page({ params: { locale } }: Readonly<{ params: { 
         </div>
         <div className="flex flex-col gap-4 justify-center items-center">
           <H1>{t("studentAffairsGateway")}</H1>
-          <p className={`text-slate-400 text-center ${locale === "ar" ? "w-64" : "w-96"}`}>
+          <P className={`text-slate-400 text-center ${locale === "ar" ? "w-64" : "w-96"}`}>
             {t("forFCAICU")}
-          </p>
+          </P>
         </div>
       </div>
     </div>

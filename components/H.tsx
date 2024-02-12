@@ -24,3 +24,7 @@ export function H5({ children, className }: ComponentProps<"h5">) {
 export function H6({ children, className }: ComponentProps<"h6">) {
   return <h6 className={cn("text-base font-bold", className)}>{children}</h6>;
 }
+
+export function P({ children, className }: ComponentProps<"p">) {
+  return <p className={cn("text-base", className)}>{children}</p>;
+}

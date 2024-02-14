@@ -3,15 +3,15 @@ import { useFormState } from "react-dom";
 import validateMapping from "./map-action";
 
 export default function MapForm({
-  Headers,
-  Mapping,
+  headers,
+  mapping,
 }: {
-  Headers: string[];
-  Mapping: { [key: string]: string };
+  headers: string[];
+  mapping: { [key: string]: string };
 }) {
   // Headers is an array of strings that represent the headers of the excel file
   // Mapping is an object with field names as keys
-  const MappingKeys = Object.keys(Mapping);
+  const mappingKeys = Object.keys(mapping);
   const [state, formAction] = useFormState(validateMapping, null);
 
   return (
@@ -19,18 +19,18 @@ export default function MapForm({
       <h1>MapForm</h1>
       <ul>
         <form action={formAction}>
-          {MappingKeys.map((field, index) => (
+          {mappingKeys.map((field, index) => (
             <li key={index}>
               <label htmlFor={field}>{field}</label>
               <select
                 required={true}
                 name={field}
-                defaultValue={Mapping[field]}
+                defaultValue={mapping[field]}
               >
                 <option disabled={true} value='<unset>'>
-                  <p>Select the column that this field represents</p>
+                  Select the column that this field represents
                 </option>
-                {Headers.map((header, index) => (
+                {headers.map((header, index) => (
                   <option key={index} value={header}>
                     {header}
                   </option>
@@ -38,9 +38,7 @@ export default function MapForm({
               </select>
             </li>
           ))}
-          <button type='submit'>
-            <p>Submit</p>
-          </button>
+          <button type='submit'>Submit</button>
         </form>
       </ul>
     </div>

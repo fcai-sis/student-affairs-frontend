@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { mappingSchema } from "./types";
 
 // either validate here or on the client and then make the api call
@@ -19,7 +20,7 @@ export default async function validateMapping(_: any, formData: FormData) {
     `${process.env.STUDENT_REGISTRATION_API}/mapping`,
     {
       method: "PATCH",
-      body: JSON.stringify({ mapping: rawFormData }),
+      body: JSON.stringify({ mapping: mapping.data }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -27,5 +28,8 @@ export default async function validateMapping(_: any, formData: FormData) {
   );
   const data = await response.json();
   console.log(data);
+  if (response.status === 200) {
+    redirect("/students/register/upload-excel/3");
+  }
   return null;
 }

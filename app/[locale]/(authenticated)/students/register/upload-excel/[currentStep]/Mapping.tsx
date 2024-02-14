@@ -9,7 +9,10 @@ export default async function Mapping() {
   return (
     <div>
       <h1>
-        <MapForm Headers={activeRegistrationSession.excelColumnsHeaders} Mapping={activeRegistrationSession.mapping}/>
+        <MapForm
+          headers={activeRegistrationSession.excelColumnsHeaders}
+          mapping={activeRegistrationSession.mapping}
+        />
       </h1>
     </div>
   );

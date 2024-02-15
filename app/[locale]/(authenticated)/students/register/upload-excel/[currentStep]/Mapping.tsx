@@ -1,5 +1,5 @@
 import { readActiveRegistrationSession } from "@/app/api";
-import MapForm from "./MapForm";
+import MapForm from "./mapForm";
 
 export default async function Mapping() {
   const activeRegistrationSession = await readActiveRegistrationSession();
@@ -8,12 +8,10 @@ export default async function Mapping() {
 
   return (
     <div>
-      <h1>
-        <MapForm
-          headers={activeRegistrationSession.excelColumnsHeaders}
-          mapping={activeRegistrationSession.mapping}
-        />
-      </h1>
+      <MapForm
+        headers={activeRegistrationSession.excelColumnsHeaders}
+        mapping={activeRegistrationSession.mapping}
+      />
     </div>
   );
 }

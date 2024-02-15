@@ -37,5 +37,9 @@ export default async function validateMapping(_: any, formData: FormData) {
 
   console.log(data);
 
-  return redirect("/students/register/upload-excel/3")
+  if (response.status === 200) {
+    redirect("/students/register/upload-excel/3");
+  }
+
+  return null;
 }

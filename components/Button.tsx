@@ -23,12 +23,12 @@ export function buttonClassName(variant: "primary" | "danger" | "secondary") {
     secondary: "bg-slate-100 text-slate-400 hover:bg-slate-200 active:bg-slate-300",
   }
 
-  const className = `cursor-pointer flex justify-center gap-2 p-4 rounded-lg ${style[variant]} transition-colors duration-200 shadow-md hover:shadow-lg active:shadow-none outline-none w-fit min-w-28 font-bold`;
+  const className = `cursor-pointer flex justify-center gap-2 p-4 rounded-lg ${style[variant]} transition-colors duration-200 shadow-md hover:shadow-lg active:shadow-none outline-none w-fit min-w-28 font-bold whitespace-nowrap`;
 
   return className;
 }
 
-export default function Button({ children, variant, icon, onClick, asLink, myHref }: ComponentProps<"button"> & ButtonProps) {
+export default function Button({ children, variant, icon, onClick, asLink, myHref, type }: ComponentProps<"button"> & ButtonProps) {
   const className = buttonClassName(variant);
 
   if (asLink) {
@@ -44,8 +44,10 @@ export default function Button({ children, variant, icon, onClick, asLink, myHre
 
   return (
     <button
+      type={type}
       onClick={onClick}
-      className={className}>
+      className={className}
+    >
       {children}
       {icon ? icon : <></>}
     </button>

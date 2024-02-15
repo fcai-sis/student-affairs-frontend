@@ -5,12 +5,7 @@ import cancelFormAction from "./cancelAction";
 import confirmFormAction from "./confirmAction";
 import CancelSessionButton from "./cancelSessionButton";
 import ConfirmSessionButton from "./confirmSessionButton";
-import { readActiveRegistrationSession, readMappedStudents } from "../api";
-
-// TODO: Move to appropriate location
-export type Mapping = {
-  [key: string]: string,
-};
+import { readActiveRegistrationSession, readMappedStudents } from "@/app/api";
 
 function getPageFromSearchParams(searchParams: { page: string }) {
   const page = parseInt(searchParams.page, 10);
@@ -26,11 +21,13 @@ export default async function Page({ searchParams }: { searchParams: { page: str
     return redirect("/table?page=1");
   }
 
-  const activeRegistrationSession = await readActiveRegistrationSession();
+  const readResponse = await readActiveRegistrationSession();
 
-  if (!activeRegistrationSession) {
+  if (!readResponse) {
     return redirect("/students/register");
   }
+
+  const { registrationSession } = readResponse;
 
   const stagedStudents = await readMappedStudents(page);
 
@@ -39,7 +36,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
       <div className="table">
         <div className="table-row">
           {
-            Object.keys(activeRegistrationSession.mapping).map((column) => (
+            Object.keys(registrationSession.mapping).map((column) => (
               <div key={column} className="table-cell p-2 bg-gray-100">
                 {column}
               </div>
@@ -50,7 +47,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
           stagedStudents.map((student: any, index: number) => (
             <div key={index} className="table-row">
               {
-                Object.keys(activeRegistrationSession.mapping).map((column) => (
+                Object.keys(registrationSession.mapping).map((column) => (
                   <div key={column} className="table-cell p-2 bg-gray-50">
                     {student[column]}
                   </div>

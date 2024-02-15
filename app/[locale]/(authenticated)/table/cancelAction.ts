@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default async function cancelSessionAction(_: FormData) {
   const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/cancel`, {
@@ -8,9 +8,6 @@ export default async function cancelSessionAction(_: FormData) {
   });
 
   if (response.status === 200) {
-    revalidatePath("/table");
-    return true;
+    redirect("/students/register/upload-excel/1");
   }
-
-  return false;
 }

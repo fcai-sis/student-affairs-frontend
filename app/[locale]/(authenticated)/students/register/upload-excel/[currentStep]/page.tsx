@@ -1,9 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { H1 } from "@/components/H";
-import Button from "@/components/Button";
 import Stepper from "@/components/Stepper";
-import { LongArrowUpRightIcon, NavArrowLeftIcon } from "@/components/icons";
 import UploadExcel from "./UploadExcel";
 import Mapping from "./Mapping";
 import ReviewAndConfirm from "./ReviewAndConfirm";
@@ -24,15 +22,11 @@ export default function PageWithStepper({ params: { currentStep } }: { params: {
       <div className="flex flex-row w-[900px] h-min">
         <H1>{pageTitle}</H1>
       </div>
-      <div className="flex flex-col items-center w-min h-min gap-16">
+      <div className="flex flex-col items-center gap-8 w-min h-min">
         <div className="flex flex-col items-center gap-8 w-min h-min">
-          <div className="flex flex-col items-center gap-8 w-min h-min">
-            <Stepper currentStep={step} />
-          </div>
-          <div className="flex flex-col gap-8 w-min h-min">
-            <Page step={step} />
-          </div>
+          <Stepper currentStep={step} />
         </div>
+        <Page step={step} />
       </div>
     </div >
   );

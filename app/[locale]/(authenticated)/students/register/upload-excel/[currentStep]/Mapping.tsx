@@ -1,16 +1,20 @@
 import { readActiveRegistrationSession } from "@/app/api";
-import MapForm from "./MapForm";
+import { redirect } from "next/navigation";
+import MappingForm from "./MappingForm";
 
 export default async function Mapping() {
-  const activeRegistrationSession = await readActiveRegistrationSession();
-  if (!activeRegistrationSession)
-    return <div>No active registration session</div>;
+  const readResponse = await readActiveRegistrationSession();
+
+  if (!readResponse)
+    return redirect("/students/register/upload-excel/1");
+
+  const { registrationSession, arabicFields } = readResponse;
 
   return (
-    <div>
-      <h1>
-        <MapForm Headers={activeRegistrationSession.excelColumnsHeaders} Mapping={activeRegistrationSession.mapping}/>
-      </h1>
-    </div>
+    <MappingForm
+      headers={registrationSession.excelColumnsHeaders}
+      mapping={registrationSession.mapping}
+      arabicFields={arabicFields}
+    />
   );
 }

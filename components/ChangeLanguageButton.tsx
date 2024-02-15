@@ -1,7 +1,7 @@
 'use client'
 
-import { useChangeLocale, useCurrentLocale } from '../locales/client';
 import { LanguageIcon } from './icons';
+import { useChangeLocale, useCurrentLocale } from '../locales/client';
 
 export default function ChangeLanguageButton() {
   const changeLocale = useChangeLocale()

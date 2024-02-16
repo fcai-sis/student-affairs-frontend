@@ -12,7 +12,7 @@ export default async function updateMappingAction(formData: FormData) {
     }
   }
 
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/mapping`, {
+  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/session/mapping`, {
     method: "PATCH",
     body: JSON.stringify({ mapping }),
     headers: {

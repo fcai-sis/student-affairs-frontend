@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 export default async function confirmSessionAction(_: FormData) {
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/commit`, {
+  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/session/commit`, {
     method: "POST",
   });
 

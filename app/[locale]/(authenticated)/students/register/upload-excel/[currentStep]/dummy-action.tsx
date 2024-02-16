@@ -1,4 +1,5 @@
 "use server";
+
 export default async function dummyEndpoint(delay: number): Promise<boolean> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -9,7 +10,7 @@ export default async function dummyEndpoint(delay: number): Promise<boolean> {
 
 export async function commitSession() {
   const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/commit`,
+    `${process.env.STUDENT_REGISTRATION_API}/session/commit`,
     {
       method: "POST",
       headers: {
@@ -20,6 +21,6 @@ export async function commitSession() {
   const data = await response.json();
   console.log(data);
 
-    // coolcool just send the data or the error if one occurs
+  // coolcool just send the data or the error if one occurs
   return null;
 }

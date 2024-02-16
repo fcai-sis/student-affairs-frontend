@@ -11,12 +11,12 @@ export default async function uploadFileAction(_: any, formData: FormData): Prom
   const body = new FormData();
   body.append("file", file);
 
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/start`, {
+  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/session/start`, {
     method: "POST",
     body,
   });
 
-  console.log(await response.json());
+  console.log("RESPONSE:", await response.json());
 
   if (response.status === 201) {
     redirect("/students/register/upload-excel/2");

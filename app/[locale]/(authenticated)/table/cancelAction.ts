@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 
 export default async function cancelSessionAction(_: FormData) {
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/cancel`, {
+  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/session/cancel`, {
     method: "POST",
   });
 

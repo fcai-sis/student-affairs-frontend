@@ -42,8 +42,14 @@ export default function MappingForm({
                 required={true}
                 name={field}
                 defaultValue={mapping[field]}
+                className={
+                  state?.error?.fields?.includes(field) ? "border-2 border-red-500 transition-all" : ""
+                }
               >
-                <option disabled={true} value='<unset>'>
+                <option
+                  disabled={true}
+                  value='<unset>'
+                >
                   Select the column that this field represents
                 </option>
                 {headers.map((header, index) => (

@@ -1,9 +1,9 @@
 "use client";
 
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import validateMapping from "./map-action";
-import Button from "@/components/Button";
-import { LongArrowUpRightIcon, NavArrowLeftIcon } from "@/components/icons";
+import Button, { SubmitButton } from "@/components/Button";
+import { LongArrowUpRightIcon } from "@/components/icons";
 import { H2, H4, P } from "@/components/H";
 import { useState } from "react";
 import cancelSessionAction from "@/app/[locale]/(authenticated)/table/cancelAction";
@@ -28,14 +28,14 @@ export default function MappingForm({
 
   return (
     <>
-      <form action={formAction} className="w-min h-min flex flex-col justify-center items-center">
-        <div className="flex flex-col overflow-auto h-52 gap-2">
+      <form
+        action={formAction}
+        className='w-min h-min flex flex-col justify-center items-center'
+      >
+        <div className='flex flex-col overflow-auto h-52 gap-2'>
           {mappingKeys.map((field, _) => (
-            <div className="flex justify-between" key={field}>
-              <label
-                className="w-max h-max p-2"
-                htmlFor={field}
-              >
+            <div className='flex justify-between' key={field}>
+              <label className='w-max h-max p-2' htmlFor={field}>
                 {arabicFields[field]}
               </label>
               <select
@@ -43,20 +43,16 @@ export default function MappingForm({
                 name={field}
                 defaultValue={mapping[field]}
                 className={
-                  state?.error?.fields?.includes(field) ? "border-2 border-red-500 transition-all" : ""
+                  state?.error?.fields?.includes(field)
+                    ? "border-2 rounded-lg p-1 border-red-500 transition-all duration-200"
+                    : ""
                 }
               >
-                <option
-                  disabled={true}
-                  value='<unset>'
-                >
+                <option disabled={true} value='<unset>'>
                   Select the column that this field represents
                 </option>
                 {headers.map((header, index) => (
-                  <option
-                    key={`${field}-option-${index}`}
-                    value={header}
-                  >
+                  <option key={`${field}-option-${index}`} value={header}>
                     {header}
                   </option>
                 ))}
@@ -64,20 +60,16 @@ export default function MappingForm({
             </div>
           ))}
         </div>
-        <div className="flex gap-2">
+        <div className='flex gap-2'>
           <Button
-            type="button"
+            type='button'
             onClick={() => setIsOpenModal(true)}
-            variant="secondary"
-            icon={<LongArrowUpRightIcon className="stroke-slate-400" />}>
+            variant='secondary'
+            icon={<LongArrowUpRightIcon className='stroke-slate-400' />}
+          >
             {backButtonText}
           </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            icon={<NavArrowLeftIcon className="stroke-slate-50" />}>
-            {continueButtonText}
-          </Button>
+          <SubmitButton />
         </div>
       </form>
       <CancelSessionModal
@@ -94,25 +86,36 @@ type CancelSessionModalProps = {
 };
 
 const CancelSessionModal = ({ isOpen, onCancel }: CancelSessionModalProps) => {
-  const confirmButtonText = "نعم، أريد إلغاء العملية والبدء من جديد";
   const cancelButtonText = "لا، أريد متابعة العملية الحالية";
 
   const heading = "متأكد أنك تريد الرجوع؟";
-  const body = "الرجوع إلى خطوة رفع الملف سيلغي العملية الحالية ويمحي أي تعديلات قمت بها على الربطة بقاعدة البيانات. هل أنت متأكد؟";
+  const body =
+    "الرجوع إلى خطوة رفع الملف سيلغي العملية الحالية ويمحي أي تعديلات قمت بها على الربطة بقاعدة البيانات. هل أنت متأكد؟";
 
   return (
     <div className={`fixed inset-0 z-50 ${isOpen ? "block" : "hidden"}`}>
-      <div className="fixed inset-0 bg-black bg-opacity-50" />
-      <div className="fixed inset-0 flex justify-center items-center">
-        <div className="bg-white p-4 rounded-lg flex flex-col items-center gap-4 shadow-md w-min">
+      <div className='fixed inset-0 bg-black bg-opacity-50' />
+      <div className='fixed inset-0 flex justify-center items-center'>
+        <div className='bg-white p-4 rounded-lg flex flex-col items-center gap-4 shadow-md w-min'>
           <H4>{heading}</H4>
-          <P className="w-max">{body}</P>
-          <form className="flex gap-4 w-max" action={cancelSessionAction}>
-            <Button variant="secondary" type="button" onClick={onCancel}>{cancelButtonText}</Button>
-            <Button variant="danger" type="submit">{confirmButtonText}</Button>
+          <P className='w-max'>{body}</P>
+          <form className='flex gap-4 w-max' action={cancelSessionAction}>
+            <Button variant='secondary' type='button' onClick={onCancel}>
+              {cancelButtonText}
+            </Button>
+            <ConfirmCancelButton />
           </form>
         </div>
       </div>
     </div>
+  );
+};
+
+function ConfirmCancelButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type='submit' variant='danger' disabled={pending}>
+      {pending ? "جاري الإلغاء..." : "نعم، أريد إلغاء العملية والبدء من جديد"}
+    </Button>
   );
 }

@@ -30,9 +30,9 @@ export default function MappingForm({
     <>
       <form
         action={formAction}
-        className='w-min h-min flex flex-col justify-center items-center'
+        className='w-min h-min flex flex-col justify-center items-center gap-4'
       >
-        <div className='flex flex-col overflow-auto h-52 gap-2'>
+        <div className='flex flex-col overflow-auto h-52 gap-2 p-2 rounded-lg shadow-lg drop-shadow-md'>
           {mappingKeys.map((field, _) => (
             <div className='flex justify-between' key={field}>
               <label className='w-max h-max p-2' htmlFor={field}>
@@ -45,7 +45,7 @@ export default function MappingForm({
                 className={
                   state?.error?.fields?.includes(field)
                     ? "border-2 rounded-lg p-1 border-red-500 transition-all duration-200"
-                    : ""
+                    : "rounded-lg"
                 }
               >
                 <option disabled={true} value='<unset>'>
@@ -96,7 +96,7 @@ const CancelSessionModal = ({ isOpen, onCancel }: CancelSessionModalProps) => {
     <div className={`fixed inset-0 z-50 ${isOpen ? "block" : "hidden"}`}>
       <div className='fixed inset-0 bg-black bg-opacity-50' />
       <div className='fixed inset-0 flex justify-center items-center'>
-        <div className='bg-white p-4 rounded-lg flex flex-col items-center gap-4 shadow-md w-min'>
+        <div className='bg-slate-100 p-4 rounded-lg flex flex-col items-center gap-4 shadow-md w-min'>
           <H4>{heading}</H4>
           <P className='w-max'>{body}</P>
           <form className='flex gap-4 w-max' action={cancelSessionAction}>

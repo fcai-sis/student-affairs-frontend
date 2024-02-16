@@ -3,11 +3,14 @@
 import { redirect } from "next/navigation";
 
 export default async function cancelSessionAction(_: FormData) {
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/session/cancel`, {
-    method: "POST",
-  });
+  const response = await fetch(
+    `${process.env.STUDENT_REGISTRATION_API}/cancel`,
+    {
+      method: "POST",
+    }
+  );
 
-  if (response.status === 200) {
+  if (response.status === 200 || response.status === 404) {
     redirect("/students/register/upload-excel/1");
   }
 }

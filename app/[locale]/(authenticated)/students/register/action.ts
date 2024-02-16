@@ -11,7 +11,7 @@ export default async function uploadFileAction(_: any, formData: FormData): Prom
   const body = new FormData();
   body.append("file", file);
 
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/session/start`, {
+  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/start`, {
     method: "POST",
     body,
   });

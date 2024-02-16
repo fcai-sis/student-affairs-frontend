@@ -14,7 +14,7 @@ export default async function validateMapping(_: any, formData: FormData) {
   );
 
   const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/session/mapping`,
+    `${process.env.STUDENT_REGISTRATION_API}/mapping`,
     {
       method: "PATCH",
       body: JSON.stringify({ mapping: cleanedFormData }),
@@ -29,17 +29,19 @@ export default async function validateMapping(_: any, formData: FormData) {
   console.log("MAPPING RES: ", data);
 
   if (response.status !== 200) {
-    return { error: data.error }
+    return { error: data.error };
   }
 
   // if any of the keys in data.mapping has value "<unset>" do not redirect and return error with list of unset fields
-  const unsetFields = Object.entries(data.mapping).filter(([_, value]) => value === "<unset>");
+  const unsetFields = Object.entries(data.mapping).filter(
+    ([_, value]) => value === "<unset>"
+  );
 
   if (unsetFields.length > 0) {
     return {
       error: {
-        fields: unsetFields.map(([key, _]) => key)
-      }
+        fields: unsetFields.map(([key, _]) => key),
+      },
     };
   }
 

@@ -10,7 +10,7 @@ export default async function dummyEndpoint(delay: number): Promise<boolean> {
 
 export async function commitSession() {
   const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/session/commit`,
+    `${process.env.STUDENT_REGISTRATION_API}/commit`,
     {
       method: "POST",
       headers: {

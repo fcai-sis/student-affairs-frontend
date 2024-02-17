@@ -61,3 +61,14 @@ export function XmarkCircleSolidIcon({ className }: ComponentProps<"svg">) {
     </svg>
   );
 }
+
+export function WarningTriangleIcon({ className }: ComponentProps<"svg">) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <path d="M20.0429 20.9995H3.95707C2.41904 20.9995 1.4566 19.3359 2.22326 18.0026L10.2662 4.01478C11.0352 2.67737 12.9648 2.67736 13.7338 4.01477L21.7768 18.0026C22.5434 19.3359 21.581 20.9995 20.0429 20.9995Z" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M12 9V13" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M12 17.0091L12.01 16.998" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+
+  );
+}

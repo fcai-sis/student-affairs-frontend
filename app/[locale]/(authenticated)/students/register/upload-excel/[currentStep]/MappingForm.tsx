@@ -2,11 +2,12 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import validateMapping from "./map-action";
-import Button, { SubmitButton } from "@/components/Button";
+import Button from "@/components/Button";
 import { LongArrowUpRightIcon } from "@/components/icons";
-import { H2, H4, P } from "@/components/H";
+import { H4, P } from "@/components/H";
 import { useState } from "react";
 import cancelSessionAction from "@/app/[locale]/(authenticated)/table/cancelAction";
+import { SubmitButton } from "@/components/SubmitButton";
 
 export default function MappingForm({
   headers,
@@ -32,10 +33,10 @@ export default function MappingForm({
         action={formAction}
         className='w-min h-min flex flex-col justify-center items-center gap-4'
       >
-        <div className='flex flex-col overflow-auto h-52 gap-2 p-2 rounded-lg shadow-lg drop-shadow-md'>
+        <div className='flex flex-col overflow-auto h-52 gap-2 p-2 rounded-lg border-2 border-slate-200 shadow-lg'>
           {mappingKeys.map((field, _) => (
             <div className='flex justify-between' key={field}>
-              <label className='w-max h-max p-2' htmlFor={field}>
+              <label className='w-32 h-max p-2 font-bold' htmlFor={field}>
                 {arabicFields[field]}
               </label>
               <select
@@ -44,8 +45,8 @@ export default function MappingForm({
                 defaultValue={mapping[field]}
                 className={
                   state?.error?.fields?.includes(field)
-                    ? "border-2 rounded-lg p-1 border-red-500 transition-all duration-200"
-                    : "rounded-lg"
+                    ? "border-2 rounded-lg p-1 border-red-500 transition-all duration-200 w-max"
+                    : "rounded-lg w-max"
                 }
               >
                 <option disabled={true} value='<unset>'>
@@ -69,7 +70,7 @@ export default function MappingForm({
           >
             {backButtonText}
           </Button>
-          <SubmitButton />
+          <SubmitButton>{continueButtonText}</SubmitButton>
         </div>
       </form>
       <CancelSessionModal

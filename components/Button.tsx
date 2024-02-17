@@ -1,23 +1,21 @@
 import Link from "next/link";
 import { ComponentProps, ReactNode } from "react";
-import { useFormStatus } from "react-dom";
-import { NavArrowLeftIcon } from "./icons";
 
 type ButtonProps = {
   variant: "primary" | "danger" | "secondary";
   icon?: ReactNode;
 } & (
-  | {
+    | {
       asLink: true;
       myHref: string;
       onClick?: never;
     }
-  | {
+    | {
       asLink?: false;
       onClick?: () => void;
       myHref?: never;
     }
-);
+  );
 
 export function buttonClassName(variant: "primary" | "danger" | "secondary") {
   const style = {
@@ -66,20 +64,3 @@ export default function Button({
   );
 }
 
-export function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button
-      type='submit'
-      variant='primary'
-      disabled={pending}
-      icon={
-        <NavArrowLeftIcon
-          className={pending ? "stroke-slate-400" : "stroke-slate-50"}
-        />
-      }
-    >
-      متابعة
-    </Button>
-  );
-}

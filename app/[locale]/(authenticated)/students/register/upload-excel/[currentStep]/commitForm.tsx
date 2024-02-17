@@ -1,17 +1,26 @@
 "use client";
 
-import { useFormState } from "react-dom";
-import { commitSession } from "./dummy-action";
+import Button from "@/components/Button";
+import { LongArrowUpRightIcon } from "@/components/icons";
+import { SubmitButton } from "@/components/SubmitButton";
 
 export default function CommitForm() {
-  const [state, formAction] = useFormState(commitSession, null);
+  const confirmButtonText = "تأكيد";
+  const backButtonText = "رجوع";
 
-  // assuming this works as intended, the state is only usable here, which isn't very useful so we'll need to probably turn "ReviewAndConfirm" to a client component
   return (
-    <div>
-      <form action={formAction}>
-        <button type='submit'>Confirm</button>
-      </form>
+    <div className='flex gap-2'>
+      <Button
+        asLink
+        myHref="/students/register/upload-excel/2"
+        variant='secondary'
+        icon={<LongArrowUpRightIcon className='stroke-slate-400' />}
+      >
+        {backButtonText}
+      </Button>
+      <SubmitButton>
+        {confirmButtonText}
+      </SubmitButton>
     </div>
   );
 }

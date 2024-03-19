@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
 
-import { Mapping } from "./table/page";
 
-// TODO: Move to appropriate location
+export type Mapping = {
+  [key: string]: string,
+};
+
 export type RegistrationSession = {
   active: boolean;
   mapping: Mapping;
@@ -10,12 +12,17 @@ export type RegistrationSession = {
   startDate: Date;
 }
 
-export async function readActiveRegistrationSession(): Promise<RegistrationSession | null> {
+type ReadActiveRegistrationSessionResponse = {
+  registrationSession: RegistrationSession;
+  arabicFields: { [key: string]: string };
+} | null;
+
+export async function readActiveRegistrationSession(): Promise<ReadActiveRegistrationSessionResponse> {
   const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/active`, { cache: 'no-store' });
 
   if (response.status === 200) {
-    const { registrationSession } = await response.json();
-    return registrationSession;
+    const { registrationSession, arabicFields } = await response.json();
+    return { registrationSession, arabicFields };
   }
 
   // TODO: Handle other status codes

@@ -4,7 +4,6 @@ import { getI18n } from "@/locales/server";
 import Image from "next/image";
 import Link from "next/link";
 
-
 export default async function Home() {
   const t = await getI18n();
   return (
@@ -34,7 +33,7 @@ export default async function Home() {
           </div>
 
           <div className='flex flex-col gap-8 items-center w-[400px] h-min'>
-            <Link href={"/students/upload-excel"}>
+            <Link href={"/students/register/upload-excel"}>
               <button
                 type='button'
                 className='text-black drop-shadow-md bg-slate-50 transition duration-200 ease-in-out hover:bg-slate-100 active:bg-slate-200 rounded-lg gap-8 gap-x-4 gap-y-4 w-[200px] h-[200px]'

@@ -19,7 +19,7 @@ const Navbar = async () => {
         </Link>
         <Link
           className='transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min'
-          href={"/students/read-students"}
+          href={"/students/view"}
         >
           {t("students")}
         </Link>

@@ -1,64 +1,41 @@
-import PencilIcon from "@/components/ui/icons/PencilIcon";
-import UploadIcon from "@/components/ui/icons/UploadIcon";
-import { getI18n } from "@/locales/server";
-import Image from "next/image";
-import Link from "next/link";
+import AnnouncementCard from "@/components/AnnouncementCard";
+import Button from "@/components/Button";
+import ServiceRequestCard from "@/components/ServiceRequestCard";
+import TextInputField from "@/components/TextInputField";
 
-export default async function Home() {
-  const t = await getI18n();
+export default async function Page({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const name = locale === "en" ? "John" : "جون";
+
   return (
-    <>
-      <div className='flex flex-col items-center w-min h-min gap-16'>
-        <div className='flex justify-start w-[900px] h-min '>
-          <h1 className='text-2xl font-bold w-max h-min'>
-            {t("Register Students")}
-          </h1>
-        </div>
-        <div className='flex justify-center w-min h-min gap-16'>
-          <div className='flex flex-col gap-8 items-center w-min h-min'>
-            <Link href={"/students/add-student"}>
-              <button
-                type='button'
-                className='text-white drop-shadow-md bg-blue-500 transition duration-200 ease-in-out hover:bg-blue-600 active:bg-blue-800 rounded-lg gap-8 gap-x-4 gap-y-4 w-[200px] h-[200px]'
-              >
-                <div className='flex justify-center mb-4'>
-                  <PencilIcon />
-                </div>
-                <p className='text-lg font-bold'>{t("Manual Registration")}</p>
-              </button>
-            </Link>
-            <p className='flex text-center w-max h-min text-base text-slate-400'>
-              {t("Add a student manually")}
-            </p>
-          </div>
+    <div className='flex flex-col gap-4'>
+      <h1>Global search</h1>
+      <TextInputField placeholder='Search for anything' />
 
-          <div className='flex flex-col gap-8 items-center w-[400px] h-min'>
-            <Link href={"/students/register/upload-excel"}>
-              <button
-                type='button'
-                className='text-black drop-shadow-md bg-slate-50 transition duration-200 ease-in-out hover:bg-slate-100 active:bg-slate-200 rounded-lg gap-8 gap-x-4 gap-y-4 w-[200px] h-[200px]'
-              >
-                <div className='flex justify-center mb-4'>
-                  <Image
-                    src={"/excelIcon.png"}
-                    alt='Excel Icon'
-                    height={64}
-                    width={64}
-                  />
-                  <UploadIcon />
-                </div>
-                <p className='text-lg font-bold'>{t("Upload Excel")}</p>
-              </button>
-            </Link>
-            <p className='flex w-max h-min text-center text-sm text-slate-400'>
-              {t("Upload an excel file with student information")} <br />
-              {t(
-                "Please ensure that the student information is correct before uploading"
-              )}
-            </p>
-          </div>
-        </div>
+      <div>
+        <h1>Recent Service Requests</h1>
+        <Button asLink myHref='/students/requests' variant='secondary'>
+          View all
+        </Button>
       </div>
-    </>
+      <div>
+        <ServiceRequestCard />
+        <ServiceRequestCard />
+      </div>
+
+      <div>
+        <h1>Recent Announcements</h1>
+        <Button asLink myHref='/announcements' variant='secondary'>
+          View all
+        </Button>
+      </div>
+      <div>
+        <AnnouncementCard />
+        <AnnouncementCard />
+      </div>
+    </div>
   );
 }

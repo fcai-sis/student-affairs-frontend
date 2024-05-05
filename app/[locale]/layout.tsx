@@ -30,6 +30,7 @@ export default function RootLayout({
         {children}
         {/* a floating button to change the language */}
         <ChangeLanguageButton />
+        <Toaster position='top-right' />
       </body>
     </html>
   );

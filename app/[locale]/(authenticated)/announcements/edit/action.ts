@@ -13,7 +13,7 @@ export default async function updateAnnouncementAction(
   );
 
   console.log("CLEANED FORM DATA: ", cleanedFormData);
-
+  // supposed to get the id from the form fields
   const response = await fetch(`${process.env.ANNOUNCEMENT_API}/update/${id}`, {
     method: "POST",
     body: JSON.stringify(cleanedFormData),
@@ -23,7 +23,7 @@ export default async function updateAnnouncementAction(
   });
 
   const data = await response.json();
-  console.log("CREATE ANNOUNCEMENT RES: ", data);
+  console.log("UPDATE ANNOUNCEMENT RES: ", data);
 
   if (response.status !== 201) {
     return { error: data.error };

@@ -1,21 +1,11 @@
 import { usePathname } from "next/navigation";
 import { useFormState } from "react-dom";
-import updateAnnouncementAction, { fetchAnnouncement } from "./action";
-
-export default async function EditAnnouncement({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
-  const name = locale === "en" ? "John" : "جون";
-
-  const [state, formAction] = useFormState(updateAnnouncementAction, null);
+import updateAnnouncementAction, { fetchAnnouncement } from "../action";
+import { useState } from "react";
+import EditAnnouncementForm from "../EditAnnouncementForm";
+export default async function EditAnnouncement() {
   const params = usePathname();
-  const announcement = await fetchAnnouncement(params.split("=")[1]);
+  const announcementToUpdate = await fetchAnnouncement(params.split("=")[1]);
 
-  return (
-    <div>
-      <h1>Edit Announcement</h1>
-    </div>
-  );
+  return <EditAnnouncementForm data={announcementToUpdate} />;
 }

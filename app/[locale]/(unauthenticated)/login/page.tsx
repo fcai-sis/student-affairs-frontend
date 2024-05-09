@@ -5,7 +5,7 @@ import TextInputField from "@/components/TextInputField";
 import Image from "next/image";
 import { getI18n } from "@/locales/server";
 
-export default async function Page({ params: { locale } }: Readonly<{ params: { locale: string } }>) {
+export default async function Page({ params: { locale } }: { params: { locale: string } }) {
   const t = await getI18n();
 
   return (

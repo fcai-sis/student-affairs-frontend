@@ -1,4 +1,6 @@
+import AcceptButtonModal from "./AcceptServiceRequestModal";
 import Button from "./Button";
+import RejectButtonModal from "./RejectServiceRequestModal";
 
 export default function ServiceRequestCard({ request }: { request: any }) {
   return (
@@ -25,8 +27,8 @@ export default function ServiceRequestCard({ request }: { request: any }) {
           />
         </div>
         <div>
-          <Button variant='primary'>Accept</Button>
-          <Button variant='danger'>Reject</Button>
+          <AcceptButtonModal data={request._id} />
+          <RejectButtonModal data={request._id} />
         </div>
       </div>
     </div>

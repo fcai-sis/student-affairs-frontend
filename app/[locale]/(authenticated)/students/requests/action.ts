@@ -1,8 +1,10 @@
 "use server";
+
 import { PAGE_SIZE } from "@/app/[locale]/students/constants";
-export async function readServiceRequests() {
+
+export async function readServiceRequests(page: number) {
   const response = await fetch(
-    `http://127.0.0.1:3000/service/read?page=1&pageSize=10`,
+    `http://127.0.0.1:3000/service/read?page=${page}&pageSize=${PAGE_SIZE}`,
     {
       cache: "no-store",
       method: "GET",
@@ -14,15 +16,19 @@ export async function readServiceRequests() {
   const studentServiceRequests = requestData.serviceRequests;
   const currentPage = requestData.page;
   const pageSize = requestData.pageSize;
+  const totalPages = requestData.totalServiceRequests;
+
   console.log("Student Requests", studentServiceRequests);
   console.log("Current Page", currentPage);
   console.log("Page Size", pageSize);
+  console.log("Total Pages", totalPages);
 
   if (response.status === 200) {
     return {
       studentServiceRequests,
       currentPage,
       pageSize,
+      totalPages,
     };
   } else if (response.status == 400) {
     return requestData.error;

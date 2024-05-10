@@ -1,12 +1,19 @@
 import { H1 } from "@/components/H";
 import ServiceRequestCard from "@/components/ServiceRequestCard";
 import { readServiceRequests } from "./action";
+import { PAGE_SIZE } from "@/app/[locale]/students/constants";
+import Pagination from "./pagination";
 
-export default async function StudentRequests() {
-  const requests = await readServiceRequests();
-  console.log("Requests", requests.studentServiceRequests);
-  console.log("Current Page", requests.currentPage);
-  console.log("Page Size", requests.pageSize);
+export default async function StudentRequests({
+  searchParams,
+}: {
+  searchParams: { page: string };
+}) {
+  let page = parseInt(searchParams.page, 10);
+  if (!page || page < 1) page = 1;
+  const requests = await readServiceRequests(page);
+
+  const totalPages = requests.totalPages;
 
   return (
     <>
@@ -21,6 +28,8 @@ export default async function StudentRequests() {
             .map((request: any, index: number) => (
               <ServiceRequestCard key={index} request={request} />
             ))}
+
+          <Pagination currentPage={page} totalPages={totalPages} />
         </div>
       </div>
     </>

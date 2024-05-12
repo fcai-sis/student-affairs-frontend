@@ -2,6 +2,7 @@ import AnnouncementCard from "@/components/AnnouncementCard";
 import Button from "@/components/Button";
 import ServiceRequestCard from "@/components/ServiceRequestCard";
 import TextInputField from "@/components/TextInputField";
+import { readServiceRequests } from "./(authenticated)/students/requests/action";
 
 export default async function Page({
   params: { locale },
@@ -9,7 +10,7 @@ export default async function Page({
   params: { locale: string };
 }) {
   const name = locale === "en" ? "John" : "جون";
-
+  const requests = await readServiceRequests(1);
   return (
     <div className='flex flex-col gap-4'>
       <h1>Global search</h1>
@@ -22,8 +23,12 @@ export default async function Page({
         </Button>
       </div>
       <div>
-        <ServiceRequestCard />
-        <ServiceRequestCard />
+        {requests.studentServiceRequests
+          .filter((request: any) => request.status !== "rejected")
+          .slice(0, 3)
+          .map((request: any, index: number) => (
+            <ServiceRequestCard key={index} request={request} />
+          ))}
       </div>
 
       <div>

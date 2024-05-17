@@ -24,5 +24,5 @@ export default async function Page({ params: { locale } }: { params: { locale: s
         <AnnouncementCard />
       </div>
     </div>
-  )
+  );
 }

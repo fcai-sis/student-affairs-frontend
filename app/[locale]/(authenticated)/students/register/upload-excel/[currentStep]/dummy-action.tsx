@@ -18,11 +18,18 @@ export async function commitSession() {
       },
     }
   );
-  const data = await response.json();
-  console.log(data);
 
   // coolcool just send the data or the error if one occurs
-  return null;
+  if (response.status !== 200) {
+    const error = await response.json();
+    console.error(error);
+    return { success: false, errors: error.errors };
+  }
+
+  return {
+    success: true,
+    data: await response.json(),
+  };
 }
 
 export async function precommitRegistrationSession() {

@@ -1,30 +1,36 @@
-import Locale from 'intl-locale-textinfo-polyfill'
+import Locale from "intl-locale-textinfo-polyfill";
 import { Rubik } from "next/font/google";
 import "../globals.css";
-import ChangeLanguageButton from '@/components/ChangeLanguageButton';
-import { Metadata } from 'next';
+import { Toaster } from "react-hot-toast";
+import ChangeLanguageButton from "@/components/ChangeLanguageButton";
+import { Metadata } from "next";
+import Navbar from "@/components/Navbar";
 
 const rubik = Rubik({ subsets: ["latin", "arabic"] });
 
 export const metadata: Metadata = {
-  title: "lol"
-}
+  title: "lol",
+};
 
 export default function RootLayout({
   children,
-  params: { locale }
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-  const { direction: dir } = new Locale(locale).textInfo
+  const { direction: dir } = new Locale(locale).textInfo;
 
   return (
     <html lang={locale} dir={dir}>
-      <body className={`${rubik.className} h-screen flex items-center justify-center`}>
+      <body
+        className={`${rubik.className} h-screen flex items-center justify-center`}
+      >
+        <Navbar />
         {children}
         {/* a floating button to change the language */}
         <ChangeLanguageButton />
+        <Toaster position='top-right' />
       </body>
     </html>
   );

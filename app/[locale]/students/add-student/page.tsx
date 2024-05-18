@@ -17,7 +17,7 @@ export default function AddStudent() {
         toast.error(state.error);
       } else {
         toast.success(`Student ${state.fullName} added successfully`);
-        // redirect("/students/read-students");
+        redirect("/students/read-students");
       }
     }
   }, [state]);
@@ -78,7 +78,6 @@ export default function AddStudent() {
           >
             Gender
           </label>
-          {/* can be "male", "female" or other, via dropdown */}
           <select
             name='gender'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'

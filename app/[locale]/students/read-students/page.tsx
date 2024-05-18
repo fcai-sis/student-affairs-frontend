@@ -53,9 +53,9 @@ export default async function Page({
             <tr key={index}>
               <td className='py-2 px-4 border-r'>{student.fullName}</td>
               <td className='py-2 px-4 border-r'>{student.studentId}</td>
-              <td className='py-2 px-4 border-r'>{
-                student.groupCode === 0 ? 'Science Group' : 'Math Group'
-              }</td>
+              <td className='py-2 px-4 border-r'>
+                {student.groupCode === 0 ? "Science Group" : "Math Group"}
+              </td>
               <td className='py-2 px-4 border-r'>{student.gender}</td>
               <td className='py-2 px-4 border-r'>{student.religion}</td>
               <td className='py-2 px-4 border-r'>{student.nationalId}</td>
@@ -69,7 +69,7 @@ export default async function Page({
               <td className='py-2 px-4 border-r'>{student.nationality}</td>
               <td className='py-2 px-4'>{student.address}</td>
               <td className='py-2 px-4 flex items-center justify-center space-x-2'>
-                <Link href={`/students/edit-student/id=${student._id}`}>
+                <Link href={`/students/edit-student/${student._id}`}>
                   <EditBtn />
                 </Link>
                 <DeleteStudentForm id={student._id} />

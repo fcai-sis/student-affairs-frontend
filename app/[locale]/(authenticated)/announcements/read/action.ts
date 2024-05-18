@@ -1,7 +1,7 @@
 "use server";
 export async function fetchAnnouncements() {
   const response = await fetch(
-    `http://127.0.0.1:3003/announcement/read?page=1&pageSize=10`,
+    `http://127.0.0.1:3003?page=1&pageSize=10`,
     {
       cache: "no-store",
       method: "GET",
@@ -11,7 +11,7 @@ export async function fetchAnnouncements() {
   const announcementsData = await response.json();
 
   const announcements = announcementsData.announcements;
-  console.log(announcements);
+  // console.log("Announcements", announcements);
 
   if (response.status === 200) {
     return announcements;

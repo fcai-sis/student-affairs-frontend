@@ -1,5 +1,7 @@
 "use client";
+import Button from "@/components/Button";
 import { H1 } from "@/components/H";
+import Link from "next/link";
 
 export default function Announcements({ data }: { data: any[] }) {
   return (
@@ -14,6 +16,13 @@ export default function Announcements({ data }: { data: any[] }) {
             <div>{announcement.content}</div>
             <div>{announcement.severity}</div>
             <div>{announcement.level}</div>
+            <Link
+              href={{
+                pathname: `/announcements/edit/${announcement._id}`,
+              }}
+            >
+              <Button variant='primary'>Read</Button>
+            </Link>
           </div>
         ))}
       </div>

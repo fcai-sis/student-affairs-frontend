@@ -10,79 +10,35 @@ export default function editAnnouncementForm({ data }: { data: any }) {
       action={formAction}
       className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96'
     >
-      <div className='mb-4'>
-        <label
-          htmlFor='announcement-title'
-          className='block text-primary text-sm font-bold mb-2'
-        >
-          Announcement Title
-        </label>
-        <input
-          type='text'
-          name='announcement-title'
-          id='announcement-title'
-          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-          defaultValue={data.title}
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='announcement-content'
-          className='block text-primary text-sm font-bold mb-2'
-        >
-          Announcement Content
-        </label>
-        <textarea
-          name='announcement-content'
-          id='announcement-content'
-          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-          defaultValue={data.content}
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='announcement-severity'
-          className='block text-primary text-sm font-bold mb-2'
-        >
-          Announcement Severity
-        </label>
-        <input
-          type='text'
-          name='announcement-severity'
-          id='announcement-severity'
-          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-          defaultValue={data.severity}
-        />
-      </div>
-      <div className='mb-4'>
-        <label
-          htmlFor='announcement-level'
-          className='block text-primary text-sm font-bold mb-2'
-        >
-          Announcement Level
-        </label>
-        <input
-          type='text'
-          name='announcement-level'
-          id='announcement-level'
-          className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-          defaultValue={data.level}
-        />
-      </div>
-      <div className='flex items-center justify-between'>
-        <button
-          type='submit'
-          className='bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-        >
-          Update
-        </button>
-        <button
-          type='button'
-          className='bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-        >
-          Cancel
-        </button>
-      </div>
+      <input
+        type='text'
+        name='title'
+        placeholder='Title'
+        defaultValue={data.title}
+      />
+      <textarea
+        name='content'
+        placeholder='Content'
+        defaultValue={data.content}
+      />
+      <select name='severity' defaultValue={data.severity}>
+        <option value='info'>Info</option>
+        <option value='warning'>Warning</option>
+        <option value='danger'>Danger</option>
+      </select>
+      <select name='academicLevel' defaultValue={data.academicLevel}>
+        <option value='1'>Level 1</option>
+        <option value='2'>Level 2</option>
+        <option value='3'>Level 3</option>
+        <option value='4'>Level 4</option>
+      </select>
+      <input
+        type='text'
+        name='department'
+        placeholder='Department'
+        defaultValue={data.department}
+      />
+      <button type='submit'>Update</button>
 
       <input type='hidden' value={data._id} name='_id' />
     </form>

@@ -14,9 +14,13 @@ export default async function updateAnnouncementAction(
 
   console.log("CLEANED FORM DATA: ", cleanedFormData);
   // supposed to get the id from the form fields
-  const response = await fetch(`${process.env.ANNOUNCEMENT_API}/update/${id}`, {
-    method: "POST",
-    body: JSON.stringify(cleanedFormData),
+  const response = await fetch(`http://127.0.0.1:3003/${cleanedFormData._id}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      ...cleanedFormData,
+      _id: undefined,
+      department: String(cleanedFormData.department).split(","),
+    }),
     headers: {
       "Content-Type": "application/json",
     },
@@ -35,10 +39,12 @@ export default async function updateAnnouncementAction(
 }
 
 export async function fetchAnnouncement(id: string) {
-  const response = await fetch(`${process.env.ANNOUNCEMENT_API}/find/${id}`);
-  console.log(process.env.STUDENT_REGISTRATION_API);
+  console.log("Fetching Announcement", id);
+
+  const response = await fetch(`http://127.0.0.1:3003/${id}`);
 
   const data = await response.json();
+  console.log("Fetched Announcement", data);
 
   return data.announcement;
 }

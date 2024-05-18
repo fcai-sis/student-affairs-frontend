@@ -63,7 +63,9 @@ export default async function Page({
               <td className='py-2 px-4 border-r'>{student.directorate}</td>
               <td className='py-2 px-4 border-r'>{student.phoneNumber}</td>
               <td className='py-2 px-4 border-r'>{student.educationType}</td>
-              <td className='py-2 px-4 border-r'>{student.birthDate}</td>
+              <td className='py-2 px-4 border-r'>
+                {student.birthDay}/{student.birthMonth}/{student.birthYear}
+              </td>
               <td className='py-2 px-4 border-r'>{student.birthPlace}</td>
               <td className='py-2 px-4 border-r'>{student.governorateId}</td>
               <td className='py-2 px-4 border-r'>{student.nationality}</td>

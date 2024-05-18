@@ -196,7 +196,13 @@ export default function EditStudentForm({ student }: { student: any }) {
             type='date'
             name='birthDate'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
-            defaultValue={`${student.birthYear}-${student.birthMonth}-${student.birthDay}`}
+            defaultValue={`${student.birthYear}-${
+              student.birthMonth < 10
+                ? `0${student.birthMonth}`
+                : student.birthMonth
+            }-${
+              student.birthDay < 10 ? `0${student.birthDay}` : student.birthDay
+            }`}
           />
         </div>
 

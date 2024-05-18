@@ -14,9 +14,12 @@ export default async function createAnnouncementAction(
 
   console.log("CLEANED FORM DATA: ", cleanedFormData);
 
-  const response = await fetch(`${process.env.ANNOUNCEMENT_API}/create`, {
+  const response = await fetch(`http://127.0.0.1:3003`, {
     method: "POST",
-    body: JSON.stringify(cleanedFormData),
+    body: JSON.stringify({
+      ...cleanedFormData,
+      department: String(cleanedFormData.department).split(","),
+    }),
     headers: {
       "Content-Type": "application/json",
     },

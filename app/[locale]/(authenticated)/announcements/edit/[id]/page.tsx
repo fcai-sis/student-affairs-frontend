@@ -1,11 +1,10 @@
-import { usePathname } from "next/navigation";
-import { useFormState } from "react-dom";
-import updateAnnouncementAction, { fetchAnnouncement } from "../action";
-import { useState } from "react";
+import { fetchAnnouncement } from "../action";
+
 import EditAnnouncementForm from "../EditAnnouncementForm";
-export default async function EditAnnouncement() {
-  const params = usePathname();
-  const announcementToUpdate = await fetchAnnouncement(params.split("=")[1]);
+export default async function EditAnnouncement({ params }: { params: any }) {
+  console.log(params);
+
+  const announcementToUpdate = await fetchAnnouncement(params.id);
 
   return <EditAnnouncementForm data={announcementToUpdate} />;
 }

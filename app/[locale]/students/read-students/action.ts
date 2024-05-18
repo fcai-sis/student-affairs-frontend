@@ -7,7 +7,7 @@ export async function readStudents(page: number) {
   });
 
   const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/read?${searchParams}`,
+    `http://127.0.0.1:3001/students/read?${searchParams}`,
     {
       cache: "no-store",
       method: "GET",

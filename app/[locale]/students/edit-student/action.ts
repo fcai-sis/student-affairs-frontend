@@ -4,14 +4,36 @@ import { StudentSchema } from "../lib/types";
 import { updateStudentApi } from "./api";
 
 export async function updateStudent(_: any, formData: FormData) {
-  const rawFormData = {
-    fullName: formData.get("student-name"),
-    status: formData.get("student-status"),
-    address: formData.get("student-address"),
-    _id: formData.get("_id"),
-  };
+  console.log("WE ARE IN ACTION");
 
-  if (rawFormData._id === null) {
+  const birthDateValue = formData.get("birthDate") as string;
+  // split the birth date value into year, month, and day
+  const [birthYear, birthMonth, birthDay] = birthDateValue.split("-");
+
+  const rawFormData = {
+    fullName: formData.get("fullName") as string,
+    studentId: formData.get("studentId") as string,
+    groupCode: (formData.get("groupCode") as string) === "1",
+    gender: formData.get("gender") as string,
+    religion: formData.get("religion") as string,
+    nationalId: formData.get("nationalId") as string,
+    administration: formData.get("administration") as string,
+    directorate: formData.get("directorate") as string,
+    phoneNumber: formData.get("phoneNumber") as string,
+    educationType: formData.get("educationType") as string,
+    birthYear: parseInt(birthYear),
+    birthMonth: parseInt(birthMonth),
+    birthDay: parseInt(birthDay),
+    birthPlace: formData.get("birthPlace") as string,
+    governorateId: parseInt(formData.get("governorateId") as string),
+    nationality: formData.get("nationality") as string,
+    address: formData.get("address") as string,
+  };
+  console.log("RAW FORM DATA: ", rawFormData);
+
+  const studentId = formData.get("_id") as string;
+
+  if (studentId === null) {
     return {
       error: "Student ID is required",
     };
@@ -29,7 +51,9 @@ export async function updateStudent(_: any, formData: FormData) {
       error: errorMessage,
     };
   }
-  const response = await updateStudentApi(rawFormData._id, parsedStudent);
+  console.log("STUDENT ID: ", studentId);
+
+  const response = await updateStudentApi(studentId, parsedStudent);
   revalidatePath("/students/read-students");
   return response;
 }

@@ -1,9 +1,14 @@
 import UploadExcel from "./UploadExcel";
 import Mapping from "./Mapping";
 import ReviewAndConfirm from "./ReviewAndConfirm";
+import { ensureAuthenticated } from "@/lib";
 
-
-export default function Page({ params: { currentStep } }: { params: { currentStep: string } }) {
+export default async function Page({
+  params: { currentStep },
+}: {
+  params: { currentStep: string };
+}) {
+  await ensureAuthenticated();
   const step = parseInt(currentStep, 10);
   switch (step) {
     case 1:

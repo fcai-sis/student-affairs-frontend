@@ -1,5 +1,7 @@
 "use server";
 
+import { getAccessToken } from "@/lib";
+
 export default async function dummyEndpoint(delay: number): Promise<boolean> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -9,12 +11,14 @@ export default async function dummyEndpoint(delay: number): Promise<boolean> {
 }
 
 export async function commitSession() {
+  const accessToken = await getAccessToken();
   const response = await fetch(
     `${process.env.STUDENT_REGISTRATION_API}/commit`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );
@@ -33,12 +37,14 @@ export async function commitSession() {
 }
 
 export async function precommitRegistrationSession() {
+  const accessToken = await getAccessToken();
   const response = await fetch(
     `${process.env.STUDENT_REGISTRATION_API}/precommit`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );

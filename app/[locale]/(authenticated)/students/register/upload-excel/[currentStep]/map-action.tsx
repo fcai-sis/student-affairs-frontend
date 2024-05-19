@@ -1,9 +1,11 @@
 "use server";
 
+import { getAccessToken } from "@/lib";
 import { redirect } from "next/navigation";
 
 // either validate here or on the client and then make the api call
 export default async function validateMapping(_: any, formData: FormData) {
+  const accessToken = await getAccessToken();
   const rawFormData = Object.fromEntries(formData.entries());
 
   console.log("RAW FORM DATA: ", rawFormData);
@@ -20,6 +22,7 @@ export default async function validateMapping(_: any, formData: FormData) {
       body: JSON.stringify({ mapping: cleanedFormData }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );

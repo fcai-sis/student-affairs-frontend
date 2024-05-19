@@ -3,12 +3,14 @@ import Button from "@/components/Button";
 import ServiceRequestCard from "@/components/ServiceRequestCard";
 import TextInputField from "@/components/TextInputField";
 import { readServiceRequests } from "./(authenticated)/students/requests/action";
+import { ensureAuthenticated } from "@/lib";
 
 export default async function Page({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
+  await ensureAuthenticated();
   const name = locale === "en" ? "John" : "جون";
   const requests = await readServiceRequests(1);
   return (

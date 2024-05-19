@@ -1,8 +1,8 @@
+import { getAccessToken } from "@/lib";
 import { redirect } from "next/navigation";
 
-
 export type Mapping = {
-  [key: string]: string,
+  [key: string]: string;
 };
 
 export type RegistrationSession = {
@@ -10,7 +10,7 @@ export type RegistrationSession = {
   mapping: Mapping;
   excelColumnsHeaders: string[];
   startDate: Date;
-}
+};
 
 type ReadActiveRegistrationSessionResponse = {
   registrationSession: RegistrationSession;
@@ -18,7 +18,11 @@ type ReadActiveRegistrationSessionResponse = {
 } | null;
 
 export async function readActiveRegistrationSession(): Promise<ReadActiveRegistrationSessionResponse> {
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/active`, { cache: 'no-store' });
+  const accessToken = await getAccessToken();
+  const response = await fetch(
+    `${process.env.STUDENT_REGISTRATION_API}/active`,
+    { cache: "no-store", headers: { Authorization: `Bearer ${accessToken}` } }
+  );
 
   if (response.status === 200) {
     const { registrationSession, arabicFields } = await response.json();
@@ -31,13 +35,19 @@ export async function readActiveRegistrationSession(): Promise<ReadActiveRegistr
 }
 
 export async function cancelRegistrationSession(): Promise<boolean> {
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/cancel`, { method: 'POST' });
+  const response = await fetch(
+    `${process.env.STUDENT_REGISTRATION_API}/cancel`,
+    { method: "POST" }
+  );
   return response.status === 200;
 }
 
 export async function readMappedStudents(page: number) {
-  const searchParams = new URLSearchParams({ page: `${page}`, pageSize: '10' });
-  const response = await fetch(`${process.env.STUDENT_REGISTRATION_API}/active/mapped?${searchParams}`, { cache: 'no-store' });
+  const searchParams = new URLSearchParams({ page: `${page}`, pageSize: "10" });
+  const response = await fetch(
+    `${process.env.STUDENT_REGISTRATION_API}/active/mapped?${searchParams}`,
+    { cache: "no-store" }
+  );
 
   if (response.status === 200) {
     const { students } = await response.json();

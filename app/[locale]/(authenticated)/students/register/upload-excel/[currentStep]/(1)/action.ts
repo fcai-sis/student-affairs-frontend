@@ -1,8 +1,8 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { UploadExcelFormState } from "./upload-excel/[currentStep]/UploadExcelForm";
+// import { redirect } from "next/navigation";
 import { getAccessToken } from "@/lib";
+import { UploadExcelFormState } from "./UploadExcelForm";
 
 export default async function uploadFileAction(
   _: any,
@@ -30,10 +30,12 @@ export default async function uploadFileAction(
   console.log("RESPONSE:", await response.json());
 
   if (response.status === 201) {
-    redirect("/students/register/upload-excel/2");
+    // redirect("/students/register/upload-excel/2");
+    return { uploaded: true };
   }
 
   return {
+    uploaded: false,
     error:
       "الملف الذي اخترته ليس ملف إكسل، من فضلك أدخل ملف إكسل صحيح (.xlsx أو .xls)",
   };

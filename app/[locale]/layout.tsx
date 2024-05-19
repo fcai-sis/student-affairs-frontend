@@ -4,7 +4,6 @@ import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import ChangeLanguageButton from "@/components/ChangeLanguageButton";
 import { Metadata } from "next";
-import Navbar from "@/components/Navbar";
 
 const rubik = Rubik({ subsets: ["latin", "arabic"] });
 
@@ -26,7 +25,6 @@ export default function RootLayout({
       <body
         className={`${rubik.className} h-screen flex items-center justify-center`}
       >
-        <Navbar />
         {children}
         {/* a floating button to change the language */}
         <ChangeLanguageButton />

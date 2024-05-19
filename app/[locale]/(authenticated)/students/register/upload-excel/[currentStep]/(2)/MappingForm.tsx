@@ -1,13 +1,13 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-import validateMapping from "./map-action";
 import Button from "@/components/Button";
 import { LongArrowUpRightIcon } from "@/components/icons";
 import { H4, P } from "@/components/H";
-import { useState } from "react";
-import cancelSessionAction from "@/app/[locale]/(authenticated)/table/cancelAction";
+import { useEffect, useState } from "react";
 import { SubmitButton } from "@/components/SubmitButton";
+import { cancelSessionAction, validateMapping } from "./action";
+import { useRouter } from "next/navigation";
 
 export default function MappingForm({
   headers,
@@ -18,6 +18,7 @@ export default function MappingForm({
   mapping: { [key: string]: string };
   arabicFields: { [key: string]: string };
 }) {
+  console.log("MappingForm");
   const backButtonText = "رجوع";
   const continueButtonText = "متابعة";
 
@@ -26,6 +27,14 @@ export default function MappingForm({
   const mappingKeys = Object.keys(mapping);
   const [state, formAction] = useFormState(validateMapping, null);
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.done) {
+      router.push("/students/register/upload-excel/3");
+    }
+  }, [state]);
 
   return (
     <>

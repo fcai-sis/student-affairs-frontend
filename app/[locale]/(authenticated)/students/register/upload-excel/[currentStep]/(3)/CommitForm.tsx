@@ -2,10 +2,9 @@
 
 import Button from "@/components/Button";
 import { LongArrowUpRightIcon } from "@/components/icons";
-import { SubmitButton } from "@/components/SubmitButton";
 import { useFormState } from "react-dom";
-import { commitSession } from "./dummy-action";
 import toast from "react-hot-toast";
+import { commitSession } from "./action";
 
 export default function CommitForm() {
   const confirmButtonText = "تأكيد";

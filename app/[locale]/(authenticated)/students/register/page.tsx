@@ -18,7 +18,7 @@ export default async function Home() {
         </div>
         <div className='flex justify-center w-min h-min gap-16'>
           <div className='flex flex-col gap-8 items-center w-min h-min'>
-            <Link href={"/students/add-student"}>
+            <Link href={"/students/register/manual/add-student"}>
               <button
                 type='button'
                 className='text-white drop-shadow-md bg-blue-500 transition duration-200 ease-in-out hover:bg-blue-600 active:bg-blue-800 rounded-lg gap-8 gap-x-4 gap-y-4 w-[200px] h-[200px]'

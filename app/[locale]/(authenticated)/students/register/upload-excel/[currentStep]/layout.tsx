@@ -4,6 +4,7 @@ import { H1 } from "@/components/H";
 import Stepper from "@/components/Stepper";
 
 export default function PageWithStepper({ params: { currentStep }, children }: { params: { currentStep: string }, children: React.ReactNode }) {
+  console.log("LAYOUTTTTTTTTT");
   const step = parseInt(currentStep, 10);
 
   if (step < 1 || step > 3) {
@@ -12,7 +13,7 @@ export default function PageWithStepper({ params: { currentStep }, children }: {
 
   const pageTitle = "تسجيل طلاب من ملف التنسيق";
 
-  const stepHref = (step: number) => `/students/register/upload-excel/${step}`;
+  // const stepHref = (step: number) => `/students/register/upload-excel/${step}`;
 
   return (
     <div className="flex flex-col items-center gap-16 w-min h-min">

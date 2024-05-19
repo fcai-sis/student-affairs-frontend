@@ -1,5 +1,4 @@
 import { getAccessToken } from "@/lib";
-import { redirect } from "next/navigation";
 
 export type Mapping = {
   [key: string]: string;
@@ -34,27 +33,23 @@ export async function readActiveRegistrationSession(): Promise<ReadActiveRegistr
   return null;
 }
 
-export async function cancelRegistrationSession(): Promise<boolean> {
+export async function readActiveRegistrationSessionMappedStudents(): Promise<boolean> {
+  const accessToken = await getAccessToken();
   const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/cancel`,
-    { method: "POST" }
+    `${process.env.STUDENT_REGISTRATION_API}/active/mapped?page=1&pageSize=1`,
+    { cache: "no-store", headers: { Authorization: `Bearer ${accessToken}` } }
   );
-  return response.status === 200;
-}
 
-export async function readMappedStudents(page: number) {
-  const searchParams = new URLSearchParams({ page: `${page}`, pageSize: "10" });
-  const response = await fetch(
-    `${process.env.STUDENT_REGISTRATION_API}/active/mapped?${searchParams}`,
-    { cache: "no-store" }
-  );
+  console.log(`response: ${response.status}`);
 
   if (response.status === 200) {
-    const { students } = await response.json();
-    return students;
-  } else if (response.status === 400) {
-    redirect("/students/register/mapping");
+    const data = await response.json();
+    console.log('data: ', data);
+    const mappedStudents = data.mappedStudents;
+    console.log("mappedStudents", mappedStudents);
+    return mappedStudents.length > 0;
   }
 
-  return [];
+  return false;
 }
+

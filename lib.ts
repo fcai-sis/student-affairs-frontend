@@ -25,8 +25,11 @@ export async function getAccessToken() {
 }
 
 export async function ensureAuthenticated() {
+  console.log("ENSURE AUTHENTICATED...");
   const session = await getServerSession();
   if (!session) {
+    console.log("REDIRECT TO LOGIN");
     redirect("/login");
   }
+  console.log("AUTHENTICATED");
 }

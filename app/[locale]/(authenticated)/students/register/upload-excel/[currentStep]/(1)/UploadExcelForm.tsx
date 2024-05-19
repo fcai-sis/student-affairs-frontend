@@ -1,22 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
 import { P } from "@/components/H";
-import uploadFileAction from "../../action";
 import Button, { buttonClassName } from "@/components/Button";
 import { CheckCircleSolidIcon, NavArrowLeftIcon, UploadIcon, XmarkCircleSolidIcon } from "@/components/icons";
+import uploadFileAction from "./action";
+import { useRouter } from 'next/navigation'
 
 export type UploadExcelFormState = {
+  uploaded: boolean;
   error?: string;
 };
 
 export default function UploadExcelForm() {
+  console.log("UploadExcelForm");
   const continueButtonText = "متابعة";
 
+  const router = useRouter();
+
   const [file, setFile] = useState<string | null>(null);
-  const [state, formAction] = useFormState(uploadFileAction, {})
+  const [state, formAction] = useFormState(uploadFileAction, { uploaded: false });
+
+  useEffect(() => {
+    if (state.uploaded)
+      router.push("/students/register/upload-excel/2")
+  }, [state])
 
   return (
     <form

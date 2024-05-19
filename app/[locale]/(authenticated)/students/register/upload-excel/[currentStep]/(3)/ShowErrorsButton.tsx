@@ -57,7 +57,10 @@ const MappingErrorsModal = ({ isOpen, onCancel, errors }: MappingErrorsModalProp
                 <div key={row} className='flex flex-col gap-2 bg-slate-100 p-2 rounded-lg'>
                   <P className='font-bold'>الصف {row}</P>
                   <ul className='list-disc list-inside'>
-                    {errors.map((error, i) => <li key={i} className="text-red-500">{error}</li>)}
+                    {
+                      // JSON.stringify(errors)
+                      errors.map((error, i) => <li key={i} className="text-red-500">{error}</li>)
+                    }
                   </ul>
                 </div>
               ))

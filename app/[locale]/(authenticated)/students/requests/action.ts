@@ -1,12 +1,12 @@
 "use server";
 
-import { PAGE_SIZE } from "@/app/[locale]/(authenticated)/students/manual-register/constants";
 import { getAccessToken } from "@/lib";
+import { PAGE_SIZE } from "../register/manual/constants";
 
 export async function readServiceRequests(page: number) {
   const accessToken = await getAccessToken();
   const response = await fetch(
-    `http://127.0.0.1:3010/service/read?page=${page}&pageSize=${PAGE_SIZE}`,
+    `${process.env.SERVICE_REQUEST_MANAGEMENT_API}/read?page=${page}&pageSize=${PAGE_SIZE}`,
     {
       cache: "no-store",
       method: "GET",

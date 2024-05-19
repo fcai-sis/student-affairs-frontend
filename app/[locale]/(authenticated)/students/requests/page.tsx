@@ -1,10 +1,9 @@
-import { H1 } from "@/components/H";
 import ServiceRequestCard from "@/components/ServiceRequestCard";
 import { readServiceRequests } from "./action";
-import { PAGE_SIZE } from "@/app/[locale]/(authenticated)/students/manual-register/constants";
 import Pagination from "./pagination";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { H1 } from "@/components/H";
 
 export default async function StudentRequests({
   searchParams,

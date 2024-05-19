@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { OFFSET_NUMBER } from "@/app/[locale]/(authenticated)/students/manual-register/constants";
+import { OFFSET_NUMBER } from "../register/manual/constants";
 
 export default function Pagination({
   currentPage,

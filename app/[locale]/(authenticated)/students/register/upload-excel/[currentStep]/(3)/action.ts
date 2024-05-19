@@ -1,14 +1,7 @@
 "use server";
 
 import { getAccessToken } from "@/lib";
-
-export default async function dummyEndpoint(delay: number): Promise<boolean> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, delay);
-  });
-}
+import { MappingError } from "./ShowErrorsButton";
 
 export async function commitSession() {
   const accessToken = await getAccessToken();
@@ -32,28 +25,45 @@ export async function commitSession() {
 
   return {
     success: true,
-    data: await response.json(),
   };
 }
 
-export async function precommitRegistrationSession() {
+type PrecommitSessionState = {
+  success: true;
+  errors?: undefined;
+} | (
+    {
+      success: false;
+      reason: "failed";
+      errors: MappingError[];
+    } | {
+      success: false;
+      reason: "conflict";
+      errors?: undefined;
+    }
+  );
+
+export async function precommitRegistrationSession(): Promise<PrecommitSessionState> {
   const accessToken = await getAccessToken();
   const response = await fetch(
     `${process.env.STUDENT_REGISTRATION_API}/precommit`,
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
     }
   );
 
+  if (response.status === 409) {
+    return { reason: "conflict", success: false };
+  }
+
   if (response.status !== 200) {
     const error = await response.json();
     console.error(error);
-    return { success: false, errors: error.errors };
+    return { reason: "failed", success: false, errors: [] };
   }
 
-  return { success: true, data: await response.json() };
+  return { success: true };
 }

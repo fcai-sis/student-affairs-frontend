@@ -1,45 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import ProfileHolder from "./ui/icons/ProfileHolder";
-import { getI18n } from "@/locales/server";
 
-const Navbar = async () => {
-  const t = await getI18n();
-
+export default function Navbar() {
   return (
-    <nav className='flex items-center fixed gap-2 py-2 top-0 w-[900px] h-min '>
-      <Image src='/Logo.png' alt='logo' width={80} height={80} />
-
-      <div className='flex flex-grow gap-2'>
-        <Link
-          className='transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min'
-          href={"/"}
-        >
-          {t("home")}
-        </Link>
-        <Link
-          className='transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min'
-          href={"/students/view"}
-        >
-          {t("students")}
-        </Link>
-        <Link
-          className='transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min'
-          href={"/announcements"}
-        >
-          {t("announcements")}
-        </Link>
-        <Link
-          className='transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min
-'
-          href={"/students/requests"}
-        >
-          {t("services")}
-        </Link>
+    <nav className="flex p-4 bg-transparent justify-between items-center fixed top-0 w-full">
+      <div className="flex items-center gap-8">
+        <Image src="/fcai.png" alt="FCAI Logo" height={50} width={55} />
+        <div className="flex gap-4">
+          <Link href="/">Home</Link>
+          <Link href="/">Home</Link>
+          <Link href="/">Home</Link>
+        </div>
       </div>
-      <ProfileHolder />
+      <div>
+        <Link href="/">profile</Link>
+      </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

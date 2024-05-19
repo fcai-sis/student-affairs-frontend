@@ -3,16 +3,15 @@ import { revalidatePath } from "next/cache";
 import { StudentSchema } from "../lib/types";
 import { updateStudentApi } from "./api";
 
-export async function updateStudent(_: any, formData: FormData) {
+export async function updateStudent(id: string, _: any, formData: FormData) {
   console.log("WE ARE IN ACTION");
-
   const birthDateValue = formData.get("birthDate") as string;
   // split the birth date value into year, month, and day
   const [birthYear, birthMonth, birthDay] = birthDateValue.split("-");
 
   const rawFormData = {
     fullName: formData.get("fullName") as string,
-    studentId: formData.get("studentId") as string,
+    studentId: id,
     groupCode: (formData.get("groupCode") as string) === "1",
     gender: formData.get("gender") as string,
     religion: formData.get("religion") as string,
@@ -31,9 +30,7 @@ export async function updateStudent(_: any, formData: FormData) {
   };
   console.log("RAW FORM DATA: ", rawFormData);
 
-  const studentId = formData.get("_id") as string;
-
-  if (studentId === null) {
+  if (rawFormData.studentId === null) {
     return {
       error: "Student ID is required",
     };
@@ -51,9 +48,9 @@ export async function updateStudent(_: any, formData: FormData) {
       error: errorMessage,
     };
   }
-  console.log("STUDENT ID: ", studentId);
+  console.log("STUDENT ID: ", rawFormData.studentId);
 
-  const response = await updateStudentApi(studentId, parsedStudent);
+  const response = await updateStudentApi(rawFormData.studentId, parsedStudent);
   revalidatePath("/students/read-students");
   return response;
 }

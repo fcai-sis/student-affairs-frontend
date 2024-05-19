@@ -71,7 +71,7 @@ export default async function Page({
               <td className='py-2 px-4 border-r'>{student.nationality}</td>
               <td className='py-2 px-4'>{student.address}</td>
               <td className='py-2 px-4 flex items-center justify-center space-x-2'>
-                <Link href={`/students/edit-student/${student._id}`}>
+                <Link href={`/students/edit-student/${student.studentId}`}>
                   <EditBtn />
                 </Link>
                 <DeleteStudentForm id={student._id} />

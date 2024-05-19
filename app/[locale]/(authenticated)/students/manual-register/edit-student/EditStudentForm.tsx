@@ -2,13 +2,18 @@
 import { useFormState } from "react-dom";
 import { CancelButton } from "./cancel-button";
 import { UpdateButton } from "./update-button";
-import { updateStudent } from "./action";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
-export default function EditStudentForm({ student }: { student: any }) {
-  const [state, formAction] = useFormState(updateStudent, null);
+export default function EditStudentForm({
+  student,
+  updateStudentAction,
+}: {
+  student: any;
+  updateStudentAction: any;
+}) {
+  const [state, formAction] = useFormState(updateStudentAction, null);
   console.log("student", student);
   useEffect(() => {
     if (state) {
@@ -54,6 +59,7 @@ export default function EditStudentForm({ student }: { student: any }) {
             name='studentId'
             className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
             defaultValue={student.studentId}
+            disabled
           />
         </div>
 
@@ -267,7 +273,7 @@ export default function EditStudentForm({ student }: { student: any }) {
             defaultValue={student.address}
           />
         </div>
-        <input type='hidden' value={student._id} name='_id' />
+
         <UpdateButton />
         <CancelButton />
       </form>

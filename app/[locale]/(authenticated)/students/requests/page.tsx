@@ -1,14 +1,21 @@
 import { H1 } from "@/components/H";
 import ServiceRequestCard from "@/components/ServiceRequestCard";
 import { readServiceRequests } from "./action";
-import { PAGE_SIZE } from "@/app/[locale]/students/constants";
+import { PAGE_SIZE } from "@/app/[locale]/(authenticated)/students/manual-register/constants";
 import Pagination from "./pagination";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default async function StudentRequests({
   searchParams,
 }: {
   searchParams: { page: string };
 }) {
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect("/login");
+  }
   let page = parseInt(searchParams.page, 10);
   if (!page || page < 1) page = 1;
   const requests = await readServiceRequests(page);

@@ -1,13 +1,18 @@
 "use server";
 
-import { PAGE_SIZE } from "@/app/[locale]/students/constants";
+import { PAGE_SIZE } from "@/app/[locale]/(authenticated)/students/manual-register/constants";
+import { getAccessToken } from "@/lib";
 
 export async function readServiceRequests(page: number) {
+  const accessToken = await getAccessToken();
   const response = await fetch(
-    `http://127.0.0.1:3000/service/read?page=${page}&pageSize=${PAGE_SIZE}`,
+    `http://127.0.0.1:3010/service/read?page=${page}&pageSize=${PAGE_SIZE}`,
     {
       cache: "no-store",
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
 
@@ -42,6 +47,7 @@ export async function readServiceRequests(page: number) {
 }
 
 export async function acceptServiceRequestAction(_: any, formData: FormData) {
+  const accessToken = await getAccessToken();
   const claimDate = formData.get("claimAt")?.toString() ?? "";
   const cleanedFormData = {
     id: formData.get("id"),
@@ -59,6 +65,7 @@ export async function acceptServiceRequestAction(_: any, formData: FormData) {
       body: JSON.stringify(cleanedFormData),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );
@@ -86,6 +93,7 @@ export async function acceptServiceRequestAction(_: any, formData: FormData) {
 }
 
 export async function rejectServiceRequestAction(_: any, formData: FormData) {
+  const accessToken = await getAccessToken();
   const cleanedFormData = {
     id: formData.get("id"),
     message: formData.get("message"),
@@ -101,6 +109,7 @@ export async function rejectServiceRequestAction(_: any, formData: FormData) {
       body: JSON.stringify(cleanedFormData),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     }
   );

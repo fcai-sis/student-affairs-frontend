@@ -1,9 +1,14 @@
+import { getAccessToken } from "@/lib";
 import { TODO } from "../TODO";
 
 export default async function fetchStudentData(id: string) {
+  const accessToken = await getAccessToken();
   const response = await fetch(`http://127.0.0.1:3001/students/find/${id}`, {
     cache: "no-store",
     method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   const data = await response.json();
@@ -12,6 +17,7 @@ export default async function fetchStudentData(id: string) {
 }
 
 export async function updateStudentApi(id: FormDataEntryValue, student: TODO) {
+  const accessToken = await getAccessToken();
   console.log("UPDATING STUDENT DATA", student);
 
   const response = await fetch(`http://127.0.0.1:3001/students/update/${id}`, {
@@ -22,6 +28,7 @@ export async function updateStudentApi(id: FormDataEntryValue, student: TODO) {
     }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 

@@ -1,6 +1,8 @@
 "use server";
+import { getAccessToken } from "@/lib";
 import { PAGE_SIZE } from "../constants";
 export async function readStudents(page: number) {
+  const accessToken = await getAccessToken();
   const searchParams = new URLSearchParams({
     page: `${page}`,
     pageSize: `${PAGE_SIZE}`,
@@ -11,6 +13,9 @@ export async function readStudents(page: number) {
     {
       cache: "no-store",
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
 

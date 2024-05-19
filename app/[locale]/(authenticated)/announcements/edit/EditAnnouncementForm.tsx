@@ -1,9 +1,23 @@
 "use client";
 import { useFormState } from "react-dom";
 import updateAnnouncementAction from "./action";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 export default function editAnnouncementForm({ data }: { data: any }) {
   const [state, formAction] = useFormState(updateAnnouncementAction, null);
+
+  useEffect(() => {
+    if (state) {
+      if (state.error) {
+        toast.error(state.error);
+      } else {
+        toast.success(`Announcement updated successfully`);
+        redirect("/announcements/read");
+      }
+    }
+  }, [state]);
 
   return (
     <form

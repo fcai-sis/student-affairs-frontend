@@ -1,12 +1,16 @@
 "use server";
+
+import { getAccessToken } from "@/lib";
+
 export async function fetchAnnouncements() {
-  const response = await fetch(
-    `http://127.0.0.1:3003?page=1&pageSize=10`,
-    {
-      cache: "no-store",
-      method: "GET",
-    }
-  );
+  const accessToken = await getAccessToken();
+  const response = await fetch(`http://127.0.0.1:3003?page=1&pageSize=10`, {
+    cache: "no-store",
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   const announcementsData = await response.json();
 

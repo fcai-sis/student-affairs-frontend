@@ -4,9 +4,21 @@ import { useFormState } from "react-dom";
 import toast from "react-hot-toast";
 import createAnnouncementAction from "./action";
 import AnnouncementCard from "@/components/AnnouncementCard";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 export default function CreateAnnouncementForm() {
   const [state, formAction] = useFormState(createAnnouncementAction, null);
+  useEffect(() => {
+    if (state) {
+      if (state.error) {
+        toast.error(state.error);
+      } else {
+        toast.success(`Announcement created successfully`);
+        redirect("/announcements/read");
+      }
+    }
+  }, [state]);
 
   return (
     <div className='flex flex-col gap-4'>

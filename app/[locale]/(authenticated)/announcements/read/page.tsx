@@ -1,8 +1,15 @@
 import Button from "@/components/Button";
 import Announcements from "./Announcements";
 import { fetchAnnouncements } from "./action";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect("/login");
+  }
   const announcements = await fetchAnnouncements();
 
   if (!announcements) {

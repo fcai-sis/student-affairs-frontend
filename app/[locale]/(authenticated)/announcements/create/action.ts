@@ -1,8 +1,15 @@
 "use server";
+
+import { getAccessToken } from "@/lib";
+import { revalidatePath } from "next/cache";
+
 export default async function createAnnouncementAction(
   _: any,
   formData: FormData
 ) {
+  const accessToken = await getAccessToken();
+  console.log("ACCESS TOKEN:", accessToken);
+
   const rawFormData = Object.fromEntries(formData.entries());
 
   console.log("RAW FORM DATA: ", rawFormData);
@@ -22,6 +29,7 @@ export default async function createAnnouncementAction(
     }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 
@@ -31,6 +39,7 @@ export default async function createAnnouncementAction(
   if (response.status !== 201) {
     return { error: data.error };
   }
+  revalidatePath("/announcements/read");
   return {
     success: true,
     data: data,

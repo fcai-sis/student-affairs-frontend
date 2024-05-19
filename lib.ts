@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { Session, getServerSession } from "next-auth";
 import { twMerge } from "tailwind-merge";
 import jwt from "jsonwebtoken";
+import { redirect } from "next/navigation";
 
 export function cn(...args: ClassValue[]) {
   return twMerge(clsx(args));
@@ -21,4 +22,11 @@ export async function getAccessToken() {
     process.env.JWT_SECRET as string
   );
   return accessToken;
+}
+
+export async function ensureAuthenticated() {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/login");
+  }
 }

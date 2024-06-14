@@ -1,8 +1,7 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-
-import uploadFileAction from "./action";
+import uploadFileAction from "./upload-excel/[currentStep]/(1)/action";
 
 export default function StudentExcelFileUploadForm() {
   const [_, formAction] = useFormState(uploadFileAction, null);

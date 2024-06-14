@@ -20,7 +20,7 @@ export default {
   password: "Password",
   passwordHint: "•••••••",
   login: "Login",
-  studentAffairsGateway: "Student Affairs Gateway",
+  employeeGateway: "Student Affairs Gateway",
   forFCAICU:
     "Faculty of Computers and Artificial Intelligence at Cairo University",
   fileError:

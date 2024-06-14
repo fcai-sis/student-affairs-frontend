@@ -20,7 +20,7 @@ export default {
   password: "كلمة المرور",
   passwordHint: "•••••••",
   login: "تسجيل الدخول",
-  studentAffairsGateway: "بوابة شؤون الطلاب",
+  employeeGateway: "بوابة شؤون الطلاب",
   forFCAICU: "لكلية الحاسبات والذكاء الاصطناعي بجامعة القاهرة",
   fileError:
     "الملف الذي اخترته ليس ملف إكسل، من فضلك أدخل ملف إكسل صحيح (.xlsx أو .xls)",

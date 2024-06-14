@@ -30,25 +30,25 @@ export default function LoginForm() {
   };
 
   return (
-    <form className='flex flex-col gap-8 items-center' onSubmit={handleSubmit}>
-      <div className='flex flex-col gap-8'>
-        <div className='flex flex-col gap-4'>
+    <form className="flex flex-col gap-8 items-center" onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
           <H6>Employee</H6>
           <TextInputField
-            placeholder={t("studentIdHint")}
-            name='employeeUsername'
+            placeholder={t("usernameHint")}
+            name="employeeUsername"
           />
         </div>
-        <div className='flex flex-col gap-4'>
+        <div className="flex flex-col gap-4">
           <H6>{t("password")}</H6>
           <TextInputField
             obscure
             placeholder={t("passwordHint")}
-            name='password'
+            name="password"
           />
         </div>
       </div>
-      <button type='submit'>{t("login")}</button>
+      <button type="submit">{t("login")}</button>
     </form>
   );
 }

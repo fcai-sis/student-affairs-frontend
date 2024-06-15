@@ -1,5 +1,5 @@
 import { getAccessToken } from "@/lib";
-import { TODO } from "../TODO";
+import { TODO } from "../register/manual/TODO";
 
 export default async function fetchStudentData(id: string) {
   const accessToken = await getAccessToken();

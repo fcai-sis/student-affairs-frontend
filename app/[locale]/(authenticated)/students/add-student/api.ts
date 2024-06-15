@@ -1,5 +1,5 @@
 import { getAccessToken } from "@/lib";
-import { TODO } from "../TODO";
+import { TODO } from "../register/manual/TODO";
 export async function addStudent(student: TODO) {
   const accessToken = await getAccessToken();
   const response = await fetch(`http://127.0.0.1:3001/students/create`, {

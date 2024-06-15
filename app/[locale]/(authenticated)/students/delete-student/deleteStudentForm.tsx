@@ -3,7 +3,7 @@
 import toast from "react-hot-toast";
 import { DeleteBtn } from "../read-students/action-btn";
 import deleteStudent from "./delete-api";
-import { TODO } from "../TODO";
+import { TODO } from "../register/manual/TODO";
 
 export const DeleteStudentForm = ({ id }: { id: string }) => {
   const handleDeleteStudent = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,7 +24,7 @@ export const DeleteStudentForm = ({ id }: { id: string }) => {
 
   return (
     <form onSubmit={handleDeleteStudent}>
-      <input type='hidden' name='_id' value={id} />
+      <input type="hidden" name="_id" value={id} />
       <DeleteBtn />
     </form>
   );

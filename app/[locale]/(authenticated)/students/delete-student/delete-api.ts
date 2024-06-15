@@ -1,6 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { TODO } from "../TODO";
+import { TODO } from "../register/manual/TODO";
 import { getAccessToken } from "@/lib";
 
 export default async function deleteStudent(id: string) {

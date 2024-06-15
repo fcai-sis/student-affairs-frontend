@@ -2,6 +2,7 @@
 
 import { getAccessToken } from "@/lib";
 import { MappingError } from "./ShowErrorsButton";
+import { redirect } from "next/navigation";
 
 export async function commitSession() {
   const accessToken = await getAccessToken();
@@ -23,25 +24,26 @@ export async function commitSession() {
     return { success: false, errors: error.errors };
   }
 
-  return {
-    success: true,
-  };
+  return redirect("/students/read-students");
 }
 
-type PrecommitSessionState = {
-  success: true;
-  errors?: undefined;
-} | (
-    {
-      success: false;
-      reason: "failed";
-      errors: MappingError[];
-    } | {
-      success: false;
-      reason: "conflict";
+type PrecommitSessionState =
+  | {
+      success: true;
       errors?: undefined;
     }
-  );
+  | (
+      | {
+          success: false;
+          reason: "failed";
+          errors: MappingError[];
+        }
+      | {
+          success: false;
+          reason: "conflict";
+          errors?: undefined;
+        }
+    );
 
 export async function precommitRegistrationSession(): Promise<PrecommitSessionState> {
   const accessToken = await getAccessToken();
@@ -62,7 +64,7 @@ export async function precommitRegistrationSession(): Promise<PrecommitSessionSt
   if (response.status !== 200) {
     const error = await response.json();
     console.error(error);
-    return { reason: "failed", success: false, errors: [] };
+    return { reason: "failed", success: false, errors: error.errors };
   }
 
   return { success: true };

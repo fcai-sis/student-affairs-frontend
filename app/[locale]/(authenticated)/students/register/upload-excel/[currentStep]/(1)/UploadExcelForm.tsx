@@ -75,6 +75,7 @@ export default function UploadExcelForm() {
       )}
       <div className="flex gap-2">
         <Button
+          disabled={!file}
           type="submit"
           variant="primary"
           icon={<NavArrowLeftIcon className="stroke-slate-50" />}

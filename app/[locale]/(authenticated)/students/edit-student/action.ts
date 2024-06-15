@@ -1,16 +1,17 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
-import { StudentSchema } from "../lib/types";
-import { addStudent } from "./api";
-export async function createStudent(_: any, formData: FormData) {
+import { StudentSchema } from "../register/manual/lib/types";
+import { updateStudentApi } from "./api";
+
+export async function updateStudent(id: string, _: any, formData: FormData) {
+  console.log("WE ARE IN ACTION");
   const birthDateValue = formData.get("birthDate") as string;
   // split the birth date value into year, month, and day
   const [birthYear, birthMonth, birthDay] = birthDateValue.split("-");
 
   const rawFormData = {
     fullName: formData.get("fullName") as string,
-    studentId: formData.get("studentId") as string,
+    studentId: id,
     groupCode: (formData.get("groupCode") as string) === "1",
     gender: formData.get("gender") as string,
     religion: formData.get("religion") as string,
@@ -27,6 +28,13 @@ export async function createStudent(_: any, formData: FormData) {
     nationality: formData.get("nationality") as string,
     address: formData.get("address") as string,
   };
+  console.log("RAW FORM DATA: ", rawFormData);
+
+  if (rawFormData.studentId === null) {
+    return {
+      error: "Student ID is required",
+    };
+  }
 
   const parsedStudent = StudentSchema.safeParse(rawFormData);
 
@@ -40,17 +48,9 @@ export async function createStudent(_: any, formData: FormData) {
       error: errorMessage,
     };
   }
+  console.log("STUDENT ID: ", rawFormData.studentId);
 
-  console.log(parsedStudent.data);
-
-  const response = await addStudent(parsedStudent);
-
-  if (response.error) {
-    return {
-      error: response.error.message,
-    };
-  }
-
-  // revalidatePath("/students/read-students");
+  const response = await updateStudentApi(rawFormData.studentId, parsedStudent);
+  revalidatePath("/students/read-students");
   return response;
 }

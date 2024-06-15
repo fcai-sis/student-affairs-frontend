@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { OFFSET_NUMBER } from "../constants";
+import { OFFSET_NUMBER } from "../register/manual/constants";
 
 export default function Pagination({
   currentPage,
@@ -22,21 +22,21 @@ export default function Pagination({
     }
   }
   return (
-    <div className='flex justify-center mt-8'>
+    <div className="flex justify-center mt-8">
       {currentPage === 1 ? (
-        <div className='cursor-not-allowed opacity-50 px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded-lg'>
+        <div className="cursor-not-allowed opacity-50 px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded-lg">
           Previous
         </div>
       ) : (
         <Link
-          className='px-4 py-2 mr-2 bg-blue-700 hover:bg-blue-900 text-white rounded-lg transition duration-300 ease-in-out'
+          className="px-4 py-2 mr-2 bg-blue-700 hover:bg-blue-900 text-white rounded-lg transition duration-300 ease-in-out"
           href={`/students/read-students?page=${prevPage}`}
         >
           Previous
         </Link>
       )}
 
-      <div className='flex space-x-2'>
+      <div className="flex space-x-2">
         {pageNumbers.map((number, index) => (
           <Link
             key={index}
@@ -53,12 +53,12 @@ export default function Pagination({
       </div>
 
       {currentPage === totalPages ? (
-        <div className='cursor-not-allowed opacity-50 px-4 py-2 ml-2 bg-gray-300 text-gray-700 rounded-lg'>
+        <div className="cursor-not-allowed opacity-50 px-4 py-2 ml-2 bg-gray-300 text-gray-700 rounded-lg">
           Next
         </div>
       ) : (
         <Link
-          className='px-4 py-2 ml-2 bg-blue-700 hover:bg-blue-900 text-white rounded-lg transition duration-300 ease-in-out'
+          className="px-4 py-2 ml-2 bg-blue-700 hover:bg-blue-900 text-white rounded-lg transition duration-300 ease-in-out"
           href={`/students/read-students?page=${nextPage}`}
         >
           Next

@@ -1,6 +1,6 @@
 "use server";
 import { getAccessToken } from "@/lib";
-import { PAGE_SIZE } from "../constants";
+import { PAGE_SIZE } from "../register/manual/constants";
 export async function readStudents(page: number) {
   const accessToken = await getAccessToken();
   const searchParams = new URLSearchParams({

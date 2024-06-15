@@ -81,7 +81,7 @@ export default async function Page({
         </tbody>
       </table>
       <Pagination currentPage={page} totalPages={totalPages} />
-      <Link href="/students/add-student">
+      <Link href="/students/register">
         <AddBtn />
       </Link>
     </div>

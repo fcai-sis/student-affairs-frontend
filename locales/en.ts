@@ -1,47 +1,94 @@
 // locales/en.ts
 export default {
-  home: "Home",
-  students: "Students",
-  announcements: "Announcements",
-  services: "Services",
-  "Register Students": "Register Students",
-  "Manual Registration": "Manual Registration",
-  "Add a student manually": "Add a student manually",
-  "Upload Excel": "Upload Excel",
-  "Upload an excel file with student information":
-    "Upload an excel file with student information.",
-  "Please ensure that the student information is correct before uploading":
-    "Please ensure that the student information is correct before uploading",
-  welcome: "Hello {name}!",
-  search: "Search",
-  clickMe: "Click Me",
-  username: "Username",
-  usernameHint: "e.g. Ayman",
-  password: "Password",
-  passwordHint: "•••••••",
-  login: "Login",
-  employeeGateway: "Student Affairs Gateway",
-  forFCAICU:
-    "Faculty of Computers and Artificial Intelligence at Cairo University",
-  fileError:
-    "The file you chose is not an Excel file, please enter a valid Excel file (.xlsx or .xls)",
-  excelRegistration: "Register Students from Excel File",
-  uploadFile: "Upload File",
-  mapping: "Database Mapping",
-  reviewConfirm: "Review and Confirm",
-  missingFile: "You haven't uploaded a file yet",
-  continue: "Continue",
-  cancel: "Cancel",
-  confirm: "Confirm",
-  back: "Back",
-  selectColumn: "Select the column that this field represents",
-  cancelMapTitle: "Are you sure you want to go back?",
-  cancelMapDescription:
-    "Going back to the file upload step will cancel the current process and erase any changes you made to the database mapping. Are you sure?",
-  cancelMapConfirm: "Yes, I want to cancel the process and start over",
-  cancelMapCancel: "No, I want to continue the current process",
-  loadingMapping: "Validating database mapping...",
-  mapSuccess: "Data mapped successfully",
-  mapWarn:
-    "Once you press “Confirm”, all students will be registered from the Excel file, based on the mapping you selected in the previous step",
+  general: {
+    loading: "Loading...",
+    submit: "Submit",
+    ok: "OK",
+    cancel: "Cancel",
+    back: "Back",
+    error: {
+      somethingWentWrong: "Something went wrong",
+    },
+  },
+  nav: {
+    home: "Home",
+    students: "Students",
+    announcements: "Announcements",
+    serviceRequests: "Service Requests",
+    profile: "Profile",
+    signOut: "Sign Out",
+  },
+  pagination: {
+    previous: "Previous",
+    next: "Next",
+  },
+  auth: {
+    title: "Login",
+    username: "Username",
+    password: "Password",
+    login: "Login",
+    success: "Successfully signed in",
+    error: {
+      invalidCredentials: "Invalid credentials",
+    },
+  },
+  home: {
+    title: "Home",
+    welcome: "Welcome",
+    search: "Search",
+    searchPlaceholder: "Search for something",
+    announcements: "Announcements",
+    viewAllAnnouncements: "View All Announcements",
+    serviceRequests: "Service Requests",
+    viewAllServiceRequests: "View All Service Requests",
+  },
+  students: {
+    title: "Students",
+    noStudents: "No students",
+    registerStudent: "Register Student",
+  },
+  registerStudent: {
+    title: "Register Student",
+    manual: {
+      title: "Manual Student Registration",
+    },
+    upload: {
+      title: "Register Students from Excel File",
+      uploadExcelFile: "Upload File",
+      success: "File uploaded successfully",
+      mapping: {
+        title: "Map Columns",
+        instructions:
+          "Map the columns in the Excel file to the fields in the database",
+        unset: "Select a field",
+        success: {
+          updateField: "Field mapping updated successfully",
+          cancel: "Registration session cancelled successfully",
+        },
+        error: {
+          missingColumns: "Please map all columns",
+          updateFailed: "Failed to update field mapping",
+          cancelFailed: "Failed to cancel registration session",
+        },
+      },
+      commit: {
+        title: "Commit Registration Session",
+        success: "Registration session committed successfully",
+        error: {
+          commitFailed: "Failed to commit registration session",
+          row: "Failed to commit row {rowNumber}",
+        },
+      },
+    },
+  },
+  announcements: {
+    title: "Announcements",
+    noAnnouncements: "No announcements",
+    createAnnouncement: "Create Announcement",
+  },
+  serviceRequests: {
+    title: "Service Requests",
+    noServiceRequests: "No service requests",
+    createServiceRequest: "Create Service Request",
+  },
 } as const;

@@ -1,46 +1,95 @@
 // locales/ar.ts
 export default {
-  home: "الصفحة الرئيسية",
-  students: "الطلاب",
-  announcements: "الإعلانات",
-  services: "الخدمات",
-  "Register Students": "تسجيل الطلاب",
-  "Manual Registration": "تسجيل يدوي",
-  "Add a student manually": "أضف طالب يدوياً",
-  "Upload Excel": "رفع ملف التنسيق",
-  "Upload an excel file with student information":
-    "قم برفع ملف الإكسل المرسل من مكتب التنسيق.",
-  "Please ensure that the student information is correct before uploading":
-    "يرجى التأكد من صحة معلومات الطلاب قبل الرفع",
-  welcome: "مرحبا {name}!",
-  search: "بحث",
-  clickMe: "اضغط هنا",
-  username: "اسم المستخدم",
-  usernameHint: "مثلا أيمن",
-  password: "كلمة المرور",
-  passwordHint: "•••••••",
-  login: "تسجيل الدخول",
-  employeeGateway: "بوابة شؤون الطلاب",
-  forFCAICU: "لكلية الحاسبات والذكاء الاصطناعي بجامعة القاهرة",
-  fileError:
-    "الملف الذي اخترته ليس ملف إكسل، من فضلك أدخل ملف إكسل صحيح (.xlsx أو .xls)",
-  excelRegistration: "تسجيل طلاب من ملف التنسيق",
-  uploadFile: "اختر ملف",
-  mapping: "الربط بقاعدة البيانات",
-  reviewConfirm: "مراجعة وتأكيد",
-  missingFile: "لم تقم بإختيار ملف بعد",
-  continue: "متابعة",
-  cancel: "إلغاء",
-  confirm: "تأكيد",
-  back: "رجوع",
-  selectColumn: "اختر العمود الذي يمثل هذا الحقل",
-  cancelMapTitle: "متأكد أنك تريد الرجوع؟",
-  cancelMapDescription:
-    "الرجوع إلى خطوة رفع الملف سيلغي العملية الحالية ويمحي أي تعديلات قمت بها على الربطة بقاعدة البيانات. هل أنت متأكد؟",
-  cancelMapConfirm: "نعم، أريد إلغاء العملية والبدء من جديد",
-  cancelMapCancel: "لا، أريد متابعة العملية الحالية",
-  loadingMapping: "جاري مراجعة صحة الربطة بقاعدة البيانات...",
-  mapSuccess: "تم ربط البيانات بنجاح",
-  mapWarn:
-    "بمجرد الضغط على “تأكيد” سيتم تسجيل جميع الطلاب بملف الإكسل، بناء على الربطة التي حددتها في الخطوة السابقة",
+  general: {
+    loading: "جاري التحميل...",
+    submit: "إرسال",
+    ok: "موافق",
+    confirm: "تأكيد",
+    cancel: "إلغاء",
+    back: "رجوع",
+    error: {
+      somethingWentWrong: "حدث خطأ ما",
+    },
+  },
+  nav: {
+    home: "الصفحة الرئيسية",
+    students: "الطلاب",
+    announcements: "الإعلانات",
+    serviceRequests: "طلبات الخدمة",
+    profile: "الملف الشخصي",
+    signOut: "تسجيل الخروج",
+  },
+  pagination: {
+    previous: "السابق",
+    next: "التالي",
+  },
+  auth: {
+    title: "تسجيل الدخول",
+    username: "اسم المستخدم",
+    password: "كلمة المرور",
+    login: "تسجيل الدخول",
+    success: "تم تسجيل الدخول بنجاح",
+    error: {
+      invalidCredentials: "بيانات الاعتماد غير صحيحة",
+    },
+  },
+  home: {
+    title: "الصفحة الرئيسية",
+    welcome: "مرحبًا",
+    search: "بحث",
+    searchPlaceholder: "ابحث عن شيء",
+    announcements: "الإعلانات",
+    viewAllAnnouncements: "عرض جميع الإعلانات",
+    serviceRequests: "طلبات الخدمة",
+    viewAllServiceRequests: "عرض جميع طلبات الخدمة",
+  },
+  students: {
+    title: "الطلاب",
+    noStudents: "لا يوجد طلاب",
+    registerStudent: "تسجيل طالب",
+  },
+  registerStudent: {
+    title: "تسجيل طالب",
+    manual: {
+      title: "تسجيل طالب يدويًا",
+    },
+    upload: {
+      title: "تسجيل الطلاب من ملف Excel",
+      uploadExcelFile: "تحميل الملف",
+      success: "تم تحميل الملف بنجاح",
+      mapping: {
+        title: "تعيين الأعمدة",
+        instructions:
+          "قم بتعيين الأعمدة في ملف Excel إلى الحقول في قاعدة البيانات",
+        unset: "اختر الحقل",
+        success: {
+          updateField: "تم تحديث تعيين الحقل بنجاح",
+          cancel: "تم إلغاء جلسة التسجيل بنجاح",
+        },
+        error: {
+          missingFields: "الرجاء تعيين جميع الحقول",
+          updateFailed: "فشل تحديث تعيين الحقل",
+          cancelFailed: "فشل إلغاء جلسة التسجيل",
+        },
+      },
+      commit: {
+        title: "تأكيد التسجيل",
+        success: "تم تسجيل الطلاب بنجاح",
+        error: {
+          commitFailed: "فشل تأكيد التسجيل",
+          row: "فشل تأكيد الصف {rowNumber}",
+        },
+      },
+    },
+  },
+  announcements: {
+    title: "الإعلانات",
+    noAnnouncements: "لا توجد إعلانات",
+    createAnnouncement: "إنشاء إعلان",
+  },
+  serviceRequests: {
+    title: "طلبات الخدمة",
+    noServiceRequests: "لا توجد طلبات خدمة",
+    createServiceRequest: "إنشاء طلب خدمة",
+  },
 } as const;

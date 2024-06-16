@@ -10,20 +10,24 @@
   },
   "dependencies": {
     "@fcai-sis/shared-models": "latest",
+    "@hookform/resolvers": "^3.6.0",
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.0",
     "intl-locale-textinfo-polyfill": "^2.1.1",
     "jotai": "^2.6.4",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
-    "next": "^14.2.3",
+    "next": "^14.2.4",
     "next-auth": "^4.24.7",
     "next-international": "^1.2.3",
     "next-safe-action": "^6.0.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.5",
     "react-hot-toast": "^2.4.1",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.2.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

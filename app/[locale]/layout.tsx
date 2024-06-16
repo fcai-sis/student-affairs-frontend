@@ -22,13 +22,10 @@ export default function RootLayout({
 
   return (
     <html lang={locale} dir={dir}>
-      <body
-        className={`${rubik.className} h-screen flex items-center justify-center`}
-      >
+      <body className={`${rubik.className}`}>
         {children}
-        {/* a floating button to change the language */}
         <ChangeLanguageButton />
-        <Toaster position='top-right' />
+        <Toaster position="top-right" />
       </body>
     </html>
   );

@@ -1,45 +1,20 @@
-import Image from "next/image";
-import Link from "next/link";
-import ProfileHolder from "./ui/icons/ProfileHolder";
+import SignOutButton from "@/components/SignOutButton";
+import { I18nProviderClient } from "@/locales/client";
 import { getI18n } from "@/locales/server";
+import Link from "next/link";
 
-const Navbar = async () => {
+export default async function Navbar({ locale }: { locale: string }) {
   const t = await getI18n();
-
   return (
-    <nav className="flex items-center fixed gap-2 py-2 top-0 w-[900px] h-min ">
-      <Image src="/Logo.png" alt="logo" width={80} height={80} />
-
-      <div className="flex flex-grow gap-2">
-        <Link
-          className="transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min"
-          href={"/"}
-        >
-          {t("home")}
-        </Link>
-        <Link
-          className="transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min"
-          href={"/students/read-students"}
-        >
-          {t("students")}
-        </Link>
-        <Link
-          className="transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min"
-          href={"/announcements"}
-        >
-          {t("announcements")}
-        </Link>
-        <Link
-          className="transition duration-200 ease-in-out transform hover:scale-110 hover:bg-gray-200 px-4 py-2 rounded-md active:bg-gray-400 h-min
-"
-          href={"/students/requests"}
-        >
-          {t("services")}
-        </Link>
-      </div>
-      <ProfileHolder />
+    <nav>
+      <Link href="/">{t("nav.home")}</Link>
+      <Link href="/students">{t("nav.students")}</Link>
+      <Link href="/announcements">{t("nav.announcements")}</Link>
+      <Link href="/Service Requests">{t("nav.serviceRequests")} </Link>
+      <Link href="/Profile">{t("nav.profile")}</Link>
+      <I18nProviderClient locale={locale}>
+        <SignOutButton />
+      </I18nProviderClient>
     </nav>
   );
-};
-
-export default Navbar;
+}

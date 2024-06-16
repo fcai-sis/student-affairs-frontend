@@ -1,47 +1,92 @@
+"use server";
+
+import { announcementsAPI, serviceRequestsAPI } from "@/api";
 import AnnouncementCard from "@/components/AnnouncementCard";
-import Button from "@/components/Button";
-import ServiceRequestCard from "@/components/ServiceRequestCard";
-import TextInputField from "@/components/TextInputField";
-import { ensureAuthenticated } from "@/lib";
-import { readServiceRequests } from "./students/requests/action";
+import { ensureAuthenticated, getAccessToken } from "@/lib";
+import { getI18n } from "@/locales/server";
+import Link from "next/link";
 
-export default async function Page({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export default async function Page() {
   await ensureAuthenticated();
-  const requests = await readServiceRequests(1);
+  const t = await getI18n();
   return (
-    <div className='flex flex-col gap-4'>
-      <h1>Global search</h1>
-      <TextInputField placeholder='Search for anything' />
+    <div>
+      <h1>{t("home.title")}</h1>
+      <SearchBar />
+      <Announcements />
+      <ServiceRequests />
+    </div>
+  );
+}
 
-      <div>
-        <h1>Recent Service Requests</h1>
-        <Button asLink myHref='/students/requests' variant='secondary'>
-          View all
-        </Button>
-      </div>
-      <div>
-        {requests.studentServiceRequests
-          .filter((request: any) => request.status !== "rejected")
-          .slice(0, 3)
-          .map((request: any, index: number) => (
-            <ServiceRequestCard key={index} request={request} />
-          ))}
-      </div>
+async function SearchBar() {
+  const t = await getI18n();
+  return (
+    <div>
+      <input type="text" placeholder={t("home.searchPlaceholder")} />
+      <button className="btn">{t("home.search")}</button>
+    </div>
+  );
+}
 
+async function Announcements() {
+  const t = await getI18n();
+  const { data } = await announcementsAPI.get("/", {
+    params: {
+      page: 1,
+      pageSize: 3,
+    },
+  });
+  const { announcements } = data;
+  return (
+    <>
       <div>
-        <h1>Recent Announcements</h1>
-        <Button asLink myHref='/announcements' variant='secondary'>
-          View all
-        </Button>
+        <h2>{t("home.announcements")}</h2>
+        <Link href="/announcements">{t("home.viewAllAnnouncements")}</Link>
       </div>
       <div>
-        <AnnouncementCard />
-        <AnnouncementCard />
+        {announcements.map((announcement: any, i: number) => (
+          <AnnouncementCard key={i} announcement={announcement} />
+        ))}
       </div>
+    </>
+  );
+}
+
+async function ServiceRequests() {
+  const t = await getI18n();
+  const accessToken = await getAccessToken();
+  const { data } = await serviceRequestsAPI.get("/read", {
+    params: {
+      page: 1,
+      pageSize: 10,
+    },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  const { serviceRequests } = data;
+
+  return (
+    <>
+      <div>
+        <h2>{t("home.serviceRequests")}</h2>
+        <Link href="/service-requests">{t("home.viewAllServiceRequests")}</Link>
+      </div>
+      <div>
+        {serviceRequests.map((serviceRequest: any, i: number) => (
+          <ServiceRequestCard key={i} serviceRequest={serviceRequest} />
+        ))}
+      </div>
+    </>
+  );
+}
+
+async function ServiceRequestCard({ serviceRequest }: { serviceRequest: any }) {
+  return (
+    <div className="border border-black w-32 p-4">
+      <h3>{serviceRequest.title}</h3>
     </div>
   );
 }

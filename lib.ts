@@ -11,7 +11,7 @@ export function cn(...args: ClassValue[]) {
 function tokenPayload(session: Session | null) {
   return {
     role: session?.user?.name,
-    id: session?.user?.email,
+    userId: session?.user?.email,
   };
 }
 
@@ -25,11 +25,19 @@ export async function getAccessToken() {
 }
 
 export async function ensureAuthenticated() {
-  console.log("ENSURE AUTHENTICATED...");
   const session = await getServerSession();
-  if (!session) {
-    console.log("REDIRECT TO LOGIN");
-    redirect("/login");
-  }
-  console.log("AUTHENTICATED");
+  if (!session) redirect("/auth");
+  return session;
+}
+
+export async function ensureUnauthenticated() {
+  const session = await getServerSession();
+  if (session) redirect("/");
+  return session;
+}
+
+export function getCurrentPage(searchParams: { page: string }) {
+  let page = parseInt(searchParams.page, 10);
+  if (!page || page < 1) page = 1;
+  return page;
 }

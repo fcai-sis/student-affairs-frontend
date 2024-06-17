@@ -6,16 +6,7 @@ import MappingFieldSelect from "./MappingFieldSelect";
 import { I18nProviderClient } from "@/locales/client";
 import CancelSessionForm from "./CancelSessionForm";
 import CommitSessionForm from "./CommitSessionForm";
-
-type Mapping = Record<string, string>;
-type FieldNames = Record<string, { en: string; ar: string }>;
-type GetActiveRegistrationSessionResponse = {
-  registrationSession: {
-    mapping: Mapping;
-    excelColumnsHeaders: string[];
-  };
-  fieldNames: FieldNames;
-};
+import { GetActiveRegistrationSessionResponse } from "./types";
 
 export default async function Page({
   params: { locale },

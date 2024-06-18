@@ -2,7 +2,7 @@
 
 import { announcementsAPI } from "@/api";
 import { getAccessToken } from "@/lib";
-import { CreateAnnouncementFormValues } from "./page";
+import { CreateAnnouncementFormValues } from "./CreateAnnouncementForm";
 import { revalidatePath } from "next/cache";
 
 export const createAnnouncement = async (
@@ -10,15 +10,17 @@ export const createAnnouncement = async (
 ) => {
   const accessToken = await getAccessToken();
 
-  const response = await announcementsAPI.post(
-    "/",
-    { ...data },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+  const requestBody = {
+    ...data,
+    academicLevel:
+      data.academicLevel !== "all" ? parseInt(data.academicLevel) : undefined,
+  };
+
+  const response = await announcementsAPI.post("/", requestBody, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   if (response.status !== 201) {
     return {

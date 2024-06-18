@@ -1,58 +1,32 @@
-"use client";
+import { getI18n } from "@/locales/server";
+import CreateAnnouncementForm from "./CreateAnnouncementForm";
+import { I18nProviderClient } from "@/locales/client";
+import { departmentsAPI } from "@/api";
 
-import { z } from "zod";
+export default async function Page({
+  params: { locale },
+}: Readonly<{ params: { locale: string } }>) {
+  const t = await getI18n();
 
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useForm } from "react-hook-form";
-import { createAnnouncement } from "./actions";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-
-const createAnnouncementFormSchema = z.object({
-  title: z.string(),
-  content: z.string(),
-  severity: z.enum(["info", "warning", "danger"]),
-});
-
-export type CreateAnnouncementFormValues = z.infer<
-  typeof createAnnouncementFormSchema
->;
-
-export default function Page() {
-  const router = useRouter();
-  const form = useForm<CreateAnnouncementFormValues>({
-    resolver: zodResolver(createAnnouncementFormSchema),
-    defaultValues: { title: "", content: "", severity: "info" },
+  const getDepartmentsResponse = await departmentsAPI.get("/", {
+    params: {
+      page: 1,
+      pageSize: 10,
+    },
   });
 
-  const onSubmit = async (values: CreateAnnouncementFormValues) => {
-    const createAnnouncementResponse = await createAnnouncement(values);
+  if (getDepartmentsResponse.status !== 200) {
+    throw new Error("Failed to fetch departments");
+  }
 
-    if (!createAnnouncementResponse.success) {
-      return toast.error(createAnnouncementResponse.error?.message);
-    }
-
-    toast.success("Announcement created");
-    router.push("/announcements");
-  };
+  const { departments } = getDepartmentsResponse.data;
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <input {...form.register("title")} type="text" />
-      <textarea {...form.register("content")} />
-      <select {...form.register("severity")}>
-        <option value="info">Info</option>
-        <option value="warning">Warning</option>
-        <option value="danger">Danger</option>
-      </select>
-      <button
-        className="btn"
-        type="submit"
-        disabled={form.formState.isSubmitting}
-      >
-        {form.formState.isSubmitting ? "Submitting..." : "Submit"}
-      </button>
-    </form>
+    <>
+      <h1>{t("announcements.create.title")}</h1>
+      <I18nProviderClient locale={locale}>
+        <CreateAnnouncementForm departments={departments} />
+      </I18nProviderClient>
+    </>
   );
 }

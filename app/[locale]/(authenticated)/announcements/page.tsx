@@ -25,7 +25,7 @@ export default async function Page({
     <>
       <h1>{t("announcements.title")}</h1>
       <Link href="/announcements/create">
-        {t("announcements.createAnnouncement")}
+        {t("announcements.create.title")}
       </Link>
       <div>
         {announcements.map((announcement: any, i: number) => (

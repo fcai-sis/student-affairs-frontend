@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import { cancelRegistrationSession } from "./actions";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 
 export default function CancelSessionForm() {
   const router = useRouter();

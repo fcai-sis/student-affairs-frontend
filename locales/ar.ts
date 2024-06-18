@@ -103,7 +103,7 @@ export default {
   },
   serviceRequests: {
     title: "طلبات الخدمة",
-    noServiceRequests: "لا توجد طلبات خدمة",
+    empty: "لا توجد طلبات خدمة",
     createServiceRequest: "إنشاء طلب خدمة",
   },
 } as const;

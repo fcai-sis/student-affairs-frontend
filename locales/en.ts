@@ -102,7 +102,7 @@ export default {
   },
   serviceRequests: {
     title: "Service Requests",
-    noServiceRequests: "No service requests",
+    empty: "No service requests",
     createServiceRequest: "Create Service Request",
   },
 } as const;

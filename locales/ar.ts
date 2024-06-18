@@ -85,7 +85,21 @@ export default {
   announcements: {
     title: "الإعلانات",
     noAnnouncements: "لا توجد إعلانات",
-    createAnnouncement: "إنشاء إعلان",
+    create: {
+      title: "إنشاء إعلان",
+      form: {
+        title: "العنوان",
+        content: "المحتوى",
+        severity: "الخطورة",
+        info: "معلومات",
+        warning: "تحذير",
+        danger: "خطر",
+      },
+      success: "تم إنشاء الإعلان بنجاح",
+      error: {
+        createFailed: "فشل إنشاء الإعلان",
+      },
+    },
   },
   serviceRequests: {
     title: "طلبات الخدمة",

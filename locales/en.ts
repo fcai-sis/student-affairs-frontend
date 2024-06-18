@@ -84,7 +84,21 @@ export default {
   announcements: {
     title: "Announcements",
     noAnnouncements: "No announcements",
-    createAnnouncement: "Create Announcement",
+    create: {
+      title: "Create Announcement",
+      form: {
+        title: "Title",
+        content: "Content",
+        severity: "Severity",
+        info: "Info",
+        warning: "Warning",
+        danger: "Danger",
+      },
+      success: "Announcement created successfully",
+      error: {
+        createFailed: "Failed to create announcement",
+      },
+    },
   },
   serviceRequests: {
     title: "Service Requests",

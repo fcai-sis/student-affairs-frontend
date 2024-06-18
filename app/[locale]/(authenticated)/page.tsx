@@ -2,6 +2,7 @@
 
 import { announcementsAPI, serviceRequestsAPI } from "@/api";
 import AnnouncementCard from "@/components/AnnouncementCard";
+import { ServiceRequestCardMini } from "@/components/ServiceRequestCard";
 import { ensureAuthenticated, getAccessToken } from "@/lib";
 import { getI18n } from "@/locales/server";
 import Link from "next/link";
@@ -56,7 +57,7 @@ async function Announcements() {
 async function ServiceRequests() {
   const t = await getI18n();
   const accessToken = await getAccessToken();
-  const { data } = await serviceRequestsAPI.get("/read", {
+  const { data } = await serviceRequestsAPI.get("/", {
     params: {
       page: 1,
       pageSize: 10,
@@ -72,21 +73,13 @@ async function ServiceRequests() {
     <>
       <div>
         <h2>{t("home.serviceRequests")}</h2>
-        <Link href="/service-requests">{t("home.viewAllServiceRequests")}</Link>
+        <Link href="/requests">{t("home.viewAllServiceRequests")}</Link>
       </div>
       <div>
         {serviceRequests.map((serviceRequest: any, i: number) => (
-          <ServiceRequestCard key={i} serviceRequest={serviceRequest} />
+          <ServiceRequestCardMini key={i} serviceRequest={serviceRequest} />
         ))}
       </div>
     </>
-  );
-}
-
-async function ServiceRequestCard({ serviceRequest }: { serviceRequest: any }) {
-  return (
-    <div className="border border-black w-32 p-4">
-      <h3>{serviceRequest.title}</h3>
-    </div>
   );
 }

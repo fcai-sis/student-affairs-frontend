@@ -1,15 +1,17 @@
-export default function Page() {
+import { getI18n } from "@/locales/server";
+import Link from "next/link";
+
+export default async function Page() {
+  const t = await getI18n();
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-4xl font-bold text-center text-slate-900">
-        Welcome to your new app
-      </h1>
-      <p className="text-lg text-center text-slate-600 mt-4">
-        Get started by editing{' '}
-        <code className="p-1 bg-slate-100 text-slate-900 rounded-md">
-          pages/index.tsx
-        </code>
-      </p>
-    </div>
+    <>
+      <h1>{t("registerStudent.title")}</h1>
+      <Link href="/students/register/manual">
+        {t("registerStudent.manual.title")}
+      </Link>
+      <Link href="/students/register/upload">
+        {t("registerStudent.upload.title")}
+      </Link>
+    </>
   );
 }

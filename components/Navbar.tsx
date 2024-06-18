@@ -1,20 +1,20 @@
-import Image from "next/image";
+import SignOutButton from "@/components/SignOutButton";
+import { I18nProviderClient } from "@/locales/client";
+import { getI18n } from "@/locales/server";
 import Link from "next/link";
 
-export default function Navbar() {
+export default async function Navbar({ locale }: { locale: string }) {
+  const t = await getI18n();
   return (
-    <nav className="flex p-4 bg-transparent justify-between items-center fixed top-0 w-full">
-      <div className="flex items-center gap-8">
-        <Image src="/fcai.png" alt="FCAI Logo" height={50} width={55} />
-        <div className="flex gap-4">
-          <Link href="/">Home</Link>
-          <Link href="/">Home</Link>
-          <Link href="/">Home</Link>
-        </div>
-      </div>
-      <div>
-        <Link href="/">profile</Link>
-      </div>
+    <nav>
+      <Link href="/">{t("nav.home")}</Link>
+      <Link href="/students">{t("nav.students")}</Link>
+      <Link href="/announcements">{t("nav.announcements")}</Link>
+      <Link href="/requests">{t("nav.serviceRequests")} </Link>
+      <Link href="/profile">{t("nav.profile")}</Link>
+      <I18nProviderClient locale={locale}>
+        <SignOutButton />
+      </I18nProviderClient>
     </nav>
   );
 }

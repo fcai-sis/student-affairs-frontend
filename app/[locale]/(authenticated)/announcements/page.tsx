@@ -1,26 +1,42 @@
+import { announcementsAPI } from "@/api";
+import Pagination from "@/components/Pagination";
+import Link from "next/link";
 import AnnouncementCard from "@/components/AnnouncementCard";
-import { H1 } from "@/components/H";
+import { getI18n } from "@/locales/server";
+import { getCurrentPage } from "@/lib";
 
-export default async function Announcements({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
-  const name = locale === "en" ? "John" : "جون";
+export default async function Page({
+  searchParams,
+}: Readonly<{ searchParams: { page: string } }>) {
+  const t = await getI18n();
+
+  const page = getCurrentPage(searchParams);
+  const pageSize = 5;
+
+  const { data } = await announcementsAPI.get("/", {
+    params: {
+      page,
+      pageSize,
+    },
+  });
+  const { announcements, totalAnnouncements } = data;
 
   return (
     <>
-      <div className='flex flex-col min-w gap-2'>
-        <div>
-          <H1>Announcements</H1>
-        </div>
-        <div className='flex flex-col w-1/2 gap-2'>
-          <AnnouncementCard />
-          <AnnouncementCard />
-          <AnnouncementCard />
-          <AnnouncementCard />
-        </div>
+      <h1>{t("announcements.title")}</h1>
+      <Link href="/announcements/create">
+        {t("announcements.create.title")}
+      </Link>
+      <div>
+        {announcements.map((announcement: any, i: number) => (
+          <AnnouncementCard key={i} announcement={announcement} />
+        ))}
       </div>
+      <Pagination
+        route="/announcements"
+        currentPage={page}
+        totalPages={totalAnnouncements / pageSize}
+      />
     </>
   );
 }

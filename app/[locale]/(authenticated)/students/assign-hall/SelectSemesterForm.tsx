@@ -4,51 +4,48 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import { fetchSemesterEnrollments } from "./actions";
+import { fetchLatestSemesterCourseEnrollments } from "./actions";
 
-const selectSemesterEnrollmentsFormSchema = z.object({
-  semester: z.string(),
+const selectCourseEnrollmentFormSchema = z.object({
+  course: z.string(),
 });
 
-
-
-export type selectSemesterEnrollmentsValues = z.infer<
-  typeof selectSemesterEnrollmentsFormSchema
+export type selectCourseEnrollmentsValues = z.infer<
+  typeof selectCourseEnrollmentFormSchema
 >;
-export default function SelectSemesterForm() {
+export default function SelectCourseForm() {
   const router = useRouter();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<selectSemesterEnrollmentsValues>({
-    resolver: zodResolver(selectSemesterEnrollmentsFormSchema),
+  } = useForm<selectCourseEnrollmentsValues>({
+    resolver: zodResolver(selectCourseEnrollmentFormSchema),
     defaultValues: {
-      semester: "",
+      course: "",
     },
   });
 
   const t = useI18n();
 
-  const onSubmit = async (values: selectSemesterEnrollmentsValues) => {
-    const fetchSemesterEnrollmentsResponse = await fetchSemesterEnrollments(
-      values
-    );
+  const onSubmit = async (values: selectCourseEnrollmentsValues) => {
+    const fetchCourseEnrollmentsResponse =
+      await fetchLatestSemesterCourseEnrollments(values);
 
-    if (!fetchSemesterEnrollmentsResponse.success) {
-      return toast.error(fetchSemesterEnrollmentsResponse.error?.message);
+    if (!fetchCourseEnrollmentsResponse.success) {
+      return toast.error(fetchCourseEnrollmentsResponse.error?.message);
     }
 
     toast.success("Successfully fetched enrollments");
-    router.push(`/students/assign-hall/${values.semester}`);
+    router.push(`/students/assign-hall/${values.course}`);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Select a semester</label>
-      <input {...register("semester")} type='text' />
-      {errors.semester && (
-        <p className='text-red-600'>{errors.semester?.message}</p>
+      <label>Select a course</label>
+      <input {...register("course")} type='text' />
+      {errors.course && (
+        <p className='text-red-600'>{errors.course?.message}</p>
       )}
 
       <button className='btn' type='submit' disabled={isSubmitting}>

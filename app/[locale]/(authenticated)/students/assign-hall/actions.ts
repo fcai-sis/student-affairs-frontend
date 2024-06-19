@@ -2,11 +2,11 @@
 
 import { enrollmentsAPI } from "@/api";
 import { getAccessToken } from "@/lib";
-import { selectSemesterEnrollmentsValues } from "./SelectSemesterForm";
+import { selectCourseEnrollmentsValues } from "./SelectSemesterForm";
 import { revalidatePath } from "next/cache";
 
-export const fetchSemesterEnrollments = async (
-  data: selectSemesterEnrollmentsValues
+export const fetchLatestSemesterCourseEnrollments = async (
+  data: selectCourseEnrollmentsValues
 ) => {
   const accessToken = await getAccessToken();
 
@@ -27,5 +27,5 @@ export const fetchSemesterEnrollments = async (
 
   revalidatePath("/assign-hall");
 
-  return { success: true };
+  return { success: true, data: response.data.enrollments };
 };

@@ -1,11 +1,9 @@
-import Link from "next/link";
-import { z } from "zod";
-import SelectSemesterForm from "./SelectSemesterForm";
+import SelectCourseForm from "./SelectSemesterForm";
 
 export default async function Page() {
   return (
     <>
-      <SelectSemesterForm />
+      <SelectCourseForm />
     </>
   );
 }

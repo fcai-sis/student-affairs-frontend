@@ -1,4 +1,5 @@
 import { fetchLatestSemesterCourseEnrollments } from "../actions";
+import AssignHallForm from "./AssignHallForm";
 
 export default async function Page({
   params: { courseId },
@@ -8,7 +9,7 @@ export default async function Page({
   };
 }) {
   const enrollments = await fetchLatestSemesterCourseEnrollments({
-    course: courseId,
+    courseId,
   });
   if (!enrollments.success) {
     return (
@@ -19,25 +20,5 @@ export default async function Page({
     );
   }
 
-  return (
-    <>
-      <h1>Enrollments</h1>
-      <form>
-        <ul>
-          {enrollments.data.map((enrollment: any) => (
-            <li key={enrollment.id}>
-              <p>{enrollment.studentId}</p>
-            </li>
-          ))}
-        </ul>
-        <label>Select a range for the enrollments</label>
-        <input type='number' /> min
-        <input type='number' /> max
-        <label>Select a hall</label>
-        <input type='text' />
-
-        <button type='submit'>Assign Halls</button>
-      </form>
-    </>
-  );
+  return <AssignHallForm enrollments={enrollments.data} />;
 }

@@ -1,3 +1,4 @@
+"use client";
 import { useI18n } from "@/locales/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -7,7 +8,7 @@ import { z } from "zod";
 import { fetchLatestSemesterCourseEnrollments } from "./actions";
 
 const selectCourseEnrollmentFormSchema = z.object({
-  course: z.string(),
+  courseId: z.string(),
 });
 
 export type selectCourseEnrollmentsValues = z.infer<
@@ -22,11 +23,9 @@ export default function SelectCourseForm() {
   } = useForm<selectCourseEnrollmentsValues>({
     resolver: zodResolver(selectCourseEnrollmentFormSchema),
     defaultValues: {
-      course: "",
+      courseId: "",
     },
   });
-
-  const t = useI18n();
 
   const onSubmit = async (values: selectCourseEnrollmentsValues) => {
     const fetchCourseEnrollmentsResponse =
@@ -37,19 +36,19 @@ export default function SelectCourseForm() {
     }
 
     toast.success("Successfully fetched enrollments");
-    router.push(`/students/assign-hall/${values.course}`);
+    router.push(`/students/assign-hall/${values.courseId}`);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label>Select a course</label>
-      <input {...register("course")} type='text' />
-      {errors.course && (
-        <p className='text-red-600'>{errors.course?.message}</p>
+      <input {...register("courseId")} type='text' />
+      {errors.courseId && (
+        <p className='text-red-600'>{errors.courseId?.message}</p>
       )}
 
       <button className='btn' type='submit' disabled={isSubmitting}>
-        {isSubmitting ? t("general.loading") : t("general.submit")}
+        {isSubmitting ? "Submitting" : "Submit"}
       </button>
     </form>
   );

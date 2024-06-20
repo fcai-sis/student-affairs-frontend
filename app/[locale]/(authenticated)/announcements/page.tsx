@@ -11,12 +11,12 @@ export default async function Page({
   const t = await getI18n();
 
   const page = getCurrentPage(searchParams);
-  const pageSize = 5;
+  const limit = 5;
 
   const { data } = await announcementsAPI.get("/", {
     params: {
       page,
-      pageSize,
+      limit,
     },
   });
   const { announcements, totalAnnouncements } = data;
@@ -35,7 +35,7 @@ export default async function Page({
       <Pagination
         route="/announcements"
         currentPage={page}
-        totalPages={totalAnnouncements / pageSize}
+        totalPages={totalAnnouncements / limit}
       />
     </>
   );

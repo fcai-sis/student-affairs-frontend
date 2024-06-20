@@ -74,21 +74,10 @@ export async function precommitSession() {
   );
 
   if (response.status !== 200) {
-    const errorCode = response.data.code;
+    // const errorCode = response.data.code;
     return {
       success: false,
-      error: {
-        message:
-          errorCode === "unset-fields-in-mapping"
-            ? "Unset fields in mapping"
-            : errorCode === "error-saving-mapped-students"
-            ? "Error saving mapped students"
-            : "Failed to precommit registration session",
-        issues:
-          errorCode === "error-saving-mapped-students"
-            ? response.data.errors
-            : undefined,
-      },
+      error: response.data,
     };
   }
 

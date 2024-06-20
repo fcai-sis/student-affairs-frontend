@@ -37,7 +37,7 @@ export default function RejectServiceRequestForm({
       return;
     }
 
-    toast.success("Service request accepted");
+    toast.success("Service request rejected");
     setShowForm(false);
     router.refresh();
   };

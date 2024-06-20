@@ -11,13 +11,13 @@ export default async function Page({
   const t = await getI18n();
 
   const page = getCurrentPage(searchParams);
-  const pageSize = 5;
+  const limit = 5;
 
   const accessToken = await getAccessToken();
   const { data } = await serviceRequestsAPI.get("/", {
     params: {
       page,
-      pageSize,
+      limit,
       status: searchParams.status,
     },
     headers: {
@@ -61,7 +61,7 @@ export default async function Page({
         <Pagination
           route="/requests"
           currentPage={page}
-          totalPages={totalServiceRequests / pageSize}
+          totalPages={totalServiceRequests / limit}
         />
       )}
     </>

@@ -11,9 +11,10 @@ export const createAnnouncement = async (
   const accessToken = await getAccessToken();
 
   const requestBody = {
-    ...data,
-    academicLevel:
-      data.academicLevel !== "all" ? parseInt(data.academicLevel) : undefined,
+    announcement: {
+      ...data,
+      level: data.level !== "ALL" ? parseInt(data.level) : undefined,
+    },
   };
 
   const response = await announcementsAPI.post("/", requestBody, {
@@ -23,12 +24,7 @@ export const createAnnouncement = async (
   });
 
   if (response.status !== 201) {
-    return {
-      success: false,
-      error: {
-        message: response.data.error.message,
-      },
-    };
+    return response.data.errors;
   }
 
   revalidatePath("/announcements");

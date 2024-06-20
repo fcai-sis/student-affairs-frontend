@@ -11,7 +11,7 @@ export default async function Page({
   const getDepartmentsResponse = await departmentsAPI.get("/", {
     params: {
       page: 1,
-      pageSize: 10,
+      limit: 10,
     },
   });
 

@@ -3,12 +3,11 @@
 import { announcementsAPI, serviceRequestsAPI } from "@/api";
 import AnnouncementCard from "@/components/AnnouncementCard";
 import { ServiceRequestCardMini } from "@/components/ServiceRequestCard";
-import { ensureAuthenticated, getAccessToken } from "@/lib";
+import { getAccessToken } from "@/lib";
 import { getI18n } from "@/locales/server";
 import Link from "next/link";
 
 export default async function Page() {
-  await ensureAuthenticated();
   const t = await getI18n();
   return (
     <div>
@@ -35,7 +34,7 @@ async function Announcements() {
   const { data } = await announcementsAPI.get("/", {
     params: {
       page: 1,
-      pageSize: 3,
+      limit: 3,
     },
   });
   const { announcements } = data;
@@ -60,7 +59,7 @@ async function ServiceRequests() {
   const { data } = await serviceRequestsAPI.get("/", {
     params: {
       page: 1,
-      pageSize: 10,
+      limit: 10,
     },
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -68,6 +67,7 @@ async function ServiceRequests() {
   });
 
   const { serviceRequests } = data;
+  console.log(data);
 
   return (
     <>

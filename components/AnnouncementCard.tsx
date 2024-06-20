@@ -16,12 +16,12 @@ export default async function AnnouncementCard({
       <h3>{announcement.title}</h3>
       <p>{announcement.content}</p>
       <p>
-        Level: <b>{announcement.academicLevel ?? "All"}</b>
+        Level: <b>{announcement.level ?? "All"}</b>
       </p>
       Department:{" "}
       <b>
-        {announcement.department.length > 0
-          ? announcement.department.map((department: any, i: number) => (
+        {announcement.departments.length > 0
+          ? announcement.departments.map((department: any, i: number) => (
               <p key={i}>{department.name.en}</p>
             ))
           : "All"}

@@ -12,12 +12,12 @@ export default async function Page({
   const accessToken = await getAccessToken();
 
   const page = getCurrentPage(searchParams);
-  const pageSize = 5;
+  const limit = 5;
 
   const { data } = await studentsAPI.get("/read", {
     params: {
       page,
-      pageSize,
+      limit,
     },
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -38,7 +38,7 @@ export default async function Page({
       <Pagination
         route="students"
         currentPage={page}
-        totalPages={totalStudents / pageSize}
+        totalPages={totalStudents / limit}
       />
     </>
   );

@@ -1,17 +1,35 @@
-import { getI18n } from "@/locales/server";
-import Link from "next/link";
+"use client";
 
-// FIXME: Going to a next or previous page doesn't persist other search params
-export default async function Pagination({
-  route,
-  currentPage,
+import {
+  I18nProviderClient,
+  useCurrentLocale,
+  useI18n,
+} from "@/locales/client";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
+
+function _Pagination({
   totalPages,
 }: Readonly<{
-  route: string;
-  currentPage: number;
   totalPages: number;
 }>) {
-  const t = await getI18n();
+  const t = useI18n();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const currentPage = parseInt(searchParams.get("page") ?? "1");
 
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
@@ -19,14 +37,41 @@ export default async function Pagination({
   return (
     <div>
       {prevPage && (
-        <Link href={`${route}?page=${prevPage}`}>
+        <button
+          onClick={() => {
+            router.push(
+              pathname + "?" + createQueryString("page", prevPage.toString())
+            );
+          }}
+        >
           {t("pagination.previous")}
-        </Link>
+        </button>
       )}
       <span>{currentPage}</span>
       {nextPage && (
-        <Link href={`${route}?page=${nextPage}`}>{t("pagination.next")}</Link>
+        <button
+          onClick={() => {
+            router.push(
+              pathname + "?" + createQueryString("page", nextPage.toString())
+            );
+          }}
+        >
+          {t("pagination.next")}
+        </button>
       )}
     </div>
+  );
+}
+
+export default function Pagination({
+  totalPages,
+}: Readonly<{
+  totalPages: number;
+}>) {
+  const locale = useCurrentLocale();
+  return (
+    <I18nProviderClient locale={locale}>
+      <_Pagination totalPages={totalPages} />
+    </I18nProviderClient>
   );
 }

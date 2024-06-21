@@ -20,5 +20,5 @@ export default async function Page({
     );
   }
 
-  return <AssignHallForm enrollments={enrollments.data} />;
+  return <AssignHallForm enrollments={enrollments.data} course={courseId} />;
 }

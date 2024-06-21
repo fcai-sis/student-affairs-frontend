@@ -4,7 +4,7 @@ import { enrollmentsAPI } from "@/api";
 import { getAccessToken } from "@/lib";
 import { selectCourseEnrollmentsValues } from "./SelectCourseForm";
 import { revalidatePath } from "next/cache";
-import { updateHallAPIValues } from "./[courseId]/AssignHallForm";
+import { assignHallValues } from "./[courseId]/AssignHallForm";
 
 export const fetchLatestSemesterCourseEnrollments = async (
   data: selectCourseEnrollmentsValues
@@ -31,10 +31,12 @@ export const fetchLatestSemesterCourseEnrollments = async (
   return { success: true, data: response.data.enrollments };
 };
 
-export const assignHallAction = async (data: updateHallAPIValues) => {
+export const assignHallAction = async (data: assignHallValues) => {
   const accessToken = await getAccessToken();
   const requestBody = {
     ...data,
+    minValue: parseInt(data.minValue),
+    maxValue: parseInt(data.maxValue),
   };
 
   const response = await enrollmentsAPI.patch(`/assign-hall`, requestBody, {

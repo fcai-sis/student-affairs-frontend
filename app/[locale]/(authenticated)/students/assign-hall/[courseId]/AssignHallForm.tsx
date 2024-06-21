@@ -7,21 +7,15 @@ import { z } from "zod";
 import { assignHallAction } from "../actions";
 
 const assignHallFormSchema = z.object({
-  minValue: z.number(),
-  maxValue: z.number(),
+  minValue: z.string(),
+  maxValue: z.string(),
   hall: z.string(),
+  course: z.string(),
 });
-
-const updateHallAPIFormSchema = z.object({
-  enrollments: z.array(z.string()),
-  hall: z.string(),
-});
-
-export type updateHallAPIValues = z.infer<typeof updateHallAPIFormSchema>;
 
 export type assignHallValues = z.infer<typeof assignHallFormSchema>;
 
-export default function AssignHallForm({ enrollments }: any) {
+export default function AssignHallForm({ enrollments, course }: any) {
   const router = useRouter();
   const {
     handleSubmit,
@@ -30,28 +24,15 @@ export default function AssignHallForm({ enrollments }: any) {
   } = useForm<assignHallValues>({
     resolver: zodResolver(assignHallFormSchema),
     defaultValues: {
-      minValue: 0,
-      maxValue: 0,
+      minValue: "",
+      maxValue: "",
       hall: "",
+      course: course,
     },
   });
 
   const onSubmit = async (values: assignHallValues) => {
-    const selectedEnrollments = enrollments.filter((enrollment: any) => {
-      return (
-        enrollment.studentId >= values.minValue &&
-        enrollment.studentId <= values.maxValue
-      );
-    });
-
-    const selectedEnrollmentIds = selectedEnrollments.map(
-      (enrollment: any) => enrollment._id
-    );
-
-    const assignHallResponse = await assignHallAction({
-      enrollments: selectedEnrollmentIds,
-      hall: values.hall,
-    });
+    const assignHallResponse = await assignHallAction(values);
 
     if (!assignHallResponse.success) {
       return toast.error(assignHallResponse.error?.message);
@@ -66,17 +47,20 @@ export default function AssignHallForm({ enrollments }: any) {
       <h1>Enrollments</h1>
       {enrollments.map((enrollment: any) => (
         <div key={enrollment.id}>
-          <p>{JSON.stringify(enrollment.studentId)}</p>
+          <p>{JSON.stringify(enrollment.student.fullName)}</p>
+          <p>{JSON.stringify(enrollment.student.studentId)}</p>
+          <p>{JSON.stringify(enrollment.exam.hall)}</p>
+          <p>{JSON.stringify(enrollment.exam.seatNumber)}</p>
         </div>
       ))}
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor='min-value'>Min Value </label>
-        <input id='min-value' type='number' {...register("minValue")} />
+        <input id='min-value' type='text' {...register("minValue")} />
         {errors.minValue && (
           <p className='text-red-600'>{errors.minValue?.message}</p>
         )}
         <label htmlFor='max-value'>Max Value </label>
-        <input id='max-value' type='number' {...register("maxValue")} />
+        <input id='max-value' type='text' {...register("maxValue")} />
         {errors.maxValue && (
           <p className='text-red-600'>{errors.maxValue?.message}</p>
         )}

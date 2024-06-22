@@ -14,6 +14,15 @@ const updateProfileFormSchema = z.object({
 export type updateProfileValues = z.infer<typeof updateProfileFormSchema>;
 
 export default function UpdateProfileForm({ profileData }: any) {
+  const profileFieldsLookup = profileData.data.reduce(
+    (acc: Record<string, any>, item: Record<string, any>) => {
+      const key = Object.keys(item)[0];
+      acc[key] = item[key];
+      return acc;
+    },
+    {}
+  );
+
   const router = useRouter();
   const {
     handleSubmit,
@@ -22,8 +31,8 @@ export default function UpdateProfileForm({ profileData }: any) {
   } = useForm<updateProfileValues>({
     resolver: zodResolver(updateProfileFormSchema),
     defaultValues: {
-      fullName: profileData.data.fullName,
-      email: profileData.data.email,
+      fullName: profileFieldsLookup["fullName"],
+      email: profileFieldsLookup["email"],
     },
   });
 
@@ -47,7 +56,7 @@ export default function UpdateProfileForm({ profileData }: any) {
         <input
           {...register("fullName")}
           type='text'
-          defaultValue={profileData.data.fullName}
+          defaultValue={profileFieldsLookup["fullName"]}
         />
         {errors.fullName && (
           <p className='text-red-600'>{errors.fullName?.message}</p>
@@ -57,7 +66,7 @@ export default function UpdateProfileForm({ profileData }: any) {
         <input
           {...register("email")}
           type='email'
-          defaultValue={profileData.data.email}
+          defaultValue={profileFieldsLookup["email"]}
         />
         {errors.email && (
           <p className='text-red-600'>{errors.email?.message}</p>

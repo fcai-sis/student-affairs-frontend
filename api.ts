@@ -38,3 +38,8 @@ export const profileAPI = axios.create({
   baseURL: process.env.PROFILE_API_URL,
   validateStatus: (status) => status < 500,
 });
+
+export const graduationAPI = axios.create({
+  baseURL: process.env.GRADUATION_API_URL,
+  validateStatus: (status) => status < 500,
+});

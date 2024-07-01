@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fcai-sis/shared-middlewares": "^6.0.0",
+    "@fcai-sis/shared-middlewares": "latest",
     "@fcai-sis/shared-models": "latest",
     "@hookform/resolvers": "^3.6.0",
     "axios": "^1.7.2",

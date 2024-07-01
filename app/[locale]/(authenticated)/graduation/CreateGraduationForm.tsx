@@ -5,20 +5,38 @@ import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { createGraduationTeamAction } from "./actions";
+import { useState } from "react";
 
 const createGraduationFormSchema = z.object({
-  enrollments: z.array(z.object({ enrollment: z.string() })),
-  instructorTeachings: z.array(z.object({ instructorTeaching: z.string() })),
-  assistantTeachings: z.array(z.object({ assistantTeaching: z.string() })),
-  semester: z.string(),
+  enrollments: z.array(z.object({ enrollment: z.string() })).nonempty(),
+  instructorTeachings: z
+    .array(z.object({ instructorTeaching: z.string() }))
+    .nonempty(),
+  assistantTeachings: z
+    .array(z.object({ assistantTeaching: z.string() }))
+    .nonempty(),
 });
 
 export type CreateGraduationFormValues = z.infer<
   typeof createGraduationFormSchema
 >;
 
-export default function CreateGraduationForm() {
+export default function CreateGraduationForm({
+  enrollments,
+  instructorTeachings,
+  assistantTeachings,
+}: {
+  enrollments: any[];
+  instructorTeachings: any[];
+  assistantTeachings: any[];
+}) {
   const router = useRouter();
+  const [selectedEnrollments, setSelectedEnrollments] = useState<string[]>([]);
+  const [selectedInstructorTeachings, setSelectedInstructorTeachings] =
+    useState<string[]>([]);
+  const [selectedAssistantTeachings, setSelectedAssistantTeachings] = useState<
+    string[]
+  >([]);
   const {
     handleSubmit,
     register,
@@ -30,7 +48,6 @@ export default function CreateGraduationForm() {
       enrollments: [{ enrollment: "" }],
       instructorTeachings: [{ instructorTeaching: "" }],
       assistantTeachings: [{ assistantTeaching: "" }],
-      semester: "",
     },
   });
 
@@ -61,6 +78,24 @@ export default function CreateGraduationForm() {
     name: "assistantTeachings",
   });
 
+  const handleEnrollmentChange = (index: number, value: string) => {
+    const newSelectedEnrollments = [...selectedEnrollments];
+    newSelectedEnrollments[index] = value;
+    setSelectedEnrollments(newSelectedEnrollments);
+  };
+
+  const handleInstructorTeachingChange = (index: number, value: string) => {
+    const newSelectedInstructorTeachings = [...selectedInstructorTeachings];
+    newSelectedInstructorTeachings[index] = value;
+    setSelectedInstructorTeachings(newSelectedInstructorTeachings);
+  };
+
+  const handleAssistantTeachingChange = (index: number, value: string) => {
+    const newSelectedAssistantTeachings = [...selectedAssistantTeachings];
+    newSelectedAssistantTeachings[index] = value;
+    setSelectedAssistantTeachings(newSelectedAssistantTeachings);
+  };
+
   const onSubmit = async (values: CreateGraduationFormValues) => {
     const createGraduationTeamResponse = await createGraduationTeamAction(
       values
@@ -71,7 +106,7 @@ export default function CreateGraduationForm() {
     }
 
     toast.success("Graduation team created successfully");
-    router.push(`/profile`);
+    router.push(`/graduation`);
   };
 
   return (
@@ -82,20 +117,45 @@ export default function CreateGraduationForm() {
         <label>Enrollments</label>
         {enrollmentFields.map((field, index) => (
           <div key={field.id}>
-            <input
-              {...register(`enrollments.${index}.enrollment`)}
-              type='text'
-            />
-            <button type='button' onClick={() => removeEnrollment(index)}>
+            <select
+              {...register(`enrollments.${index}.enrollment` as const)}
+              defaultValue={field.enrollment}
+              onChange={(e) => {
+                handleEnrollmentChange(index, e.target.value);
+              }}
+            >
+              <option value='' disabled>
+                Select an enrollment
+              </option>
+              {enrollments
+                .filter(
+                  (enrollment) =>
+                    !selectedEnrollments.includes(enrollment._id) ||
+                    enrollment._id === selectedEnrollments[index]
+                )
+                .map((enrollment) => (
+                  <option key={enrollment._id} value={enrollment._id}>
+                    {enrollment.student.studentId}
+                  </option>
+                ))}
+            </select>
+            {errors.enrollments && errors.enrollments[index] && (
+              <span>{errors.enrollments[index]?.message}</span>
+            )}
+            <button
+              type='button'
+              onClick={() => {
+                removeEnrollment(index);
+                const newSelectedEnrollments = [...selectedEnrollments];
+                newSelectedEnrollments.splice(index, 1);
+                setSelectedEnrollments(newSelectedEnrollments);
+              }}
+            >
               Remove
             </button>
-            {errors.enrollments && errors.enrollments[index] && (
-              <p className='text-red-600'>
-                {errors.enrollments[index]?.message}
-              </p>
-            )}
           </div>
         ))}
+
         <button
           type='button'
           onClick={() => appendEnrollment({ enrollment: "" })}
@@ -106,57 +166,119 @@ export default function CreateGraduationForm() {
         <label>Instructor Teachings</label>
         {instructorFields.map((field, index) => (
           <div key={field.id}>
-            <input
-              {...register(`instructorTeachings.${index}.instructorTeaching`)}
-              type='text'
-            />
-            <button type='button' onClick={() => removeInstructor(index)}>
-              Remove
-            </button>
+            <select
+              {...register(
+                `instructorTeachings.${index}.instructorTeaching` as const
+              )}
+              defaultValue={field.instructorTeaching}
+              onChange={(e) => {
+                handleInstructorTeachingChange(index, e.target.value);
+              }}
+            >
+              <option value='' disabled>
+                Select an instructor teaching
+              </option>
+              {instructorTeachings
+                .filter(
+                  (instructorTeaching) =>
+                    !selectedInstructorTeachings.includes(
+                      instructorTeaching._id
+                    ) ||
+                    instructorTeaching._id ===
+                      selectedInstructorTeachings[index]
+                )
+                .map((instructorTeaching) => (
+                  <option
+                    key={instructorTeaching._id}
+                    value={instructorTeaching._id}
+                  >
+                    {instructorTeaching.instructor.fullName}
+                  </option>
+                ))}
+            </select>
             {errors.instructorTeachings &&
               errors.instructorTeachings[index] && (
-                <p className='text-red-600'>
-                  {errors.instructorTeachings[index]?.message}
-                </p>
+                <span>{errors.instructorTeachings[index]?.message}</span>
               )}
+            <button
+              type='button'
+              onClick={() => {
+                removeInstructor(index);
+                const newSelectedInstructorTeachings = [
+                  ...selectedInstructorTeachings,
+                ];
+                newSelectedInstructorTeachings.splice(index, 1);
+                setSelectedInstructorTeachings(newSelectedInstructorTeachings);
+              }}
+            >
+              Remove
+            </button>
           </div>
         ))}
+
         <button
           type='button'
           onClick={() => appendInstructor({ instructorTeaching: "" })}
         >
-          Add Instructor
+          Add Instructor Teaching
         </button>
 
         <label>Assistant Teachings</label>
         {assistantFields.map((field, index) => (
           <div key={field.id}>
-            <input
-              {...register(`assistantTeachings.${index}.assistantTeaching`)}
-              type='text'
-            />
-            <button type='button' onClick={() => removeAssistant(index)}>
+            <select
+              {...register(
+                `assistantTeachings.${index}.assistantTeaching` as const
+              )}
+              defaultValue={field.assistantTeaching}
+              onChange={(e) => {
+                handleAssistantTeachingChange(index, e.target.value);
+              }}
+            >
+              <option value='' disabled>
+                Select an assistant teaching
+              </option>
+              {assistantTeachings
+                .filter(
+                  (assistantTeaching) =>
+                    !selectedAssistantTeachings.includes(
+                      assistantTeaching._id
+                    ) ||
+                    assistantTeaching._id === selectedAssistantTeachings[index]
+                )
+                .map((assistantTeaching) => (
+                  <option
+                    key={assistantTeaching._id}
+                    value={assistantTeaching._id}
+                  >
+                    {assistantTeaching.ta.fullName}
+                  </option>
+                ))}
+            </select>
+            {errors.assistantTeachings && errors.assistantTeachings[index] && (
+              <span>{errors.assistantTeachings[index]?.message}</span>
+            )}
+            <button
+              type='button'
+              onClick={() => {
+                removeAssistant(index);
+                const newSelectedAssistantTeachings = [
+                  ...selectedAssistantTeachings,
+                ];
+                newSelectedAssistantTeachings.splice(index, 1);
+                setSelectedAssistantTeachings(newSelectedAssistantTeachings);
+              }}
+            >
               Remove
             </button>
-            {errors.assistantTeachings && errors.assistantTeachings[index] && (
-              <p className='text-red-600'>
-                {errors.assistantTeachings[index]?.message}
-              </p>
-            )}
           </div>
         ))}
         <button
           type='button'
           onClick={() => appendAssistant({ assistantTeaching: "" })}
         >
-          Add Assistant
+          Add Assistant Teaching
         </button>
-
-        <label>Semester</label>
-        <input {...register("semester")} type='text' />
-        {errors.semester && (
-          <p className='text-red-600'>{errors.semester?.message}</p>
-        )}
 
         <button className='btn' type='submit' disabled={isSubmitting}>
           {isSubmitting ? "Submitting" : "Submit"}

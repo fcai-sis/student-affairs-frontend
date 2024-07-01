@@ -10,6 +10,24 @@ export const createGraduationTeamAction = async (
 ) => {
   const accessToken = await getAccessToken();
 
+  // if data contains any empty strings, return an error
+  if (
+    data.enrollments.some(
+      (enrollment) => enrollment.enrollment.trim() === ""
+    ) ||
+    data.instructorTeachings.some(
+      (instructorTeaching) =>
+        instructorTeaching.instructorTeaching.trim() === ""
+    ) ||
+    data.assistantTeachings.some(
+      (assistantTeaching) => assistantTeaching.assistantTeaching.trim() === ""
+    )
+  ) {
+    return {
+      success: false,
+      error: { message: "Please fill in all fields" },
+    };
+  }
   const requestBody = {
     enrollments: data.enrollments.map(
       (enrollment: any) => enrollment.enrollment
@@ -20,15 +38,16 @@ export const createGraduationTeamAction = async (
     assistantTeachings: data.assistantTeachings.map(
       (assistantTeaching: any) => assistantTeaching.assistantTeaching
     ),
-    semester: data.semester,
   };
-  //   console.log(requestBody);
+
+  console.log(requestBody);
 
   const response = await graduationAPI.post(`/create`, requestBody, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
+  console.log(response.data);
 
   if (response.status !== 201) {
     return {

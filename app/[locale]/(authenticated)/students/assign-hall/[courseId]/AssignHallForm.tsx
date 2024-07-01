@@ -49,8 +49,8 @@ export default function AssignHallForm({ enrollments, course }: any) {
         <div key={enrollment.id}>
           <p>{JSON.stringify(enrollment.student.fullName)}</p>
           <p>{JSON.stringify(enrollment.student.studentId)}</p>
-          <p>{JSON.stringify(enrollment.exam.hall)}</p>
-          <p>{JSON.stringify(enrollment.exam.seatNumber)}</p>
+          <p>{JSON.stringify(enrollment.examHall)}</p>
+          <p>{JSON.stringify(enrollment.examSeatNumber)}</p>
         </div>
       ))}
       <form onSubmit={handleSubmit(onSubmit)}>

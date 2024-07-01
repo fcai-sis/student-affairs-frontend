@@ -42,20 +42,20 @@ export default async function Page({
 
   const { students, totalStudents } = data;
 
-  const { data: departmentsData } = await departmentsAPI.get("/");
+  // const { data: departmentsData } = await departmentsAPI.get("/");
 
-  const departments: SelectOption[] = departmentsData.departments.map(
-    (department: any) => ({ label: department.name.en, value: department.code })
-  );
+  // const departments: SelectOption[] = departmentsData.departments.map(
+  //   (department: any) => ({ label: department.name.en, value: department.code })
+  // );
 
   return (
     <>
       <h1>{t("students.title")}</h1>
-      <Link href="/students/register">{t("students.registerStudent")}</Link>
+      <Link href='/students/register'>{t("students.registerStudent")}</Link>
       <div>
         <b>Filter: </b>
-        <label>Department: </label>
-        <SelectFilter name={"department"} options={departments} />
+        {/* <label>Department: </label>
+        <SelectFilter name={"department"} options={departments} /> */}
         <label>Search: </label>
         <TextFilter name={"query"} />
         <label>Gender: </label>

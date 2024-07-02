@@ -1,25 +1,16 @@
 import { getI18n } from "@/locales/server";
 import CreateAnnouncementForm from "./CreateAnnouncementForm";
 import { I18nProviderClient } from "@/locales/client";
-import { departmentsAPI } from "@/api";
+import { getDepartments } from "../page";
 
 export default async function Page({
   params: { locale },
 }: Readonly<{ params: { locale: string } }>) {
   const t = await getI18n();
 
-  const getDepartmentsResponse = await departmentsAPI.get("/", {
-    params: {
-      page: 1,
-      limit: 10,
-    },
-  });
+  const getDepartmentsResponse = await getDepartments();
 
-  if (getDepartmentsResponse.status !== 200) {
-    throw new Error("Failed to fetch departments");
-  }
-
-  const { departments } = getDepartmentsResponse.data;
+  const departments = getDepartmentsResponse.data;
 
   return (
     <>

@@ -6,6 +6,7 @@ import { getCurrentLocale, getI18n } from "@/locales/server";
 import { getAccessToken, getCurrentPage, limit, tt } from "@/lib";
 import { revalidatePath } from "next/cache";
 import { SelectFilter } from "@/components/SetQueryFilter";
+import { Plus } from "iconoir-react";
 
 export const getDepartments = async () => {
   const accessToken = await getAccessToken();
@@ -55,6 +56,15 @@ export default async function Page({
   return (
     <>
       <h1 className='text-3xl font-bold mb-4'>{t("announcements.title")}</h1>
+      <div className='flex justify-end'>
+        <Link
+          className='flex gap-2 bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 active:bg-blue-900'
+          href='/announcements/create'
+        >
+          {t("announcements.create.title")}
+          <Plus className='[&>*]:stroke-white' />
+        </Link>
+      </div>
 
       <div className='mt-4'>
         <SelectFilter name='department' options={departmentOptions} />
@@ -65,15 +75,6 @@ export default async function Page({
         </div>
       </div>
       <Pagination totalPages={total / limit} />
-
-      <div className='flex justify-end'>
-        <Link
-          className='bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 active:bg-blue-900'
-          href='/announcements/create'
-        >
-          {t("announcements.create.title")}
-        </Link>
-      </div>
     </>
   );
 }

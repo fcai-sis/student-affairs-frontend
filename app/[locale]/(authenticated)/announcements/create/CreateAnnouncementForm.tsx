@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useCurrentLocale, useI18n } from "@/locales/client";
 import { tt } from "@/lib";
-import { departmentLocalizedFields } from "@fcai-sis/shared-models";
+import { useRef } from "react";
 
 const createAnnouncementFormSchema = z.object({
   title: z.string().min(1).max(255),
@@ -59,6 +59,8 @@ export default function CreateAnnouncementForm({
 
   const t = useI18n();
 
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
   const onSubmit = async (values: CreateAnnouncementFormValues) => {
     const createAnnouncementResponse = await createAnnouncement(values);
 
@@ -70,13 +72,20 @@ export default function CreateAnnouncementForm({
     router.push("/announcements");
   };
 
+  const adjustHeight = () => {
+    if (contentRef.current) {
+      contentRef.current.style.height = "auto";
+      contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
+    }
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='p-4 bg-white border border-slate-200 rounded-lg w-full max-w-lg mx-auto my-8'
+      className='flex flex-col p-4 bg-white border border-slate-200 rounded-lg w-full max-w-2xl mx-auto my-8'
     >
-      <div className='mb-4'>
-        <label className='block mb-2 font-bold text-gray-700'>
+      <div className='flex flex-col mb-4'>
+        <label className='mb-2 font-bold text-gray-700'>
           {t("announcements.create.form.title")}
         </label>
         <input
@@ -89,21 +98,24 @@ export default function CreateAnnouncementForm({
         )}
       </div>
 
-      <div className='mb-4'>
-        <label className='block mb-2 font-bold text-gray-700'>
+      <div className='flex flex-col mb-4'>
+        <label className='mb-2 font-bold text-gray-700'>
           {t("announcements.create.form.content")}
         </label>
         <textarea
           {...register("content")}
+          ref={contentRef}
           className='w-full p-2 border border-slate-300 rounded-lg'
+          onInput={adjustHeight}
+          rows={1} // Start with one row
         />
         {errors.content && (
           <p className='text-red-600 mt-2'>{errors.content?.message}</p>
         )}
       </div>
 
-      <div className='mb-4'>
-        <label className='block mb-2 font-bold text-gray-700'>
+      <div className='flex flex-col mb-4'>
+        <label className='mb-2 font-bold text-gray-700'>
           {t("announcements.create.form.severity")}
         </label>
         <select
@@ -123,11 +135,8 @@ export default function CreateAnnouncementForm({
         )}
       </div>
 
-      <div className='mb-4'>
-        <label
-          htmlFor='academicLevel'
-          className='block mb-2 font-bold text-gray-700'
-        >
+      <div className='flex flex-col mb-4'>
+        <label className='mb-2 font-bold text-gray-700'>
           {t("announcements.create.form.levels")}
         </label>
         <select
@@ -150,11 +159,8 @@ export default function CreateAnnouncementForm({
         )}
       </div>
 
-      <div className='mb-4'>
-        <label
-          htmlFor='departments'
-          className='block mb-2 font-bold text-gray-700'
-        >
+      <div className='flex flex-col mb-4'>
+        <label className='mb-2 font-bold text-gray-700'>
           {t("announcements.create.form.departments")}
         </label>
         <select
@@ -173,7 +179,7 @@ export default function CreateAnnouncementForm({
         )}
       </div>
 
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between mt-4'>
         <button className='btn' type='submit' disabled={isSubmitting}>
           {isSubmitting ? t("general.loading") : t("general.submit")}
         </button>

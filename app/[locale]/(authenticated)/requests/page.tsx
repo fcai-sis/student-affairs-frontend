@@ -2,7 +2,7 @@ import { serviceRequestsAPI } from "@/api";
 import Pagination from "@/components/Pagination";
 import ServiceRequestCard from "@/components/ServiceRequestCard";
 import { getI18n } from "@/locales/server";
-import { getAccessToken, getCurrentPage } from "@/lib";
+import { getAccessToken, getCurrentPage, limit, tt } from "@/lib";
 import Link from "next/link";
 
 export default async function Page({
@@ -11,12 +11,11 @@ export default async function Page({
   const t = await getI18n();
 
   const page = getCurrentPage(searchParams);
-  const limit = 5;
 
   const accessToken = await getAccessToken();
   const { data } = await serviceRequestsAPI.get("/", {
     params: {
-      page,
+      skip: page,
       limit,
       status: searchParams.status,
     },
@@ -31,8 +30,8 @@ export default async function Page({
 
   return (
     <>
-      <h1>{t("serviceRequests.title")}</h1>
-      <p>
+      <h1 className='text-3xl font-bold mb-4'>{t("serviceRequests.title")}</h1>
+      <p className='flex items-center align-middle gap-2'>
         <b>Filter by status: </b>
         {statuses.map((status: string) => (
           <Link
@@ -43,14 +42,14 @@ export default async function Page({
                 : `/requests?status=${status}`
             }
             className={`${
-              searchParams.status === status ? "bg-blue-600 text-white" : ""
-            }`}
+              searchParams.status === status ? "bg-slate-500 text-white" : ""
+            } flex justify-center w-min h-min rounded-full border hover:bg-slate-300 active:bg-slate-500 mr-2`}
           >
             {status}
           </Link>
         ))}
       </p>
-      <div>
+      <div className='flex flex-col gap-4 mt-4'>
         {serviceRequests.map((serviceRequest: any, i: number) => (
           <ServiceRequestCard key={i} serviceRequest={serviceRequest} />
         ))}
@@ -58,11 +57,7 @@ export default async function Page({
       {serviceRequests.length === 0 ? (
         <p>{t("serviceRequests.empty")}</p>
       ) : (
-        <Pagination
-          route="/requests"
-          currentPage={page}
-          totalPages={totalServiceRequests / limit}
-        />
+        <Pagination totalPages={totalServiceRequests / limit} />
       )}
     </>
   );

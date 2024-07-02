@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 import { createGraduationTeamAction } from "./actions";
 import { useState } from "react";
+import { useI18n } from "@/locales/client";
 
 const createGraduationFormSchema = z.object({
   enrollments: z.array(z.object({ enrollment: z.string() })).nonempty(),
@@ -30,6 +31,7 @@ export default function CreateGraduationForm({
   instructorTeachings: any[];
   assistantTeachings: any[];
 }) {
+  const t = useI18n();
   const router = useRouter();
   const [selectedEnrollments, setSelectedEnrollments] = useState<string[]>([]);
   const [selectedInstructorTeachings, setSelectedInstructorTeachings] =
@@ -37,6 +39,10 @@ export default function CreateGraduationForm({
   const [selectedAssistantTeachings, setSelectedAssistantTeachings] = useState<
     string[]
   >([]);
+  const [enrollmentSearch, setEnrollmentSearch] = useState("");
+  const [instructorTeachingSearch, setInstructorTeachingSearch] = useState("");
+  const [assistantTeachingSearch, setAssistantTeachingSearch] = useState("");
+
   const {
     handleSubmit,
     register,
@@ -105,185 +111,244 @@ export default function CreateGraduationForm({
       return toast.error(createGraduationTeamResponse.error?.message);
     }
 
-    toast.success("Graduation team created successfully");
-    router.push(`/graduation`);
+    toast.success(t("graduation.success"));
+    router.push(`/`);
   };
 
+  // Filter options based on search query
+  const filteredEnrollments = enrollments.filter((enrollment) =>
+    enrollment.student.studentId.includes(enrollmentSearch)
+  );
+
+  const filteredInstructorTeachings = instructorTeachings.filter(
+    (instructorTeaching) =>
+      instructorTeaching.instructor.fullName
+        .toLowerCase()
+        .includes(instructorTeachingSearch.toLowerCase())
+  );
+
+  const filteredAssistantTeachings = assistantTeachings.filter(
+    (assistantTeaching) =>
+      assistantTeaching.ta.fullName
+        .toLowerCase()
+        .includes(assistantTeachingSearch.toLowerCase())
+  );
+
   return (
-    <>
-      <h1>Create Graduation Team</h1>
+    <div className='flex flex-col items-center justify-center w-full max-w-3xl mx-auto my-8 p-6 bg-white border border-slate-200 rounded-lg shadow-md'>
+      <h1 className='text-2xl font-bold mb-6'>{t("graduation.title")}</h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col space-y-4 w-full'
+      >
+        <div className='flex flex-col space-y-2'>
+          <label className='font-bold'>{t("graduation.enrollments")}</label>
+          <input
+            type='text'
+            placeholder={t("graduation.search")}
+            value={enrollmentSearch}
+            onChange={(e) => setEnrollmentSearch(e.target.value)}
+            className='w-full p-2 border border-slate-300 rounded-lg mb-2'
+          />
+          {enrollmentFields.map((field, index) => (
+            <div key={field.id} className='flex flex-col space-y-2'>
+              <select
+                {...register(`enrollments.${index}.enrollment` as const)}
+                defaultValue={field.enrollment}
+                onChange={(e) => handleEnrollmentChange(index, e.target.value)}
+                className='w-full p-2 border border-slate-300 rounded-lg'
+              >
+                <option value='' disabled>
+                  {t("graduation.selectEnrollment")}
+                </option>
+                {filteredEnrollments
+                  .filter(
+                    (enrollment) =>
+                      !selectedEnrollments.includes(enrollment._id) ||
+                      enrollment._id === selectedEnrollments[index]
+                  )
+                  .map((enrollment) => (
+                    <option key={enrollment._id} value={enrollment._id}>
+                      {enrollment.student.studentId}
+                    </option>
+                  ))}
+              </select>
+              <button
+                type='button'
+                onClick={() => {
+                  removeEnrollment(index);
+                  const newSelectedEnrollments = [...selectedEnrollments];
+                  newSelectedEnrollments.splice(index, 1);
+                  setSelectedEnrollments(newSelectedEnrollments);
+                }}
+                className='btn-danger flex justify-center'
+              >
+                {t("general.remove")}
+              </button>
+            </div>
+          ))}
+          <button
+            type='button'
+            onClick={() => appendEnrollment({ enrollment: "" })}
+            className='btn flex justify-center'
+          >
+            {t("graduation.addEnrollment")}
+          </button>
+        </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Enrollments</label>
-        {enrollmentFields.map((field, index) => (
-          <div key={field.id}>
-            <select
-              {...register(`enrollments.${index}.enrollment` as const)}
-              defaultValue={field.enrollment}
-              onChange={(e) => {
-                handleEnrollmentChange(index, e.target.value);
-              }}
-            >
-              <option value='' disabled>
-                Select an enrollment
-              </option>
-              {enrollments
-                .filter(
-                  (enrollment) =>
-                    !selectedEnrollments.includes(enrollment._id) ||
-                    enrollment._id === selectedEnrollments[index]
-                )
-                .map((enrollment) => (
-                  <option key={enrollment._id} value={enrollment._id}>
-                    {enrollment.student.studentId}
-                  </option>
-                ))}
-            </select>
-            {errors.enrollments && errors.enrollments[index] && (
-              <span>{errors.enrollments[index]?.message}</span>
-            )}
-            <button
-              type='button'
-              onClick={() => {
-                removeEnrollment(index);
-                const newSelectedEnrollments = [...selectedEnrollments];
-                newSelectedEnrollments.splice(index, 1);
-                setSelectedEnrollments(newSelectedEnrollments);
-              }}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
+        <div className='flex flex-col space-y-2'>
+          <label className='font-bold'>
+            {t("graduation.instructorTeachings")}
+          </label>
+          <input
+            type='text'
+            placeholder={t("graduation.search")}
+            value={instructorTeachingSearch}
+            onChange={(e) => setInstructorTeachingSearch(e.target.value)}
+            className='w-full p-2 border border-slate-300 rounded-lg mb-2'
+          />
+          {instructorFields.map((field, index) => (
+            <div key={field.id} className='flex flex-col space-y-2'>
+              <select
+                {...register(
+                  `instructorTeachings.${index}.instructorTeaching` as const
+                )}
+                defaultValue={field.instructorTeaching}
+                onChange={(e) =>
+                  handleInstructorTeachingChange(index, e.target.value)
+                }
+                className='w-full p-2 border border-slate-300 rounded-lg'
+              >
+                <option value='' disabled>
+                  {t("graduation.selectInstructorTeaching")}
+                </option>
+                {filteredInstructorTeachings
+                  .filter(
+                    (instructorTeaching) =>
+                      !selectedInstructorTeachings.includes(
+                        instructorTeaching._id
+                      ) ||
+                      instructorTeaching._id ===
+                        selectedInstructorTeachings[index]
+                  )
+                  .map((instructorTeaching) => (
+                    <option
+                      key={instructorTeaching._id}
+                      value={instructorTeaching._id}
+                    >
+                      {instructorTeaching.instructor.fullName}
+                    </option>
+                  ))}
+              </select>
+              <button
+                type='button'
+                onClick={() => {
+                  removeInstructor(index);
+                  const newSelectedInstructorTeachings = [
+                    ...selectedInstructorTeachings,
+                  ];
+                  newSelectedInstructorTeachings.splice(index, 1);
+                  setSelectedInstructorTeachings(
+                    newSelectedInstructorTeachings
+                  );
+                }}
+                className='btn-danger flex justify-center'
+              >
+                {t("general.remove")}
+              </button>
+            </div>
+          ))}
+          <button
+            type='button'
+            onClick={() => appendInstructor({ instructorTeaching: "" })}
+            className='btn flex justify-center'
+          >
+            {t("graduation.addInstructorTeaching")}
+          </button>
+        </div>
 
-        <button
-          type='button'
-          onClick={() => appendEnrollment({ enrollment: "" })}
-        >
-          Add Enrollment
-        </button>
+        <div className='flex flex-col space-y-2'>
+          <label className='font-bold'>
+            {t("graduation.assistantTeachings")}
+          </label>
+          <input
+            type='text'
+            placeholder={t("graduation.search")}
+            value={assistantTeachingSearch}
+            onChange={(e) => setAssistantTeachingSearch(e.target.value)}
+            className='w-full p-2 border border-slate-300 rounded-lg mb-2'
+          />
+          {assistantFields.map((field, index) => (
+            <div key={field.id} className='flex flex-col space-y-2'>
+              <select
+                {...register(
+                  `assistantTeachings.${index}.assistantTeaching` as const
+                )}
+                defaultValue={field.assistantTeaching}
+                onChange={(e) =>
+                  handleAssistantTeachingChange(index, e.target.value)
+                }
+                className='w-full p-2 border border-slate-300 rounded-lg'
+              >
+                <option value='' disabled>
+                  {t("graduation.selectAssistantTeaching")}
+                </option>
+                {filteredAssistantTeachings
+                  .filter(
+                    (assistantTeaching) =>
+                      !selectedAssistantTeachings.includes(
+                        assistantTeaching._id
+                      ) ||
+                      assistantTeaching._id ===
+                        selectedAssistantTeachings[index]
+                  )
+                  .map((assistantTeaching) => (
+                    <option
+                      key={assistantTeaching._id}
+                      value={assistantTeaching._id}
+                    >
+                      {assistantTeaching.ta.fullName}
+                    </option>
+                  ))}
+              </select>
+              <button
+                type='button'
+                onClick={() => {
+                  removeAssistant(index);
+                  const newSelectedAssistantTeachings = [
+                    ...selectedAssistantTeachings,
+                  ];
+                  newSelectedAssistantTeachings.splice(index, 1);
+                  setSelectedAssistantTeachings(newSelectedAssistantTeachings);
+                }}
+                className='btn-danger flex justify-center'
+              >
+                {t("general.remove")}
+              </button>
+            </div>
+          ))}
+          <button
+            type='button'
+            onClick={() => appendAssistant({ assistantTeaching: "" })}
+            className='btn flex justify-center'
+          >
+            {t("graduation.addAssistantTeaching")}
+          </button>
+        </div>
 
-        <label>Instructor Teachings</label>
-        {instructorFields.map((field, index) => (
-          <div key={field.id}>
-            <select
-              {...register(
-                `instructorTeachings.${index}.instructorTeaching` as const
-              )}
-              defaultValue={field.instructorTeaching}
-              onChange={(e) => {
-                handleInstructorTeachingChange(index, e.target.value);
-              }}
-            >
-              <option value='' disabled>
-                Select an instructor teaching
-              </option>
-              {instructorTeachings
-                .filter(
-                  (instructorTeaching) =>
-                    !selectedInstructorTeachings.includes(
-                      instructorTeaching._id
-                    ) ||
-                    instructorTeaching._id ===
-                      selectedInstructorTeachings[index]
-                )
-                .map((instructorTeaching) => (
-                  <option
-                    key={instructorTeaching._id}
-                    value={instructorTeaching._id}
-                  >
-                    {instructorTeaching.instructor.fullName}
-                  </option>
-                ))}
-            </select>
-            {errors.instructorTeachings &&
-              errors.instructorTeachings[index] && (
-                <span>{errors.instructorTeachings[index]?.message}</span>
-              )}
-            <button
-              type='button'
-              onClick={() => {
-                removeInstructor(index);
-                const newSelectedInstructorTeachings = [
-                  ...selectedInstructorTeachings,
-                ];
-                newSelectedInstructorTeachings.splice(index, 1);
-                setSelectedInstructorTeachings(newSelectedInstructorTeachings);
-              }}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-
-        <button
-          type='button'
-          onClick={() => appendInstructor({ instructorTeaching: "" })}
-        >
-          Add Instructor Teaching
-        </button>
-
-        <label>Assistant Teachings</label>
-        {assistantFields.map((field, index) => (
-          <div key={field.id}>
-            <select
-              {...register(
-                `assistantTeachings.${index}.assistantTeaching` as const
-              )}
-              defaultValue={field.assistantTeaching}
-              onChange={(e) => {
-                handleAssistantTeachingChange(index, e.target.value);
-              }}
-            >
-              <option value='' disabled>
-                Select an assistant teaching
-              </option>
-              {assistantTeachings
-                .filter(
-                  (assistantTeaching) =>
-                    !selectedAssistantTeachings.includes(
-                      assistantTeaching._id
-                    ) ||
-                    assistantTeaching._id === selectedAssistantTeachings[index]
-                )
-                .map((assistantTeaching) => (
-                  <option
-                    key={assistantTeaching._id}
-                    value={assistantTeaching._id}
-                  >
-                    {assistantTeaching.ta.fullName}
-                  </option>
-                ))}
-            </select>
-            {errors.assistantTeachings && errors.assistantTeachings[index] && (
-              <span>{errors.assistantTeachings[index]?.message}</span>
-            )}
-            <button
-              type='button'
-              onClick={() => {
-                removeAssistant(index);
-                const newSelectedAssistantTeachings = [
-                  ...selectedAssistantTeachings,
-                ];
-                newSelectedAssistantTeachings.splice(index, 1);
-                setSelectedAssistantTeachings(newSelectedAssistantTeachings);
-              }}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type='button'
-          onClick={() => appendAssistant({ assistantTeaching: "" })}
-        >
-          Add Assistant Teaching
-        </button>
-
-        <button className='btn' type='submit' disabled={isSubmitting}>
-          {isSubmitting ? "Submitting" : "Submit"}
-        </button>
+        <div className='flex items-center justify-between mt-4'>
+          <button className='btn' type='submit' disabled={isSubmitting}>
+            {isSubmitting ? t("general.loading") : t("general.submit")}
+          </button>
+          <button
+            className='btn-secondary'
+            type='button'
+            onClick={() => router.push("/")}
+          >
+            {t("general.back")}
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }

@@ -9,6 +9,7 @@ export default {
     error: {
       somethingWentWrong: "Something went wrong",
     },
+    remove: "Remove",
   },
   nav: {
     home: "Home",
@@ -118,5 +119,22 @@ export default {
     error: {
       updateFailed: "Failed to update profile",
     },
+  },
+  graduation: {
+    title: "Create a Graduation Project Team",
+    enrollments: "Enrollments",
+    instructorTeachings: "Instructor Teachings",
+    assistantTeachings: "TA Teachings",
+    selectEnrollment: "Select Enrollment",
+    selectInstructorTeaching: "Select Instructor Teaching",
+    selectAssistantTeaching: "Select TA Teaching",
+    addEnrollment: "Add Enrollment",
+    addInstructorTeaching: "Add Instructor Teaching",
+    addAssistantTeaching: "Add TA Teaching",
+    success: "Team created successfully",
+    error: {
+      createFailed: "Failed to create team",
+    },
+    search: "Search",
   },
 } as const;

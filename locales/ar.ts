@@ -10,6 +10,7 @@ export default {
     error: {
       somethingWentWrong: "حدث خطأ ما",
     },
+    remove: "حذف",
   },
   nav: {
     home: "الصفحة الرئيسية",
@@ -119,5 +120,22 @@ export default {
       updateFailed: "فشل تحديث الملف الشخصي",
     },
     updating: "جاري التحديث...",
+  },
+  graduation: {
+    title: "إنشاء فريق مشروع التخرج",
+    enrollments: "التسجيلات",
+    instructorTeachings: "تدريس الدكتور",
+    assistantTeachings: "تدريس المعيد",
+    selectEnrollment: "اختر التسجيل",
+    selectInstructorTeaching: "اختر تدريس الدكتور",
+    selectAssistantTeaching: "اختر تدريس المعيد",
+    addEnrollment: "إضافة تسجيل",
+    addInstructorTeaching: "إضافة تدريس الدكتور",
+    addAssistantTeaching: "إضافة تدريس المعيد",
+    success: "تم إنشاء الفريق بنجاح",
+    error: {
+      createFailed: "فشل إنشاء الفريق",
+    },
+    search: "بحث",
   },
 } as const;

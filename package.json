@@ -9,13 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fcai-sis/shared-utilities": "latest",
     "@fcai-sis/shared-middlewares": "latest",
     "@fcai-sis/shared-models": "latest",
+    "@fcai-sis/shared-utilities": "latest",
     "@hookform/resolvers": "^3.6.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.0",
+    "iconoir-react": "^7.7.0",
     "intl-locale-textinfo-polyfill": "^2.1.1",
     "jotai": "^2.6.4",
     "jsonwebtoken": "^9.0.2",

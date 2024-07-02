@@ -92,7 +92,7 @@ export default function UpdateProfileForm({ profileData }: any) {
           <button
             className='btn-secondary'
             type='button'
-            onClick={() => router.push("/announcements")}
+            onClick={() => router.push("/")}
           >
             {t("general.back")}
           </button>

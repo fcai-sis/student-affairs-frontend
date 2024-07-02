@@ -13,7 +13,7 @@ export const createAnnouncement = async (
   const requestBody = {
     announcement: {
       ...data,
-      level: data.level !== "ALL" ? parseInt(data.level) : undefined,
+      levels: data.levels !== "ALL" ? [parseInt(data.levels)] : undefined,
     },
   };
 
@@ -24,7 +24,14 @@ export const createAnnouncement = async (
   });
 
   if (response.status !== 201) {
-    return response.data.errors;
+    return {
+      success: false,
+      error: {
+        message: response.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
+      },
+    };
   }
 
   revalidatePath("/announcements");

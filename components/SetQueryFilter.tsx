@@ -73,7 +73,6 @@ export function SelectFilter(props: SelectFilterProps) {
           );
         }}
       >
-        <option value="">All</option>
         {props.options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

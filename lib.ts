@@ -17,10 +17,8 @@ function tokenPayload(session: Session | null) {
 
 export async function getAccessToken() {
   const session = await getServerSession();
-  const accessToken = jwt.sign(
-    tokenPayload(session),
-    process.env.JWT_SECRET as string
-  );
+  const payload = tokenPayload(session);
+  const accessToken = jwt.sign(payload, process.env.JWT_SECRET as string);
   return accessToken;
 }
 
@@ -41,3 +39,15 @@ export function getCurrentPage(searchParams: { page: string }) {
   if (!page || page < 1) page = 1;
   return page;
 }
+
+export function tt(
+  locale: "en" | "ar",
+  { en, ar }: { en: string; ar: string }
+) {
+  return locale === "ar" ? ar : en;
+}
+
+/**
+ * The number of items to show per page.
+ */
+export const limit = 3;

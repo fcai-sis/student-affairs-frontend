@@ -18,7 +18,9 @@ export const getProfileAction = async () => {
     return {
       success: false,
       error: {
-        message: response.data.error.message,
+        message: response.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
       },
     };
   }
@@ -48,7 +50,9 @@ export const updateProfileAction = async (data: updateProfileValues) => {
     return {
       success: false,
       error: {
-        message: response.data.error.message,
+        message: response.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
       },
     };
   }

@@ -10,8 +10,7 @@ export default async function Page({
 
   const getDepartmentsResponse = await getDepartments();
 
-  const departments = getDepartmentsResponse.data;
-
+  const departments = getDepartmentsResponse.departments;
   return (
     <>
       <h1>{t("announcements.create.title")}</h1>

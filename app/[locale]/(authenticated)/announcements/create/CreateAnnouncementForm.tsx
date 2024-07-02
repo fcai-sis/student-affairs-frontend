@@ -8,7 +8,9 @@ import { useForm } from "react-hook-form";
 import { createAnnouncement } from "./actions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useI18n } from "@/locales/client";
+import { useCurrentLocale, useI18n } from "@/locales/client";
+import { tt } from "@/lib";
+import { departmentLocalizedFields } from "@fcai-sis/shared-models";
 
 const createAnnouncementFormSchema = z.object({
   title: z.string().min(1).max(255),
@@ -40,6 +42,7 @@ type CreateAnnouncementFormProps = {
 export default function CreateAnnouncementForm({
   departments,
 }: CreateAnnouncementFormProps) {
+  const locale = useCurrentLocale();
   const router = useRouter();
   const {
     handleSubmit,
@@ -90,9 +93,14 @@ export default function CreateAnnouncementForm({
       {errors.severity && (
         <p className='text-red-600'>{errors.severity?.message}</p>
       )}
-      <label htmlFor='academicLevel'>Level</label>
+      <label htmlFor='academicLevel'>{t("announcements.create.form.levels")}</label>
       <select {...register("levels")}>
-        <option value='ALL'>All levels</option>
+        <option value='ALL'>
+          {tt(locale, {
+            en: "All levels",
+            ar: "جميع المستويات",
+          })}
+        </option>
         <option value='1'>1</option>
         <option value='2'>2</option>
         <option value='3'>3</option>
@@ -101,11 +109,13 @@ export default function CreateAnnouncementForm({
       {errors.levels && (
         <p className='text-red-600'>{errors.levels?.message}</p>
       )}
-      <label htmlFor='departments'>Department</label>
+      <label htmlFor='departments'>
+        {t("announcements.create.form.departments")}
+      </label>
       <select {...register("departments")} multiple>
         {departments.map((department) => (
           <option key={department.code} value={department._id}>
-            {department.name.en}
+            {tt(locale, department.name)}
           </option>
         ))}
       </select>

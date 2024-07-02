@@ -91,10 +91,12 @@ export default {
       form: {
         title: "العنوان",
         content: "المحتوى",
-        severity: "الخطورة",
+        severity: "الاهمية",
         info: "معلومات",
         warning: "تحذير",
         danger: "خطر",
+        departments: "الأقسام",
+        levels: "المستويات",
       },
       success: "تم إنشاء الإعلان بنجاح",
       error: {

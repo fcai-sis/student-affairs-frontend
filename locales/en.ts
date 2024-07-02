@@ -94,6 +94,8 @@ export default {
         info: "Info",
         warning: "Warning",
         danger: "Danger",
+        departments: "Departments",
+        levels: "Levels",
       },
       success: "Announcement created successfully",
       error: {

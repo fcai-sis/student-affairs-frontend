@@ -50,4 +50,4 @@ export function tt(
 /**
  * The number of items to show per page.
  */
-export const limit = 3;
+export const limit = 2;

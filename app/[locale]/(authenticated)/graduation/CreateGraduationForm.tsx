@@ -151,7 +151,7 @@ export default function CreateGraduationForm({
             className='w-full p-2 border border-slate-300 rounded-lg mb-2'
           />
           {enrollmentFields.map((field, index) => (
-            <div key={field.id} className='flex flex-col space-y-2'>
+            <div key={field.id} className='flex gap-2'>
               <select
                 {...register(`enrollments.${index}.enrollment` as const)}
                 defaultValue={field.enrollment}
@@ -208,7 +208,7 @@ export default function CreateGraduationForm({
             className='w-full p-2 border border-slate-300 rounded-lg mb-2'
           />
           {instructorFields.map((field, index) => (
-            <div key={field.id} className='flex flex-col space-y-2'>
+            <div key={field.id} className='flex gap-2'>
               <select
                 {...register(
                   `instructorTeachings.${index}.instructorTeaching` as const
@@ -279,7 +279,7 @@ export default function CreateGraduationForm({
             className='w-full p-2 border border-slate-300 rounded-lg mb-2'
           />
           {assistantFields.map((field, index) => (
-            <div key={field.id} className='flex flex-col space-y-2'>
+            <div key={field.id} className='flex gap-2'>
               <select
                 {...register(
                   `assistantTeachings.${index}.assistantTeaching` as const

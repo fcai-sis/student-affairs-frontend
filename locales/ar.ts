@@ -109,4 +109,15 @@ export default {
     empty: "لا توجد طلبات خدمة",
     createServiceRequest: "إنشاء طلب خدمة",
   },
+  profile: {
+    title: "الملف الشخصي",
+    name: "الاسم",
+    email: "البريد الإلكتروني",
+    update: "تحديث",
+    success: "تم تحديث الملف الشخصي بنجاح",
+    error: {
+      updateFailed: "فشل تحديث الملف الشخصي",
+    },
+    updating: "جاري التحديث...",
+  },
 } as const;

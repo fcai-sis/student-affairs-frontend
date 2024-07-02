@@ -108,4 +108,15 @@ export default {
     empty: "No service requests",
     createServiceRequest: "Create Service Request",
   },
+  profile: {
+    title: "Profile",
+    name: "Name",
+    email: "Email",
+    updating: "Updating...",
+    update: "Update",
+    success: "Profile updated successfully",
+    error: {
+      updateFailed: "Failed to update profile",
+    },
+  },
 } as const;

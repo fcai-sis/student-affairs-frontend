@@ -68,7 +68,7 @@ export default async function Page({
 
       <div className='mt-4'>
         <SelectFilter name='department' options={departmentOptions} />
-        <div className='grid grid-cols-1 gap-4 mt-4'>
+        <div className='flex flex-col gap-4 mt-4'>
           {announcements.map((announcement: any, i: number) => (
             <AnnouncementCard key={i} announcement={announcement} />
           ))}

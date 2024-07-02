@@ -18,6 +18,7 @@ export default {
     serviceRequests: "طلبات الخدمة",
     profile: "الملف الشخصي",
     signOut: "تسجيل الخروج",
+    more: "المزيد",
   },
   pagination: {
     previous: "السابق",

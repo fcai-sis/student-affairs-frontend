@@ -17,6 +17,7 @@ export default {
     serviceRequests: "Service Requests",
     profile: "Profile",
     signOut: "Sign Out",
+    more: "More",
   },
   pagination: {
     previous: "Previous",

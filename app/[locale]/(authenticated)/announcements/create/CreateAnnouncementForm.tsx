@@ -9,14 +9,17 @@ import { useRouter } from "next/navigation";
 import { useCurrentLocale, useI18n } from "@/locales/client";
 import { tt } from "@/lib";
 import { useRef } from "react";
+import { localizedLevel } from "@/dummy/utils";
 
 const createAnnouncementFormSchema = z.object({
   title: z.string().min(1).max(255),
   content: z.string().min(1),
   severity: z.enum(["INFO", "WARNING", "DANGER"]),
-  levels: z.string().refine((value) => {
-    return ["ALL", "1", "2", "3", "4"].includes(value);
-  }),
+  levels: z.array(
+    z.string().refine((value) => {
+      return ["1", "2", "3", "4"].includes(value);
+    })
+  ),
   departments: z.array(z.string()),
 });
 
@@ -52,7 +55,7 @@ export default function CreateAnnouncementForm({
       title: "",
       content: "",
       severity: "INFO",
-      levels: "ALL",
+      levels: [],
       departments: [],
     },
   });
@@ -104,10 +107,9 @@ export default function CreateAnnouncementForm({
         </label>
         <textarea
           {...register("content")}
-          ref={contentRef}
+          // ref={contentRef}
           className='w-full p-2 border border-slate-300 rounded-lg'
           onInput={adjustHeight}
-          rows={1} // Start with one row
         />
         {errors.content && (
           <p className='text-red-600 mt-2'>{errors.content?.message}</p>
@@ -142,17 +144,12 @@ export default function CreateAnnouncementForm({
         <select
           {...register("levels")}
           className='w-full p-2 border border-slate-300 rounded-lg'
+          multiple
         >
-          <option value='ALL'>
-            {tt(locale, {
-              en: "All levels",
-              ar: "جميع المستويات",
-            })}
-          </option>
-          <option value='1'>1</option>
-          <option value='2'>2</option>
-          <option value='3'>3</option>
-          <option value='4'>4</option>
+          <option value='1'>{tt(locale, localizedLevel(1))}</option>
+          <option value='2'>{tt(locale, localizedLevel(2))}</option>
+          <option value='3'>{tt(locale, localizedLevel(3))}</option>
+          <option value='4'>{tt(locale, localizedLevel(4))}</option>
         </select>
         {errors.levels && (
           <p className='text-red-600 mt-2'>{errors.levels?.message}</p>

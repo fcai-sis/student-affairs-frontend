@@ -34,7 +34,7 @@ export default async function Page({
 
   const departmentOptions = [
     {
-      label: tt(locale, { en: "All", ar: "الكل" }),
+      label: tt(locale, { en: "All Departments", ar: "جميع الأقسام" }),
       value: "",
     },
     ...departments.map((department: any) => ({
@@ -54,19 +54,26 @@ export default async function Page({
 
   return (
     <>
-      <h1>{t("announcements.title")}</h1>
+      <h1 className='text-3xl font-bold mb-4'>{t("announcements.title")}</h1>
 
-      <Link href='/announcements/create'>
-        {t("announcements.create.title")}
-      </Link>
-
-      <div>
+      <div className='mt-4'>
         <SelectFilter name='department' options={departmentOptions} />
-        {announcements.map((announcement: any, i: number) => (
-          <AnnouncementCard key={i} announcement={announcement} />
-        ))}
+        <div className='grid grid-cols-1 gap-4 mt-4'>
+          {announcements.map((announcement: any, i: number) => (
+            <AnnouncementCard key={i} announcement={announcement} />
+          ))}
+        </div>
       </div>
       <Pagination totalPages={total / limit} />
+
+      <div className='flex justify-end'>
+        <Link
+          className='bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 active:bg-blue-900'
+          href='/announcements/create'
+        >
+          {t("announcements.create.title")}
+        </Link>
+      </div>
     </>
   );
 }

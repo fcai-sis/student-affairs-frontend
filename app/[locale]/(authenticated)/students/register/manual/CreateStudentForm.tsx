@@ -96,7 +96,7 @@ export default function CreateStudentForm() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96'
+        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96 flex flex-col gap-4 mx-auto'
       >
         <div className='mb-4'>
           <label
@@ -350,7 +350,11 @@ export default function CreateStudentForm() {
           {errors.address && <span>{errors.address.message}</span>}
         </div>
 
-        <button className='btn' type='submit' disabled={isSubmitting}>
+        <button
+          className='btn flex justify-center'
+          type='submit'
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Submitting" : "Submit"}
         </button>
       </form>

@@ -113,7 +113,7 @@ export default {
     title: "الملف الشخصي",
     name: "الاسم",
     email: "البريد الإلكتروني",
-    update: "تحديث",
+    update: "تحديث الملف الشخصي",
     success: "تم تحديث الملف الشخصي بنجاح",
     error: {
       updateFailed: "فشل تحديث الملف الشخصي",

@@ -113,7 +113,7 @@ export default {
     name: "Name",
     email: "Email",
     updating: "Updating...",
-    update: "Update",
+    update: "Update Profile",
     success: "Profile updated successfully",
     error: {
       updateFailed: "Failed to update profile",

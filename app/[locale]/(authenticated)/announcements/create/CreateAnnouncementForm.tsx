@@ -183,7 +183,10 @@ export default function CreateAnnouncementForm({
         <button
           className='btn-secondary'
           type='button'
-          onClick={() => router.push("/announcements")}
+          onClick={(e) => {
+            e.preventDefault();
+            router.push("/announcements");
+          }}
         >
           {t("general.back")}
         </button>

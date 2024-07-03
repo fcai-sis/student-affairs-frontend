@@ -343,7 +343,10 @@ export default function CreateGraduationForm({
           <button
             className='btn-secondary'
             type='button'
-            onClick={() => router.push("/")}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("/");
+            }}
           >
             {t("general.back")}
           </button>

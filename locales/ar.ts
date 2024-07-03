@@ -56,6 +56,8 @@ export default {
     manual: {
       title: "تسجيل طالب يدويًا",
       add: "إضافة طالب",
+      link: "إضافة طالب يدويًا",
+      linkHint: "املأ نموذج بمعلومات الطالب",
       submit: "تسجيل الطالب",
       update: "تحديث الطالب",
       addSuccess: "تم تسجيل الطالب بنجاح",
@@ -63,7 +65,9 @@ export default {
     },
     upload: {
       title: "تسجيل الطلاب من ملف Excel",
-      uploadExcelFile: "تحميل الملف",
+      uploadExcelFile: "رفع ملف اكسيل",
+      uploadExcelHint: "قم برفع ملف يحتوي على بيانات الطلاب",
+      uploadWarning: "الرجاء التأكد من صحة بيانات الطلاب قبل الرفع",
       success: "تم تحميل الملف بنجاح",
       mapping: {
         title: "تعيين الأعمدة",

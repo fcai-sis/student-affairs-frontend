@@ -54,16 +54,20 @@ export default {
     title: "Register Student",
     manual: {
       title: "Manual Student Registration",
+      link: "Add Student Manually",
+      linkHint: "Fill a form with necessary student information",
       add: "Add Student",
       submit: "Register Student",
       update: "Update Student",
       addSuccess: "Student registered successfully",
       updateSuccess: "Student updated successfully",
-
     },
     upload: {
       title: "Register Students from Excel File",
-      uploadExcelFile: "Upload File",
+      uploadExcelFile: "Upload Excel File",
+      uploadExcelHint: "Upload an excel file with student information",
+      uploadWarning:
+        "Please ensure that the student information is correct before uploading",
       success: "File uploaded successfully",
       mapping: {
         title: "Map Columns",

@@ -1,13 +1,14 @@
 "use server";
 
 import { enrollmentsAPI } from "@/api";
-import { getAccessToken } from "@/lib";
+import { getAccessToken, limit } from "@/lib";
 import { selectCourseEnrollmentsValues } from "./SelectCourseForm";
 import { revalidatePath } from "next/cache";
 import { assignHallValues } from "./[courseId]/AssignHallForm";
 
 export const fetchLatestSemesterCourseEnrollments = async (
-  data: selectCourseEnrollmentsValues
+  data: selectCourseEnrollmentsValues,
+  page?: number
 ) => {
   const accessToken = await getAccessToken();
 
@@ -15,20 +16,26 @@ export const fetchLatestSemesterCourseEnrollments = async (
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+    params: {
+      skip: page ? (page - 1) * limit : 0,
+      limit: limit,
+    },
   });
 
   if (response.status !== 200) {
     return {
       success: false,
       error: {
-        message: response.data.error.message,
+        message: response.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
       },
     };
   }
 
   revalidatePath("/assign-hall");
 
-  return { success: true, data: response.data.enrollments };
+  return { success: true, data: response.data };
 };
 
 export const assignHallAction = async (data: assignHallValues) => {
@@ -49,7 +56,9 @@ export const assignHallAction = async (data: assignHallValues) => {
     return {
       success: false,
       error: {
-        message: response.data.error.message,
+        message: response.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
       },
     };
   }

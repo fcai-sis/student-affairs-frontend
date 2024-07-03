@@ -20,6 +20,8 @@ export default {
     serviceRequests: "طلبات الخدمة",
     profile: "الملف الشخصي",
     signOut: "تسجيل الخروج",
+    graduation: "إنشاء فريق مشروع التخرج",
+    assignHall: "تعيين الطلاب للقاعات",
     more: "المزيد",
   },
   pagination: {

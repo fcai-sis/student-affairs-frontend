@@ -19,6 +19,8 @@ export default {
     serviceRequests: "Service Requests",
     profile: "Profile",
     signOut: "Sign Out",
+    graduation: "Create Graduation Project Team",
+    assignHall: "Assign Students to Halls",
     more: "More",
   },
   pagination: {

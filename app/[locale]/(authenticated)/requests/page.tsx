@@ -31,8 +31,6 @@ export default async function Page({
 
   const { serviceRequests, totalServiceRequests } = data;
 
-  const statuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "REJECTED"];
-
   const statusOptions = [
     {
       label: tt(locale, { en: "All", ar: "جميع الحالات" }),

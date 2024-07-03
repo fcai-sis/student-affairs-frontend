@@ -27,7 +27,7 @@ export default async function ServiceRequestCard({
     <div className={`border border-slate-200 w-full p-4 rounded-lg my-2`}>
       <div className='flex justify-end w-full'>
         <small
-          className={`${colors} flex justify-start rounded-lg px-2 py-1 h-min w-min`}
+          className={`${colors} flex justify-start text-nowrap rounded-lg px-2 py-1 h-min w-min`}
         >
           {tt(
             locale,
@@ -78,7 +78,7 @@ export async function ServiceRequestCardMini({
     <div className={`border border-slate-200 w-full p-4 rounded-lg my-2`}>
       <div className='flex justify-end w-full'>
         <small
-          className={`${colors} flex justify-start rounded-lg px-2 py-1 h-min w-min`}
+          className={`${colors} flex justify-start text-nowrap rounded-lg px-2 py-1 h-min w-min`}
         >
           {tt(
             locale,

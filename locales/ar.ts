@@ -3,7 +3,7 @@ export default {
   general: {
     loading: "جاري التحميل...",
     submit: "إرسال",
-    ok: "موافق",
+    ok: "تم",
     confirm: "تأكيد",
     cancel: "إلغاء",
     back: "رجوع",

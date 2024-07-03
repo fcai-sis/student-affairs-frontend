@@ -6,8 +6,8 @@ import {
   TextFilter,
 } from "@/components/SetQueryFilter";
 import StudentCard from "@/components/StudentCard";
-import { getAccessToken, getCurrentPage } from "@/lib";
-import { getI18n } from "@/locales/server";
+import { getAccessToken, getCurrentPage, limit, tt } from "@/lib";
+import { getCurrentLocale, getI18n } from "@/locales/server";
 import { GenderEnum } from "@fcai-sis/shared-models";
 import Link from "next/link";
 
@@ -19,19 +19,21 @@ export default async function Page({
     department: string;
     query: string;
     gender: string;
+    level: string;
   };
 }>) {
   const t = await getI18n();
+  const locale = getCurrentLocale();
   const accessToken = await getAccessToken();
 
   const page = getCurrentPage(searchParams);
-  const limit = 5;
 
   const { data } = await studentsAPI.get("/", {
     params: {
       page,
       limit,
       department: searchParams.department,
+      level: searchParams.level,
       query: searchParams.query,
       gender: searchParams.gender,
     },
@@ -42,37 +44,77 @@ export default async function Page({
 
   const { students, totalStudents } = data;
 
-  // const { data: departmentsData } = await departmentsAPI.get("/");
+  const { data: departmentsData } = await departmentsAPI.get("/");
 
-  // const departments: SelectOption[] = departmentsData.departments.map(
-  //   (department: any) => ({ label: department.name.en, value: department.code })
-  // );
+  const departmentOptions = [
+    {
+      label: tt(locale, { en: "All Departments", ar: "جميع الأقسام" }),
+      value: "",
+    },
+    ...departmentsData.departments.map((department: any) => ({
+      label: tt(locale, department.name),
+      value: department.code,
+    })),
+  ];
+
+  const genderOptions: SelectOption[] = [
+    {
+      label: tt(locale, { en: "All", ar: "الكل" }),
+      value: "",
+    },
+    {
+      label: tt(locale, {
+        en: "Male",
+        ar: "ذكر",
+      }),
+      value: GenderEnum[0],
+    },
+    {
+      label: tt(locale, {
+        en: "Female",
+        ar: "انثى",
+      }),
+      value: GenderEnum[1],
+    },
+  ];
 
   return (
     <>
-      <h1>{t("students.title")}</h1>
-      <Link href='/students/register'>{t("students.registerStudent")}</Link>
-      <div>
-        <b>Filter: </b>
-        {/* <label>Department: </label>
-        <SelectFilter name={"department"} options={departments} /> */}
-        <label>Search: </label>
-        <TextFilter name={"query"} />
-        <label>Gender: </label>
-        <SelectFilter
-          name={"gender"}
-          options={GenderEnum.map((gender) => ({
-            label: gender,
-            value: gender,
-          }))}
-        />
+      <h1 className='text-3xl font-bold mb-4'>{t("students.title")}</h1>
+      <div className='flex justify-end'>
+        <Link
+          href='/students/register'
+          className='bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 rounded-lg transition-colors duration-300'
+        >
+          {t("students.registerStudent")}
+        </Link>
       </div>
-      <div>
+      <div className='flex flex-col gap-2 mt-4'>
+        <div className='flex gap-4'>
+          <label className='flex flex-col'>
+            {t("filter.department")}:
+            <SelectFilter name={"department"} options={departmentOptions} />
+          </label>
+          <label className='flex flex-col'>
+            {t("filter.search")}:
+            <TextFilter name={"query"} />
+          </label>
+          <label className='flex flex-col'>
+            {t("filter.gender")}:
+            <SelectFilter name={"gender"} options={genderOptions} />
+          </label>
+        </div>
+      </div>
+      <div className='flex flex-col gap-4 mt-4'>
         {students.map((student: any, i: number) => (
           <StudentCard key={i} student={student} />
         ))}
       </div>
-      <Pagination totalPages={totalStudents / limit} />
+      {students.length === 0 ? (
+        <p>{t("students.noStudents")}</p>
+      ) : (
+        <Pagination totalPages={totalStudents / limit} />
+      )}
     </>
   );
 }

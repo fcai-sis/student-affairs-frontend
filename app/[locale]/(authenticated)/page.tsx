@@ -12,7 +12,7 @@ export default async function Page() {
   return (
     <div>
       <h1>{t("home.title")}</h1>
-      <SearchBar />
+      {/* <SearchBar /> */}
       <Announcements />
       <ServiceRequests />
     </div>
@@ -23,8 +23,8 @@ async function SearchBar() {
   const t = await getI18n();
   return (
     <div>
-      <input type="text" placeholder={t("home.searchPlaceholder")} />
-      <button className="btn">{t("home.search")}</button>
+      <input type='text' placeholder={t("home.searchPlaceholder")} />
+      <button className='btn'>{t("home.search")}</button>
     </div>
   );
 }
@@ -42,7 +42,7 @@ async function Announcements() {
     <>
       <div>
         <h2>{t("home.announcements")}</h2>
-        <Link href="/announcements">{t("home.viewAllAnnouncements")}</Link>
+        <Link href='/announcements'>{t("home.viewAllAnnouncements")}</Link>
       </div>
       <div>
         {announcements.map((announcement: any, i: number) => (
@@ -73,7 +73,7 @@ async function ServiceRequests() {
     <>
       <div>
         <h2>{t("home.serviceRequests")}</h2>
-        <Link href="/requests">{t("home.viewAllServiceRequests")}</Link>
+        <Link href='/requests'>{t("home.viewAllServiceRequests")}</Link>
       </div>
       <div>
         {serviceRequests.map((serviceRequest: any, i: number) => (

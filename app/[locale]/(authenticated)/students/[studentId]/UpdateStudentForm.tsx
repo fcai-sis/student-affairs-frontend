@@ -1,13 +1,40 @@
 "use client";
-import { IStudent } from "@fcai-sis/shared-models";
+import { IStudent, studentLocalizedFields } from "@fcai-sis/shared-models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { updateStudentAction } from "../register/manual/actions";
+import { useCurrentLocale, useI18n } from "@/locales/client";
+import { tt } from "@/lib";
 
 const NationalityEnum = [
+  { value: "EGYPTIAN", label: { en: "Egyptian", ar: "مصري" } },
+  { value: "BAHRAINI", label: { en: "Bahraini", ar: "بحريني" } },
+  { value: "COMORAN", label: { en: "Comoran", ar: "قمري" } },
+  { value: "DJIBOUTIAN", label: { en: "Djiboutian", ar: "جيبوتي" } },
+  { value: "ALGERIAN", label: { en: "Algerian", ar: "جزائري" } },
+  { value: "IRAQI", label: { en: "Iraqi", ar: "عراقي" } },
+  { value: "JORDANIAN", label: { en: "Jordanian", ar: "أردني" } },
+  { value: "KUWAITI", label: { en: "Kuwaiti", ar: "كويتي" } },
+  { value: "LEBANESE", label: { en: "Lebanese", ar: "لبناني" } },
+  { value: "LIBYAN", label: { en: "Libyan", ar: "ليبي" } },
+  { value: "MAURITANIAN", label: { en: "Mauritanian", ar: "موريتاني" } },
+  { value: "MOROCCAN", label: { en: "Moroccan", ar: "مغربي" } },
+  { value: "OMANI", label: { en: "Omani", ar: "عماني" } },
+  { value: "PALESTINIAN", label: { en: "Palestinian", ar: "فلسطيني" } },
+  { value: "QATARI", label: { en: "Qatari", ar: "قطري" } },
+  { value: "SAUDI", label: { en: "Saudi", ar: "سعودي" } },
+  { value: "SOMALI", label: { en: "Somali", ar: "صومالي" } },
+  { value: "SUDANESE", label: { en: "Sudanese", ar: "سوداني" } },
+  { value: "SYRIAN", label: { en: "Syrian", ar: "سوري" } },
+  { value: "TUNISIAN", label: { en: "Tunisian", ar: "تونسي" } },
+  { value: "EMIRATI", label: { en: "Emirati", ar: "إماراتي" } },
+  { value: "YEMENI", label: { en: "Yemeni", ar: "يمني" } },
+  { value: "FOREIGN", label: { en: "Foreign", ar: "أجنبي" } },
+];
+const NationalityEnumValues = [
   "EGYPTIAN",
   "BAHRAINI",
   "COMORAN",
@@ -47,14 +74,22 @@ const updateStudentFormSchema = z.object({
   birthDate: z.string().optional(),
   birthPlace: z.string().optional(),
   governorateId: z.number().optional(),
-  nationality: z.enum(NationalityEnum).optional(),
+  nationality: z.enum(NationalityEnumValues).optional(),
   address: z.string().optional(),
 });
 
 export type UpdateStudentFormValues = z.infer<typeof updateStudentFormSchema>;
 
-export default function UpdateStudentForm({ student }: { student: IStudent }) {
+export default function UpdateStudentForm({
+  student,
+  localizedFields,
+}: {
+  student: IStudent;
+  localizedFields: typeof studentLocalizedFields;
+}) {
   const router = useRouter();
+  const t = useI18n();
+  const locale = useCurrentLocale();
   const {
     handleSubmit,
     register,
@@ -90,7 +125,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
       return toast.error(updateStudentResponse.error?.message);
     }
 
-    toast.success(`Student ${values.fullName} updated successfully`);
+    toast.success(t("registerStudent.manual.updateSuccess"));
     router.push("/students");
   };
 
@@ -105,7 +140,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='fullName'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Student Name
+            {tt(locale, localizedFields.fullName)}
           </label>
           <input
             type='text'
@@ -120,7 +155,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='studentId'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Student ID
+            {tt(locale, localizedFields.studentId)}
           </label>
           <input
             type='text'
@@ -135,7 +170,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='scientificDivision'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Scientific Division
+            {tt(locale, localizedFields.scientificDivision)}
           </label>
           <input
             type='radio'
@@ -143,17 +178,24 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             value='SCIENCE'
             className='mr-2'
           />
-          <label htmlFor='science-group' className='mr-4'>
-            Science
+          <label htmlFor='science-group' className='mr-2'>
+            {tt(locale, {
+              en: "Science",
+              ar: "علمي علوم",
+            })}
           </label>
+          {"    "}
           <input
             type='radio'
             {...register("scientificDivision")}
             value='MATHEMATICS'
             className='mr-2'
           />
-          <label htmlFor='math-group' className='mr-4'>
-            Mathematics
+          <label htmlFor='math-group' className='mr-2'>
+            {tt(locale, {
+              en: "Mathematics",
+              ar: "علمي رياضة",
+            })}
           </label>
           {errors.scientificDivision && (
             <span>{errors.scientificDivision.message}</span>
@@ -165,14 +207,24 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='gender'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Gender
+            {tt(locale, localizedFields.gender)}
           </label>
           <select
             {...register("gender")}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
           >
-            <option value='MALE'>Male</option>
-            <option value='FEMALE'>Female</option>
+            <option value='MALE'>
+              {tt(locale, {
+                en: "Male",
+                ar: "ذكر",
+              })}
+            </option>
+            <option value='FEMALE'>
+              {tt(locale, {
+                en: "Female",
+                ar: "انثى",
+              })}
+            </option>
           </select>
           {errors.gender && <span>{errors.gender.message}</span>}
         </div>
@@ -182,15 +234,30 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='religion'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Religion
+            {tt(locale, localizedFields.religion)}
           </label>
           <select
             {...register("religion")}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
           >
-            <option value='MUSLIM'>Muslim</option>
-            <option value='CHRISTIAN'>Christian</option>
-            <option value='OTHER'>Other</option>
+            <option value='MUSLIM'>
+              {tt(locale, {
+                en: "Muslim",
+                ar: "مسلم",
+              })}
+            </option>
+            <option value='CHRISTIAN'>
+              {tt(locale, {
+                en: "Christian",
+                ar: "مسيحي",
+              })}
+            </option>
+            <option value='OTHER'>
+              {tt(locale, {
+                en: "Other",
+                ar: "اخرى",
+              })}
+            </option>
           </select>
           {errors.religion && <span>{errors.religion.message}</span>}
         </div>
@@ -200,7 +267,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='nationalId'
             className='block text-primary text-sm font-bold mb-2'
           >
-            National ID
+            {tt(locale, localizedFields.nationalId)}
           </label>
           <input
             type='text'
@@ -215,7 +282,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='administration'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Administration
+            {tt(locale, localizedFields.administration)}
           </label>
           <input
             type='text'
@@ -232,7 +299,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='directorate'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Directorate
+            {tt(locale, localizedFields.directorate)}
           </label>
           <input
             type='text'
@@ -247,7 +314,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='phoneNumber'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Phone Number
+            {tt(locale, localizedFields.phoneNumber)}
           </label>
           <input
             type='tel'
@@ -262,7 +329,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='educationType'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Education Type
+            {tt(locale, localizedFields.educationType)}
           </label>
           <input
             type='text'
@@ -277,7 +344,10 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='birthDate'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Birth Date
+            {tt(locale, {
+              en: "Birth Date",
+              ar: "تاريخ الميلاد",
+            })}
           </label>
           <input
             type='date'
@@ -292,7 +362,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='birthPlace'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Birth Place
+            {tt(locale, localizedFields.birthPlace)}
           </label>
           <input
             type='text'
@@ -307,7 +377,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='governorateId'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Governorate ID
+            {tt(locale, localizedFields.governorateId)}
           </label>
           <input
             type='text'
@@ -322,15 +392,15 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='nationality'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Nationality
+            {tt(locale, localizedFields.nationality)}
           </label>
           <select
             {...register("nationality")}
             className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
           >
             {NationalityEnum.map((national) => (
-              <option key={national} value={national}>
-                {national}
+              <option key={national.value} value={national.value}>
+                {tt(locale, national.label)}
               </option>
             ))}
           </select>
@@ -342,7 +412,7 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
             htmlFor='address'
             className='block text-primary text-sm font-bold mb-2'
           >
-            Address
+            {tt(locale, localizedFields.address)}
           </label>
           <input
             type='text'
@@ -357,7 +427,19 @@ export default function UpdateStudentForm({ student }: { student: IStudent }) {
           type='submit'
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Updating..." : "Update"}
+          {isSubmitting
+            ? t("general.loading")
+            : t("registerStudent.manual.update")}
+        </button>
+        <button
+          className='btn-secondary flex justify-center'
+          type='button'
+          onClick={(e) => {
+            e.preventDefault();
+            router.push("/students");
+          }}
+        >
+          {t("general.back")}
         </button>
       </form>
     </>

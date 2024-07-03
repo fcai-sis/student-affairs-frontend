@@ -29,7 +29,9 @@ export async function updateMapping({
     return {
       success: false,
       error: {
-        message: "Failed to update mapping",
+        message: response.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
       },
     };
   }
@@ -53,7 +55,9 @@ export async function cancelRegistrationSession() {
     return {
       success: false,
       error: {
-        message: "Failed to cancel registration session",
+        message: response.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
       },
     };
   }
@@ -74,10 +78,11 @@ export async function precommitSession() {
   );
 
   if (response.status !== 200) {
-    // const errorCode = response.data.code;
     return {
       success: false,
-      error: response.data,
+      error: {
+        errors: response.data.errors,
+      },
     };
   }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useI18n } from "@/locales/client";
-
 import toast from "react-hot-toast";
 import { cancelRegistrationSession } from "./actions";
 import { useRouter } from "next/navigation";
@@ -28,8 +27,11 @@ export default function CancelSessionForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <button className="btn" type="submit" disabled={isSubmitting}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='flex justify-center gap-4'
+    >
+      <button className='btn-secondary' type='submit' disabled={isSubmitting}>
         {isSubmitting ? t("general.loading") : t("general.cancel")}
       </button>
     </form>

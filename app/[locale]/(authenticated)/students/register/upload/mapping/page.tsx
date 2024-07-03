@@ -33,15 +33,21 @@ export default async function Page({
   } = getActiveRegistrationSessionResponse.data;
 
   return (
-    <>
-      <h1>{t("registerStudent.upload.mapping.title")}</h1>
-      <p>{t("registerStudent.upload.mapping.instructions")}</p>
+    <div className='max-w-2xl mx-auto p-4 border shadow-md'>
+      <h1 className='text-3xl font-bold mb-4'>
+        {t("registerStudent.upload.mapping.title")}
+      </h1>
+      <p className='mb-6'>{t("registerStudent.upload.mapping.instructions")}</p>
       <I18nProviderClient locale={locale}>
-        <CommitSessionForm />
-        <CancelSessionForm />
+        <div className='mb-6'>
+          <CommitSessionForm />
+        </div>
+        <div className='mb-6'>
+          <CancelSessionForm />
+        </div>
         {Object.keys(mapping).map((key) => (
-          <div key={key}>
-            <label htmlFor={key}>
+          <div key={key} className='mb-4'>
+            <label htmlFor={key} className='block mb-2 font-semibold'>
               {locale === "ar" ? fieldNames[key].ar : fieldNames[key].en}
             </label>
             <MappingFieldSelect
@@ -52,6 +58,6 @@ export default async function Page({
           </div>
         ))}
       </I18nProviderClient>
-    </>
+    </div>
   );
 }

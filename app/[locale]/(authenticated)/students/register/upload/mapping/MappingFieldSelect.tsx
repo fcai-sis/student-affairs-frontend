@@ -17,32 +17,40 @@ export default function MappingFieldSelect({
 }: MappingFieldSelectProps) {
   const t = useI18n();
   return (
-    <select
-      id={fieldName}
-      defaultValue={defaultValue}
-      name={fieldName}
-      onChange={async (e) => {
-        const value = e.target.value;
-        const updateMappingResponse = await updateMapping({ fieldName, value });
-        if (!updateMappingResponse.success) {
-          console.error(
-            `Failed to update mapping for field ${fieldName} to value ${value}`
+    <div className='flex'>
+      <select
+        id={fieldName}
+        defaultValue={defaultValue}
+        name={fieldName}
+        onChange={async (e) => {
+          const value = e.target.value;
+          const updateMappingResponse = await updateMapping({
+            fieldName,
+            value,
+          });
+          if (!updateMappingResponse.success) {
+            console.error(
+              `Failed to update mapping for field ${fieldName} to value ${value}`
+            );
+            return toast.error(
+              t("registerStudent.upload.mapping.error.updateFailed")
+            );
+          }
+          toast.success(
+            t("registerStudent.upload.mapping.success.updateField")
           );
-          return toast.error(
-            t("registerStudent.upload.mapping.error.updateFailed")
-          );
-        }
-        toast.success(t("registerStudent.upload.mapping.success.updateField"));
-      }}
-    >
-      <option value="<unset>">
-        {t("registerStudent.upload.mapping.unset")}
-      </option>
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
+        }}
+        className='flex p-2 border border-gray-300 rounded-lg'
+      >
+        <option value='<unset>'>
+          {t("registerStudent.upload.mapping.unset")}
         </option>
-      ))}
-    </select>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }

@@ -21,7 +21,9 @@ export async function startRegistrationSession(data: FormData) {
     return {
       success: false,
       error: {
-        message: startRegistrationSessionResponse.data.message,
+        message: startRegistrationSessionResponse.data.errors
+          .map((error: any) => error.message)
+          .join(", "),
       },
     };
   }

@@ -154,4 +154,9 @@ export default {
     },
     search: "Search",
   },
+  filter: {
+    search: "Search",
+    department: "Department",
+    gender: "Gender",
+  },
 } as const;

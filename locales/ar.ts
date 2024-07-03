@@ -155,4 +155,9 @@ export default {
     },
     search: "بحث",
   },
+  filter: {
+    search: "بحث",
+    department: "القسم",
+    gender: "الجنس",
+  },
 } as const;

@@ -42,3 +42,12 @@ export default async function StudentCard({ student }: { student: any }) {
     </div>
   );
 }
+
+export async function StudentCardMini({ student }: { student: any }) {
+  return (
+    <div className='flex flex-col border border-slate-200 w-full p-4 rounded-lg my-2 bg-white shadow-md'>
+      <h3 className='text-xl font-bold mb-2'>{student.fullName}</h3>
+      <p className='text-slate-700 mb-1'>{student.studentId}</p>
+    </div>
+  );
+}

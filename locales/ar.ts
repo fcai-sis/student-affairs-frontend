@@ -55,6 +55,11 @@ export default {
     title: "تسجيل طالب",
     manual: {
       title: "تسجيل طالب يدويًا",
+      add: "إضافة طالب",
+      submit: "تسجيل الطالب",
+      update: "تحديث الطالب",
+      addSuccess: "تم تسجيل الطالب بنجاح",
+      updateSuccess: "تم تحديث الطالب بنجاح",
     },
     upload: {
       title: "تسجيل الطلاب من ملف Excel",
@@ -159,5 +164,6 @@ export default {
     search: "بحث",
     department: "القسم",
     gender: "الجنس",
+    level: "المستوى",
   },
 } as const;

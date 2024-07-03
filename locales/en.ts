@@ -54,6 +54,12 @@ export default {
     title: "Register Student",
     manual: {
       title: "Manual Student Registration",
+      add: "Add Student",
+      submit: "Register Student",
+      update: "Update Student",
+      addSuccess: "Student registered successfully",
+      updateSuccess: "Student updated successfully",
+
     },
     upload: {
       title: "Register Students from Excel File",
@@ -158,5 +164,6 @@ export default {
     search: "Search",
     department: "Department",
     gender: "Gender",
+    level: "Level",
   },
 } as const;

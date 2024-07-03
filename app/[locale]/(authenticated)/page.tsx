@@ -12,7 +12,7 @@ export default async function Page() {
   return (
     <div>
       <h1>{t("home.title")}</h1>
-      {/* <SearchBar /> */}
+      <SearchBar />
       <Announcements />
       <ServiceRequests />
     </div>
@@ -22,7 +22,7 @@ export default async function Page() {
 async function SearchBar() {
   const t = await getI18n();
   return (
-    <div>
+    <div className='flex justify-center gap-2'>
       <input type='text' placeholder={t("home.searchPlaceholder")} />
       <button className='btn'>{t("home.search")}</button>
     </div>

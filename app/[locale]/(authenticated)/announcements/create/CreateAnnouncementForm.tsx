@@ -85,85 +85,85 @@ export default function CreateAnnouncementForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col p-4 bg-white border border-slate-200 rounded-lg w-full max-w-2xl mx-auto my-8'
+      className="flex flex-col p-4 bg-white border border-slate-200 rounded-lg w-full max-w-2xl mx-auto my-8"
     >
-      <div className='flex flex-col mb-4'>
-        <label className='mb-2 font-bold text-gray-700'>
+      <div className="flex flex-col mb-4">
+        <label className="mb-2 font-bold text-gray-700">
           {t("announcements.create.form.title")}
         </label>
         <input
           {...register("title")}
-          type='text'
-          className='w-full p-2 border border-slate-300 rounded-lg'
+          type="text"
+          className="w-full p-2 border border-slate-300 rounded-lg"
         />
         {errors.title && (
-          <p className='text-red-600 mt-2'>{errors.title?.message}</p>
+          <p className="text-red-600 mt-2">{errors.title?.message}</p>
         )}
       </div>
 
-      <div className='flex flex-col mb-4'>
-        <label className='mb-2 font-bold text-gray-700'>
+      <div className="flex flex-col mb-4">
+        <label className="mb-2 font-bold text-gray-700">
           {t("announcements.create.form.content")}
         </label>
         <textarea
           {...register("content")}
           // ref={contentRef}
-          className='w-full p-2 border border-slate-300 rounded-lg'
+          className="w-full p-2 border border-slate-300 rounded-lg"
           onInput={adjustHeight}
         />
         {errors.content && (
-          <p className='text-red-600 mt-2'>{errors.content?.message}</p>
+          <p className="text-red-600 mt-2">{errors.content?.message}</p>
         )}
       </div>
 
-      <div className='flex flex-col mb-4'>
-        <label className='mb-2 font-bold text-gray-700'>
+      <div className="flex flex-col mb-4">
+        <label className="mb-2 font-bold text-gray-700">
           {t("announcements.create.form.severity")}
         </label>
         <select
           {...register("severity")}
-          className='w-full p-2 border border-slate-300 rounded-lg'
+          className="w-full p-2 border border-slate-300 rounded-lg"
         >
-          <option value='INFO'>{t("announcements.create.form.info")}</option>
-          <option value='WARNING'>
+          <option value="INFO">{t("announcements.create.form.info")}</option>
+          <option value="WARNING">
             {t("announcements.create.form.warning")}
           </option>
-          <option value='DANGER'>
+          <option value="DANGER">
             {t("announcements.create.form.danger")}
           </option>
         </select>
         {errors.severity && (
-          <p className='text-red-600 mt-2'>{errors.severity?.message}</p>
+          <p className="text-red-600 mt-2">{errors.severity?.message}</p>
         )}
       </div>
 
-      <div className='flex flex-col mb-4'>
-        <label className='mb-2 font-bold text-gray-700'>
+      <div className="flex flex-col mb-4">
+        <label className="mb-2 font-bold text-gray-700">
           {t("announcements.create.form.levels")}
         </label>
         <select
           {...register("levels")}
-          className='w-full p-2 border border-slate-300 rounded-lg'
+          className="w-full p-2 border border-slate-300 rounded-lg"
           multiple
         >
-          <option value='1'>{tt(locale, localizedLevel(1))}</option>
-          <option value='2'>{tt(locale, localizedLevel(2))}</option>
-          <option value='3'>{tt(locale, localizedLevel(3))}</option>
-          <option value='4'>{tt(locale, localizedLevel(4))}</option>
+          <option value="1">{tt(locale, localizedLevel(1))}</option>
+          <option value="2">{tt(locale, localizedLevel(2))}</option>
+          <option value="3">{tt(locale, localizedLevel(3))}</option>
+          <option value="4">{tt(locale, localizedLevel(4))}</option>
         </select>
         {errors.levels && (
-          <p className='text-red-600 mt-2'>{errors.levels?.message}</p>
+          <p className="text-red-600 mt-2">{errors.levels?.message}</p>
         )}
       </div>
 
-      <div className='flex flex-col mb-4'>
-        <label className='mb-2 font-bold text-gray-700'>
+      <div className="flex flex-col mb-4">
+        <label className="mb-2 font-bold text-gray-700">
           {t("announcements.create.form.departments")}
         </label>
         <select
           {...register("departments")}
           multiple
-          className='w-full p-2 border border-slate-300 rounded-lg'
+          className="w-full p-2 border border-slate-300 rounded-lg"
         >
           {departments.map((department) => (
             <option key={department.code} value={department._id}>
@@ -172,17 +172,17 @@ export default function CreateAnnouncementForm({
           ))}
         </select>
         {errors.departments && (
-          <p className='text-red-600 mt-2'>{errors.departments?.message}</p>
+          <p className="text-red-600 mt-2">{errors.departments?.message}</p>
         )}
       </div>
 
-      <div className='flex items-center justify-between mt-4'>
-        <button className='btn' type='submit' disabled={isSubmitting}>
+      <div className="flex items-center justify-between mt-4">
+        <button className="btn" type="submit" disabled={isSubmitting}>
           {isSubmitting ? t("general.loading") : t("general.submit")}
         </button>
         <button
-          className='btn-secondary'
-          type='button'
+          className="btn-secondary"
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             router.push("/announcements");

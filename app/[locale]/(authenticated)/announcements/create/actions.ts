@@ -13,7 +13,7 @@ export const createAnnouncement = async (
   const requestBody = {
     announcement: {
       ...data,
-      levels: data.levels !== "ALL" ? [parseInt(data.levels)] : undefined,
+      levels: data.levels.map((level) => parseInt(level)),
     },
   };
 

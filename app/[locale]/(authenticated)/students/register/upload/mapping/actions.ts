@@ -77,6 +77,8 @@ export async function precommitSession() {
     }
   );
 
+  console.log(response.data);
+
   if (response.status !== 200) {
     return {
       success: false,
@@ -100,6 +102,7 @@ export async function commitSession() {
       },
     }
   );
+  console.log(response.data);
 
   if (response.status !== 200) {
     return {

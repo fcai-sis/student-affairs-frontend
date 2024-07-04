@@ -55,9 +55,12 @@ export default async function AnnouncementCard({
     <div
       className={`rounded-lg w-full p-4 bg-white border border-slate-200 my-2`}
     >
-      <div className="flex items-center gap-2">
-        {icon}
-        <h5>{announcement.title}</h5>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          {icon}
+          <h5>{announcement.title}</h5>
+        </div>
+        <CreatedAt date={announcement.createdAt} />
       </div>
       <p className="text-gray-600 my-4">{announcement.content}</p>
       <div className="flex flex-wrap gap-2">
@@ -96,9 +99,7 @@ export default async function AnnouncementCard({
           </small>
         )}
       </div>
-      <div className="w-full mt-4 text-start text-gray-500">
-        <CreatedAt date={announcement.createdAt} />
-      </div>
+      <div className="w-full mt-4 text-start text-gray-500"></div>
     </div>
   );
 }

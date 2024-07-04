@@ -44,7 +44,10 @@ export const createStudentAction = async (data: CreateStudentFormValues) => {
   return { success: true };
 };
 
-export const updateStudentAction = async (data: UpdateStudentFormValues) => {
+export const updateStudentAction = async (
+  studentId: string,
+  data: UpdateStudentFormValues
+) => {
   const accessToken = await getAccessToken();
 
   const [birthYear, birthMonth, birthDay] = data.birthDate?.split("-") ?? [];
@@ -56,7 +59,7 @@ export const updateStudentAction = async (data: UpdateStudentFormValues) => {
     birthDay: parseInt(birthDay) ? parseInt(birthDay) : undefined,
   };
 
-  const response = await studentsAPI.patch(`/${data.studentId}`, requestBody, {
+  const response = await studentsAPI.patch(`/${studentId}`, requestBody, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

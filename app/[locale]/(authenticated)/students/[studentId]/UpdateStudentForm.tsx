@@ -119,7 +119,10 @@ export default function UpdateStudentForm({
   });
 
   const onSubmit = async (values: UpdateStudentFormValues) => {
-    const updateStudentResponse = await updateStudentAction(values);
+    const updateStudentResponse = await updateStudentAction(
+      student.studentId,
+      values
+    );
 
     if (!updateStudentResponse.success) {
       return toast.error(updateStudentResponse.error?.message);
@@ -133,52 +136,52 @@ export default function UpdateStudentForm({
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96 flex flex-col gap-4 mx-auto'
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96 flex flex-col gap-4 mx-auto"
       >
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='fullName'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="fullName"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.fullName)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("fullName")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.fullName && <span>{errors.fullName.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='studentId'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="studentId"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.studentId)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("studentId")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.studentId && <span>{errors.studentId.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='scientificDivision'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="scientificDivision"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.scientificDivision)}
           </label>
           <input
-            type='radio'
+            type="radio"
             {...register("scientificDivision")}
-            value='SCIENCE'
-            className='mr-2'
+            value="SCIENCE"
+            className="mr-2"
           />
-          <label htmlFor='science-group' className='mr-2'>
+          <label htmlFor="science-group" className="mr-2">
             {tt(locale, {
               en: "Science",
               ar: "علمي علوم",
@@ -186,12 +189,12 @@ export default function UpdateStudentForm({
           </label>
           {"    "}
           <input
-            type='radio'
+            type="radio"
             {...register("scientificDivision")}
-            value='MATHEMATICS'
-            className='mr-2'
+            value="MATHEMATICS"
+            className="mr-2"
           />
-          <label htmlFor='math-group' className='mr-2'>
+          <label htmlFor="math-group" className="mr-2">
             {tt(locale, {
               en: "Mathematics",
               ar: "علمي رياضة",
@@ -202,24 +205,24 @@ export default function UpdateStudentForm({
           )}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='gender'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="gender"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.gender)}
           </label>
           <select
             {...register("gender")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option value='MALE'>
+            <option value="MALE">
               {tt(locale, {
                 en: "Male",
                 ar: "ذكر",
               })}
             </option>
-            <option value='FEMALE'>
+            <option value="FEMALE">
               {tt(locale, {
                 en: "Female",
                 ar: "انثى",
@@ -229,30 +232,30 @@ export default function UpdateStudentForm({
           {errors.gender && <span>{errors.gender.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='religion'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="religion"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.religion)}
           </label>
           <select
             {...register("religion")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option value='MUSLIM'>
+            <option value="MUSLIM">
               {tt(locale, {
                 en: "Muslim",
                 ar: "مسلم",
               })}
             </option>
-            <option value='CHRISTIAN'>
+            <option value="CHRISTIAN">
               {tt(locale, {
                 en: "Christian",
                 ar: "مسيحي",
               })}
             </option>
-            <option value='OTHER'>
+            <option value="OTHER">
               {tt(locale, {
                 en: "Other",
                 ar: "اخرى",
@@ -262,87 +265,87 @@ export default function UpdateStudentForm({
           {errors.religion && <span>{errors.religion.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='nationalId'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="nationalId"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.nationalId)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("nationalId")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.nationalId && <span>{errors.nationalId.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='administration'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="administration"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.administration)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("administration")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.administration && (
             <span>{errors.administration.message}</span>
           )}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='directorate'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="directorate"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.directorate)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("directorate")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.directorate && <span>{errors.directorate.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='phoneNumber'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="phoneNumber"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.phoneNumber)}
           </label>
           <input
-            type='tel'
+            type="tel"
             {...register("phoneNumber")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='educationType'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="educationType"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.educationType)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("educationType")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.educationType && <span>{errors.educationType.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='birthDate'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="birthDate"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, {
               en: "Birth Date",
@@ -350,53 +353,53 @@ export default function UpdateStudentForm({
             })}
           </label>
           <input
-            type='date'
+            type="date"
             {...register("birthDate")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.birthDate && <span>{errors.birthDate.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='birthPlace'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="birthPlace"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.birthPlace)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("birthPlace")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.birthPlace && <span>{errors.birthPlace.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='governorateId'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="governorateId"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.governorateId)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("governorateId", { valueAsNumber: true })}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.governorateId && <span>{errors.governorateId.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='nationality'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="nationality"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.nationality)}
           </label>
           <select
             {...register("nationality")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           >
             {NationalityEnum.map((national) => (
               <option key={national.value} value={national.value}>
@@ -407,24 +410,24 @@ export default function UpdateStudentForm({
           {errors.nationality && <span>{errors.nationality.message}</span>}
         </div>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            htmlFor='address'
-            className='block text-primary text-sm font-bold mb-2'
+            htmlFor="address"
+            className="block text-primary text-sm font-bold mb-2"
           >
             {tt(locale, localizedFields.address)}
           </label>
           <input
-            type='text'
+            type="text"
             {...register("address")}
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-primary leading-tight focus:outline-none focus:shadow-outline"
           />
           {errors.address && <span>{errors.address.message}</span>}
         </div>
 
         <button
-          className='btn flex justify-center'
-          type='submit'
+          className="btn flex justify-center"
+          type="submit"
           disabled={isSubmitting}
         >
           {isSubmitting
@@ -432,8 +435,8 @@ export default function UpdateStudentForm({
             : t("registerStudent.manual.update")}
         </button>
         <button
-          className='btn-secondary flex justify-center'
-          type='button'
+          className="btn-secondary flex justify-center"
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             router.push("/students");

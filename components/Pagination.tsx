@@ -37,10 +37,10 @@ function _Pagination({
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
   return (
-    <div className='flex items-center gap-2'>
+    <div className="flex items-center gap-2">
       {prevPage && (
         <button
-          className='p-2 rounded-lg cursor-pointer hover:bg-slate-100 transition-colors duration-300 flex gap-2'
+          className="p-2 rounded-lg cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors duration-300 flex gap-2"
           onClick={() => {
             router.push(
               pathname + "?" + createQueryString("page", prevPage.toString())
@@ -51,12 +51,12 @@ function _Pagination({
           {t("pagination.previous")}
         </button>
       )}
-      <span className='p-2 bg-slate-100 rounded-lg w-10 h-10 flex justify-center items-center'>
+      <span className="p-2 bg-slate-100 rounded-lg w-10 h-10 flex justify-center items-center">
         {currentPage.toLocaleString(locale === "ar" ? "ar-EG" : "en-US")}
       </span>
       {nextPage && (
         <button
-          className='p-2 rounded-lg cursor-pointer hover:bg-slate-100 transition-colors duration-300 flex gap-2'
+          className="p-2 rounded-lg cursor-pointer bg-slate-100 hover:bg-slate-200 transition-colors duration-300 flex gap-2"
           onClick={() => {
             router.push(
               pathname + "?" + createQueryString("page", nextPage.toString())

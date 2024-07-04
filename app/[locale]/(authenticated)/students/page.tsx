@@ -104,36 +104,36 @@ export default async function Page({
 
   return (
     <>
-      <h1 className='text-3xl font-bold mb-4'>{t("students.title")}</h1>
-      <div className='flex justify-end'>
+      <h1 className="text-3xl font-bold mb-4">{t("students.title")}</h1>
+      <div className="flex justify-end">
         <Link
-          href='/students/register'
-          className='bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 rounded-lg transition-colors duration-300'
+          href="/students/register"
+          className="bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 rounded-lg transition-colors duration-300"
         >
           {t("students.registerStudent")}
         </Link>
       </div>
-      <div className='flex flex-col gap-2 mt-4'>
-        <div className='flex gap-4'>
-          <label className='flex flex-col'>
+      <div className="flex flex-col gap-2 mt-4">
+        <div className="flex gap-4">
+          <label className="flex flex-col">
             {t("filter.department")}
             <SelectFilter name={"department"} options={departmentOptions} />
           </label>
-          <label className='flex flex-col'>
+          <label className="flex flex-col">
             {t("filter.search")}
             <TextFilter name={"query"} />
           </label>
-          <label className='flex flex-col'>
+          <label className="flex flex-col">
             {t("filter.level")}
             <SelectFilter name={"level"} options={levelOptions} />
           </label>
-          <label className='flex flex-col'>
+          <label className="flex flex-col">
             {t("filter.gender")}
             <SelectFilter name={"gender"} options={genderOptions} />
           </label>
         </div>
       </div>
-      <div className='flex flex-col gap-4 mt-4'>
+      <div className="flex flex-col gap-4 mt-4">
         {students.map((student: any, i: number) => (
           <StudentCard key={i} student={student} />
         ))}

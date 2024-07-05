@@ -39,12 +39,6 @@ export default async function Page({
       </h1>
       <p className='mb-6'>{t("registerStudent.upload.mapping.instructions")}</p>
       <I18nProviderClient locale={locale}>
-        <div className='mb-6'>
-          <CommitSessionForm />
-        </div>
-        <div className='mb-6'>
-          <CancelSessionForm />
-        </div>
         {Object.keys(mapping).map((key) => (
           <div key={key} className='mb-4'>
             <label htmlFor={key} className='block mb-2 font-semibold'>
@@ -57,6 +51,12 @@ export default async function Page({
             />
           </div>
         ))}
+        <div className='mb-6'>
+          <CommitSessionForm />
+        </div>
+        <div className='mb-6'>
+          <CancelSessionForm />
+        </div>
       </I18nProviderClient>
     </div>
   );

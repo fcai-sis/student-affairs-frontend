@@ -11,7 +11,7 @@ import Pagination from "@/components/Pagination";
 export const getHalls = async () => {
   const accessToken = await getAccessToken();
 
-  const response = await hallSlotAPI.get(`/hall/read`, {
+  const response = await hallSlotAPI.get(`/hall/`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

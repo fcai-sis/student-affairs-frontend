@@ -131,7 +131,11 @@ export default function AssignHallForm({ halls, course }: any) {
             </option>
             {halls.map((hall: any) => (
               <option key={hall._id} value={hall._id}>
-                {tt(locale, hall.name)}
+                {tt(locale, hall.name)} -{" "}
+                {tt(locale, {
+                  en: `Capacity: ${hall.capacity}`,
+                  ar: `السعة: ${hall.capacity}`,
+                })}
               </option>
             ))}
           </select>

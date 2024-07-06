@@ -1,6 +1,6 @@
 import { getCurrentLocale } from "@/locales/server";
 import { CreatedAt } from "./CreatedAt";
-import ServiceRequestCardImage from "./ServiceRequestCardImage";
+// import ServiceRequestCardImage from "./ServiceRequestCardImage";
 import Link from "next/link";
 import {
   ServiceRequestStatusEnum,
@@ -23,12 +23,12 @@ export default async function ServiceRequestCard({
       : serviceRequest.status === ServiceRequestStatusEnum[2]
       ? "bg-green-100 text-green-500"
       : "bg-red-100 text-red-500";
+
   return (
-    <div className={`border border-slate-200 w-full p-4 rounded-lg my-2`}>
-      <div className='flex justify-end w-full'>
-        <small
-          className={`${colors} flex justify-start text-nowrap rounded-lg px-2 py-1 h-min w-min`}
-        >
+    <div className='border border-slate-200 shadow-md rounded-lg my-2 p-4 flex flex-col gap-2'>
+      <div className='flex justify-between items-center mb-2'>
+        <h5 className='text-xl font-bold'>{serviceRequest.serviceName}</h5>
+        <small className={`${colors} text-nowrap rounded-lg px-2 py-1`}>
           {tt(
             locale,
             serviceRequestStatusLocalizedFields[
@@ -37,16 +37,27 @@ export default async function ServiceRequestCard({
           )}
         </small>
       </div>
-      <div className='flex flex-col gap-2'>
-        <h5>{serviceRequest.serviceName}</h5>
-
-        <div>
-          <p>{serviceRequest.student.fullName}</p>
-          <p>{serviceRequest.student.studentId}</p>
-        </div>
-        <ServiceRequestCardImage src={serviceRequest.image} />
+      <div className='border-t border-slate-200 py-2'>
+        <table className='w-full'>
+          <tbody>
+            <tr>
+              {/* <td className='pr-2 font-medium'>
+                {tt(locale, { en: "Student Name:", ar: "اسم الطالب:" })}
+              </td> */}
+              <td>{serviceRequest.student.fullName}</td>
+            </tr>
+            <tr>
+              {/* <td className='pr-2 font-medium'>
+                {tt(locale, { en: "Student ID:", ar: "رقم الطالب:" })}
+              </td> */}
+              <td>{serviceRequest.student.studentId}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className='flex justify-between items-center mt-2'>
         <Link
-          className='flex gap-2 w-min text-nowrap bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 active:bg-blue-900'
+          className='flex gap-2 w-min text-nowrap bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 active:bg-blue-900 rounded-lg'
           href={`/requests/${serviceRequest._id}`}
         >
           {tt(locale, {

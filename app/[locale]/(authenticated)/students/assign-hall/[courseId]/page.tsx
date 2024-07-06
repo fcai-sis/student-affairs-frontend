@@ -65,7 +65,10 @@ export default async function Page({
       <div className='flex flex-col gap-4'>
         {enrollments.map((enrollment: any) => (
           <div key={enrollment.id}>
-            <StudentCardMini student={enrollment.student} />
+            <StudentCardMini
+              student={enrollment.student}
+              enrollment={enrollment}
+            />
           </div>
         ))}
       </div>

@@ -43,11 +43,30 @@ export default async function StudentCard({ student }: { student: any }) {
   );
 }
 
-export async function StudentCardMini({ student }: { student: any }) {
+export async function StudentCardMini({
+  student,
+  enrollment,
+}: {
+  student: any;
+  enrollment?: any;
+}) {
+  const locale = getCurrentLocale();
   return (
     <div className='flex flex-col border border-slate-200 w-full p-4 rounded-lg my-2 bg-white shadow-md'>
       <h3 className='text-xl font-bold mb-2'>{student.fullName}</h3>
       <p className='text-slate-700 mb-1'>{student.studentId}</p>
+      <p>
+        {tt(locale, { en: "Exam Hall: ", ar: "قاعة الامتحان: " })}
+        {tt(
+          locale,
+          enrollment.examHall
+            ? enrollment.examHall.name
+            : {
+                en: "Not assigned yet",
+                ar: "لم يتم التعيين بعد",
+              }
+        )}
+      </p>
     </div>
   );
 }

@@ -22,6 +22,7 @@ export default {
     graduation: "Create Graduation Project Team",
     assignHall: "Assign Students to Halls",
     more: "More",
+    register: "Register Students",
   },
   pagination: {
     previous: "Previous",

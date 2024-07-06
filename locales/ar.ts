@@ -23,6 +23,7 @@ export default {
     graduation: "إنشاء فريق مشروع التخرج",
     assignHall: "تعيين الطلاب للقاعات",
     more: "المزيد",
+    register: "تسجيل الطلاب",
   },
   pagination: {
     previous: "السابق",

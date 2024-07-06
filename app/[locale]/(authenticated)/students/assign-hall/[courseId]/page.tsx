@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { I18nProviderClient } from "@/locales/client";
 import { getCurrentLocale } from "@/locales/server";
 import Pagination from "@/components/Pagination";
+import { dummyHalls } from "@/dummy/halls";
 
 export const getHalls = async () => {
   const accessToken = await getAccessToken();
@@ -54,8 +55,9 @@ export default async function Page({
   const enrollments = enrollmentsResponse.data.enrollments;
   const totalEnrollments = enrollmentsResponse.data.totalEnrollments;
 
-  const hallResponse = await getHalls();
-  const halls = hallResponse.halls;
+  // const hallResponse = await getHalls();
+  // const halls = hallResponse.halls;
+  const halls = dummyHalls;
 
   return (
     <div className="flex flex-col items-center gap-6">

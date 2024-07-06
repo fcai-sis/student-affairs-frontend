@@ -32,7 +32,7 @@ export default async function Page({
   const { data } = await studentsAPI.get("/", {
     params: {
       page,
-      limit,
+      limit: 30,
       department: searchParams.department,
       level: searchParams.level,
       query: searchParams.query,
@@ -134,14 +134,63 @@ export default async function Page({
         </div>
       </div>
       <div className="flex flex-col gap-4 mt-4">
-        {students.map((student: any, i: number) => (
-          <StudentCard key={i} student={student} />
-        ))}
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Student ID",
+                  ar: "رقم الطالب",
+                })}
+              </th>
+              <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Full Name",
+                  ar: "الاسم الكامل",
+                })}
+              </th>
+              <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Department",
+                  ar: "القسم",
+                })}
+              </th>
+              <th className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Level",
+                  ar: "المستوى",
+                })}
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {students.map((student: any, i: number) => (
+              <tr key={i}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {student.studentId}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {student.fullName}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    {tt(locale, student.major.name)}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    {tt(locale, localizedLevel(student.level))}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       {students.length === 0 ? (
         <p>{t("students.noStudents")}</p>
       ) : (
-        <Pagination totalPages={totalStudents / limit} />
+        <Pagination totalPages={totalStudents / 30} />
       )}
     </>
   );

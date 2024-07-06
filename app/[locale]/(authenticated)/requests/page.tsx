@@ -116,7 +116,12 @@ export default async function Page({
         </table>
       </div>
       {serviceRequests.length === 0 ? (
-        <p className="py-4">{t("serviceRequests.empty")}</p>
+        <p className="py-4">
+          {tt(locale, {
+            en: "No service requests found",
+            ar: "لا توجد طلبات خدمة",
+          })}
+        </p>
       ) : (
         <Pagination totalPages={totalServiceRequests / requestsLimit} />
       )}

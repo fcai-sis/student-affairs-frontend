@@ -56,20 +56,20 @@ export default function UploadExcelForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='bg-white shadow-md rounded-lg p-8 w-full max-w-lg mx-auto flex flex-col gap-4'
+      className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg mx-auto flex flex-col gap-4"
     >
-      <div className='mb-4'>
-        <label className='block text-primary text-sm font-bold mb-2'>
+      <div className="mb-4">
+        <label className="block text-primary text-sm font-bold mb-2">
           {tt(locale, {
             en: "Excel file (.xlsx)",
             ar: "ملف الإكسل (.xlsx)",
           })}
         </label>
-        <div className='relative'>
+        <div className="relative">
           <input
             {...register("excelFile")}
-            type='file'
-            className='absolute inset-0 opacity-0 cursor-pointer'
+            type="file"
+            className="absolute inset-0 opacity-0 cursor-pointer"
             onChange={(e) => {
               const file = e.target.files?.[0];
 
@@ -80,8 +80,8 @@ export default function UploadExcelForm() {
               }
             }}
           />
-          <div className='flex items-center justify-center border border-dashed border-gray-300 p-4 rounded-lg cursor-pointer hover:bg-gray-100'>
-            <span className='text-gray-600'>
+          <div className="flex items-center justify-center border border-dashed border-gray-300 p-4 rounded-lg cursor-pointer hover:bg-gray-100">
+            <span className="text-gray-600">
               {selectedFile
                 ? selectedFile
                 : tt(locale, {
@@ -92,14 +92,14 @@ export default function UploadExcelForm() {
           </div>
         </div>
         {errors.excelFile && (
-          <p className='text-red-600 text-xs italic mt-2'>
+          <p className="text-red-600 text-xs italic mt-2">
             {errors.excelFile.message}
           </p>
         )}
       </div>
       <button
-        className='btn flex justify-center mt-4'
-        type='submit'
+        className="btn flex justify-center mt-4"
+        type="submit"
         disabled={isSubmitting}
       >
         {isSubmitting

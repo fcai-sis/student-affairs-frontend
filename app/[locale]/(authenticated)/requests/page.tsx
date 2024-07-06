@@ -1,14 +1,17 @@
 import { serviceRequestsAPI } from "@/api";
 import Pagination from "@/components/Pagination";
-import ServiceRequestCard from "@/components/ServiceRequestCard";
+import { ServiceRequestStatusChip } from "@/components/ServiceRequestCard";
 import { getCurrentLocale, getI18n } from "@/locales/server";
-import { getAccessToken, getCurrentPage, limit, tt } from "@/lib";
+import { getAccessToken, getCurrentPage, tt } from "@/lib";
 import { SelectFilter } from "@/components/SetQueryFilter";
+import { ButtonLink } from "@/components/Buttons";
 import {
   ServiceRequestStatusEnum,
   ServiceRequestStatusEnumType,
   serviceRequestStatusLocalizedFields,
 } from "@fcai-sis/shared-models";
+
+const requestsLimit = 30;
 
 export default async function Page({
   searchParams,
@@ -20,8 +23,8 @@ export default async function Page({
   const accessToken = await getAccessToken();
   const { data } = await serviceRequestsAPI.get("/", {
     params: {
-      skip: page * limit - limit,
-      limit,
+      page,
+      limit: requestsLimit,
       status: searchParams.status,
     },
     headers: {
@@ -44,19 +47,78 @@ export default async function Page({
 
   return (
     <>
-      <h1 className='text-3xl font-bold mb-4'>{t("serviceRequests.title")}</h1>
-      <p className='flex items-center align-middle gap-2'>
-        <SelectFilter options={statusOptions} name='status' />
+      <h1 className="text-3xl font-bold mb-4">{t("serviceRequests.title")}</h1>
+      <p className="flex items-center align-middle gap-2">
+        <SelectFilter options={statusOptions} name="status" />
       </p>
-      <div className='flex flex-col gap-4 mt-4'>
-        {serviceRequests.map((serviceRequest: any, i: number) => (
-          <ServiceRequestCard key={i} serviceRequest={serviceRequest} />
-        ))}
+      <div className="overflow-x-auto mt-8">
+        <table className="min-w-full divide-y divide-slate-200">
+          <thead className="bg-slate-50">
+            <tr>
+              <th className="px-2 py-3 text-start text-xs font-medium text-slate-600 uppercase tracking-wider">
+                #
+              </th>
+              <th className="px-6 py-3 text-start text-xs font-medium text-slate-600 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Service Name",
+                  ar: "اسم الخدمة",
+                })}
+              </th>
+              <th className="px-2 py-3 text-start text-xs font-medium text-slate-600 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Student Name",
+                  ar: "اسم الطالب",
+                })}
+              </th>
+              <th className="px-2 py-3 text-start text-xs font-medium text-slate-600 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Student ID",
+                  ar: "رقم الطالب",
+                })}
+              </th>
+              <th className="px-2 py-3 text-start text-xs font-medium text-slate-600 uppercase tracking-wider">
+                {tt(locale, {
+                  en: "Status",
+                  ar: "الحالة",
+                })}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {serviceRequests.map((request: any, index: number) => (
+              <tr key={index}>
+                <td className="px-2 py-3 text-startleft text-xs font-medium text-slate-600 uppercase tracking-wider w-4">
+                  {index + 1}
+                </td>
+                <td className="px-6 py-3 text-start text-xs font-medium text-slate-600 uppercase tracking-wider w-[600px]">
+                  {request.serviceName}
+                </td>
+                <td className="px-2 py-3 text-startleft text-xs font-medium text-slate-600 uppercase tracking-wider w-64">
+                  {request.student.fullName}
+                </td>
+                <td className="px-2 py-3 text-startleft text-xs font-medium text-slate-600 uppercase tracking-wider w-32">
+                  {request.student.studentId}
+                </td>
+                <td className="px-2 py-3 flex gap-2 text-startleft text-xs font-medium text-slate-600 uppercase tracking-wider">
+                  <ServiceRequestStatusChip status={request.status} />
+                </td>
+                <td className="px-2 py-3 text-start text-xs font-medium text-slate-600 uppercase tracking-wider">
+                  <ButtonLink href={`/requests/${request._id}`}>
+                    {tt(locale, {
+                      en: "View Details",
+                      ar: "عرض التفاصيل",
+                    })}
+                  </ButtonLink>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       {serviceRequests.length === 0 ? (
-        <p>{t("serviceRequests.empty")}</p>
+        <p className="py-4">{t("serviceRequests.empty")}</p>
       ) : (
-        <Pagination totalPages={totalServiceRequests / limit} />
+        <Pagination totalPages={totalServiceRequests / requestsLimit} />
       )}
     </>
   );

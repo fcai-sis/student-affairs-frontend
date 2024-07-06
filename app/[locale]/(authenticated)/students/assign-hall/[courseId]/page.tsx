@@ -46,8 +46,8 @@ export default async function Page({
   if (!enrollmentsResponse.success) {
     return (
       <>
-        <h1 className='text-3xl font-bold mb-4'>Enrollments</h1>
-        <p className='text-red-600'>Failed to load enrollments</p>
+        <h1 className="text-3xl font-bold mb-4">Enrollments</h1>
+        <p className="text-red-600">Failed to load enrollments</p>
       </>
     );
   }
@@ -58,11 +58,11 @@ export default async function Page({
   const halls = hallResponse.halls;
 
   return (
-    <div className='flex flex-col items-center gap-6'>
+    <div className="flex flex-col items-center gap-6">
       <I18nProviderClient locale={locale}>
         <AssignHallForm course={courseId} halls={halls} />
       </I18nProviderClient>
-      <div className='flex flex-col gap-4'>
+      <div className="flex flex-col gap-4">
         {enrollments.map((enrollment: any) => (
           <div key={enrollment.id}>
             <StudentCardMini

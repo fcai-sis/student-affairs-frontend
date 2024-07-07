@@ -1,15 +1,15 @@
-import { serviceRequestsAPI } from "@/api";
 import Pagination from "@/components/Pagination";
 import { ServiceRequestStatusChip } from "@/components/ServiceRequestCard";
 import { getCurrentLocale, getI18n } from "@/locales/server";
-import { getAccessToken, getCurrentPage, tt } from "@/lib";
+import { getCurrentPage, tt } from "@/lib";
 import { SelectFilter } from "@/components/SetQueryFilter";
-import { ButtonLink } from "@/components/Buttons";
 import {
   ServiceRequestStatusEnum,
   ServiceRequestStatusEnumType,
   serviceRequestStatusLocalizedFields,
 } from "@fcai-sis/shared-models";
+import { getServiceRequests } from "@/queries";
+import { ButtonLink } from "@/components/Buttons";
 
 const requestsLimit = 30;
 
@@ -20,16 +20,10 @@ export default async function Page({
   const locale = getCurrentLocale();
   const page = getCurrentPage(searchParams);
 
-  const accessToken = await getAccessToken();
-  const { data } = await serviceRequestsAPI.get("/", {
-    params: {
-      page,
-      limit: requestsLimit,
-      status: searchParams.status,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const { data } = await getServiceRequests({
+    page,
+    limit: requestsLimit,
+    status: searchParams.status,
   });
 
   const { serviceRequests, totalServiceRequests } = data;

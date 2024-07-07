@@ -1,6 +1,5 @@
-import { serviceRequestsAPI } from "@/api";
 import ServiceRequestCardImage from "@/components/ServiceRequestCardImage";
-import { getAccessToken, tt } from "@/lib";
+import { tt } from "@/lib";
 import AcceptServiceRequestForm from "./AcceptServiceRequestForm";
 import RejectServiceRequestForm from "./RejectServiceRequestForm";
 import CompleteServiceRequestForm from "./CompleteServiceRequestForm";
@@ -11,6 +10,7 @@ import {
   serviceRequestStatusLocalizedFields,
 } from "@fcai-sis/shared-models";
 import { I18nProviderClient } from "@/locales/client";
+import { getServiceRequestById } from "@/queries";
 
 export default async function Page({
   params: { serviceRequestId },
@@ -21,14 +21,8 @@ export default async function Page({
 }) {
   const locale = getCurrentLocale();
   const t = await getI18n();
-  const accessToken = await getAccessToken();
-  const getServiceRequestResponse = await serviceRequestsAPI.get(
-    `/${serviceRequestId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
+  const getServiceRequestResponse = await getServiceRequestById(
+    `${serviceRequestId}`
   );
 
   if (getServiceRequestResponse.status !== 200) {

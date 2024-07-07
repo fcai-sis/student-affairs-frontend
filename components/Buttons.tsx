@@ -1,5 +1,4 @@
 import { cn } from "@/lib";
-import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { ComponentProps } from "react";
 
@@ -37,7 +36,7 @@ export function ButtonLink(props: ButtonLinkProps) {
   let css = "rounded-lg px-4 py-2 flex gap-2 w-min text-nowrap";
   css = variantCss(css, props.variant ?? "primary");
   return (
-    <Link href={props.href as Url} className={cn(css, props.className)}>
+    <Link href={props.href as string} className={cn(css, props.className)}>
       {props.children}
     </Link>
   );

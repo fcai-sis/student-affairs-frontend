@@ -1,27 +1,11 @@
-import { announcementsAPI, departmentsAPI } from "@/api";
 import Pagination from "@/components/Pagination";
 import Link from "next/link";
 import AnnouncementCard from "@/components/AnnouncementCard";
 import { getCurrentLocale, getI18n } from "@/locales/server";
-import { getAccessToken, getCurrentPage, limit, tt } from "@/lib";
-import { revalidatePath } from "next/cache";
+import { getCurrentPage, limit, tt } from "@/lib";
 import { SelectFilter } from "@/components/SetQueryFilter";
 import { Plus } from "iconoir-react";
-
-export const getDepartments = async () => {
-  const accessToken = await getAccessToken();
-  const response = await departmentsAPI.get(`/`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (response.status !== 200) throw new Error("Failed to fetch departments");
-
-  revalidatePath("/announcements");
-
-  return response.data;
-};
+import { getAllDepartments, getAnnouncements, getDepartments } from "@/queries";
 
 export default async function Page({
   searchParams,
@@ -30,8 +14,7 @@ export default async function Page({
   const locale = getCurrentLocale();
   const page = getCurrentPage(searchParams);
 
-  const departmentResponse = await getDepartments();
-  const departments = departmentResponse.departments;
+  const { departments } = await getAllDepartments();
 
   const departmentOptions = [
     {
@@ -44,31 +27,24 @@ export default async function Page({
     })),
   ];
 
-  const { data } = await announcementsAPI.get("/", {
-    params: {
-      skip: page * limit - limit,
-      limit,
-      department: searchParams.department,
-    },
-  });
-  const { announcements, total } = data;
+  const { announcements, total } = await getAnnouncements({ page, limit });
 
   return (
     <>
-      <h1 className='text-3xl font-bold mb-4'>{t("announcements.title")}</h1>
-      <div className='flex justify-end'>
+      <h1 className="text-3xl font-bold mb-4">{t("announcements.title")}</h1>
+      <div className="flex justify-end">
         <Link
-          className='flex gap-2 bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 active:bg-blue-900'
-          href='/announcements/create'
+          className="flex gap-2 bg-blue-500 text-white font-bold hover:bg-blue-700 py-2 px-4 active:bg-blue-900"
+          href="/announcements/create"
         >
           {t("announcements.create.title")}
-          <Plus className='[&>*]:stroke-white' />
+          <Plus className="[&>*]:stroke-white" />
         </Link>
       </div>
 
-      <div className='mt-4'>
-        <SelectFilter name='department' options={departmentOptions} />
-        <div className='flex flex-col gap-4 mt-4'>
+      <div className="mt-4">
+        <SelectFilter name="department" options={departmentOptions} />
+        <div className="flex flex-col gap-4 mt-4">
           {announcements.map((announcement: any, i: number) => (
             <AnnouncementCard key={i} announcement={announcement} />
           ))}

@@ -1,14 +1,13 @@
-import { departmentsAPI, studentsAPI } from "@/api";
 import Pagination from "@/components/Pagination";
 import {
   SelectFilter,
   SelectOption,
   TextFilter,
 } from "@/components/SetQueryFilter";
-import StudentCard from "@/components/StudentCard";
 import { localizedLevel } from "@/dummy/utils";
 import { getAccessToken, getCurrentPage, limit, tt } from "@/lib";
 import { getCurrentLocale, getI18n } from "@/locales/server";
+import { getAllDepartments, getDepartments, getStudents } from "@/queries";
 import { GenderEnum } from "@fcai-sis/shared-models";
 import Link from "next/link";
 
@@ -29,30 +28,23 @@ export default async function Page({
 
   const page = getCurrentPage(searchParams);
 
-  const { data } = await studentsAPI.get("/", {
-    params: {
-      page,
-      limit: 30,
-      department: searchParams.department,
-      level: searchParams.level,
-      query: searchParams.query,
-      gender: searchParams.gender,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  const { students, totalStudents } = await getStudents({
+    page,
+    limit,
+    department: searchParams.department,
+    query: searchParams.query,
+    level: searchParams.level,
+    gender: searchParams.gender,
   });
 
-  const { students, totalStudents } = data;
-
-  const { data: departmentsData } = await departmentsAPI.get("/");
+  const { departments } = await getAllDepartments();
 
   const departmentOptions = [
     {
       label: tt(locale, { en: "All Departments", ar: "جميع الأقسام" }),
       value: "",
     },
-    ...departmentsData.departments.map((department: any) => ({
+    ...departments.map((department: any) => ({
       label: tt(locale, department.name),
       value: department.code,
     })),

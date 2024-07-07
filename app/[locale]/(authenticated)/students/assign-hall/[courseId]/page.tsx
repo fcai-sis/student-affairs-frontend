@@ -2,28 +2,11 @@ import { StudentCardMini } from "@/components/StudentCard";
 import { fetchLatestSemesterCourseEnrollments } from "../actions";
 import AssignHallForm from "./AssignHallForm";
 import { getAccessToken, getCurrentPage, limit } from "@/lib";
-import { hallSlotAPI } from "@/api";
 import { revalidatePath } from "next/cache";
 import { I18nProviderClient } from "@/locales/client";
 import { getCurrentLocale } from "@/locales/server";
 import Pagination from "@/components/Pagination";
 import { dummyHalls } from "@/dummy/halls";
-
-export const getHalls = async () => {
-  const accessToken = await getAccessToken();
-
-  const response = await hallSlotAPI.get(`/hall/`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (response.status !== 200) throw new Error("Failed to fetch halls");
-
-  revalidatePath("/assign-hall");
-
-  return response.data;
-};
 
 export default async function Page({
   params: { courseId },

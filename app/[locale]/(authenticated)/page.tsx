@@ -1,45 +1,36 @@
 "use server";
 
-import { announcementsAPI, serviceRequestsAPI } from "@/api";
 import AnnouncementCard from "@/components/AnnouncementCard";
+import { PageHeader } from "@/components/PageBuilder";
 import { ServiceRequestCardMini } from "@/components/ServiceRequestCard";
-import { getAccessToken, tt } from "@/lib";
+import { tt } from "@/lib";
 import { getCurrentLocale, getI18n } from "@/locales/server";
+import { getAnnouncements, getServiceRequests } from "@/queries";
 import Link from "next/link";
 
 export default async function Page() {
-  const t = await getI18n();
   return (
-    <div>
-      {/* <h1>{t("home.title")}</h1> */}
+    <>
+      <PageHeader
+        title={tt(getCurrentLocale(), {
+          en: "Home",
+          ar: "الرئيسية",
+        })}
+        actions={[]}
+      />
       {/* <SearchBar /> */}
       <div className="grid grid-cols-2 gap-8 mt-8">
         <Announcements />
         <ServiceRequests />
       </div>
-    </div>
-  );
-}
-
-async function SearchBar() {
-  const t = await getI18n();
-  return (
-    <div className="flex justify-center gap-2">
-      <input type="text" placeholder={t("home.searchPlaceholder")} />
-      <button className="btn">{t("home.search")}</button>
-    </div>
+    </>
   );
 }
 
 async function Announcements() {
   const t = await getI18n();
-  const { data } = await announcementsAPI.get("/", {
-    params: {
-      page: 1,
-      limit: 3,
-    },
-  });
-  const { announcements } = data;
+
+  const { announcements } = await getAnnouncements({ page: 1, limit: 10 });
   return (
     <div>
       <div className="flex justify-between">
@@ -63,19 +54,8 @@ async function Announcements() {
 async function ServiceRequests() {
   const locale = getCurrentLocale();
   const t = await getI18n();
-  const accessToken = await getAccessToken();
-  const { data } = await serviceRequestsAPI.get("/", {
-    params: {
-      page: 1,
-      limit: 10,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
 
-  const { serviceRequests } = data;
-  console.log(data);
+  const { serviceRequests } = await getServiceRequests({ page: 1, limit: 10 });
 
   return (
     <div>

@@ -91,7 +91,26 @@ function ErrorItem({ error }: { error: any }) {
   } else if (error.row) {
     // loop over error.errors
     return (
-      <div className="bg-red-100 p-4 rounded-lg mb-4">
+      <div className="table bg-red-100 p-4 rounded-lg mb-4">
+        <h6 className="text-red-600">
+          {tt(useCurrentLocale(), {
+            en: "Row",
+            ar: "الصف",
+          })}{" "}
+          {error.row}
+        </h6>
+        {Object.keys(error.data).map((key, index) => (
+          <div key={index}>
+            <span className="font-bold">{key}: </span>
+            <span>{error.data[key]}</span>
+          </div>
+        ))}
+        <h6 className="text-red-600">
+          {tt(useCurrentLocale(), {
+            en: "Errors",
+            ar: "الأخطاء",
+          })}
+        </h6>
         {Object.keys(error.errors).map((key, index) => (
           <div key={index}>{error.errors[key]}</div>
         ))}

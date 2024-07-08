@@ -1,16 +1,14 @@
 import { getI18n } from "@/locales/server";
 import CreateAnnouncementForm from "./CreateAnnouncementForm";
 import { I18nProviderClient } from "@/locales/client";
-import { getDepartments } from "../page";
+import { getAllDepartments } from "@/queries";
 
 export default async function Page({
   params: { locale },
 }: Readonly<{ params: { locale: string } }>) {
   const t = await getI18n();
 
-  const getDepartmentsResponse = await getDepartments();
-
-  const departments = getDepartmentsResponse.departments;
+  const { departments } = await getAllDepartments();
   return (
     <>
       <h1>{t("announcements.create.title")}</h1>

@@ -5,11 +5,13 @@ import {
   TextFilter,
 } from "@/components/SetQueryFilter";
 import { localizedLevel } from "@/dummy/utils";
-import { getAccessToken, getCurrentPage, limit, tt } from "@/lib";
+import { getCurrentPage, tt } from "@/lib";
 import { getCurrentLocale, getI18n } from "@/locales/server";
-import { getAllDepartments, getDepartments, getStudents } from "@/queries";
+import { getAllDepartments, getStudents } from "@/queries";
 import { GenderEnum } from "@fcai-sis/shared-models";
 import Link from "next/link";
+
+const studentsLimit = 30;
 
 export default async function Page({
   searchParams,
@@ -24,13 +26,12 @@ export default async function Page({
 }>) {
   const t = await getI18n();
   const locale = getCurrentLocale();
-  const accessToken = await getAccessToken();
 
   const page = getCurrentPage(searchParams);
 
   const { students, totalStudents } = await getStudents({
     page,
-    limit,
+    limit: studentsLimit,
     department: searchParams.department,
     query: searchParams.query,
     level: searchParams.level,
@@ -182,7 +183,7 @@ export default async function Page({
       {students.length === 0 ? (
         <p>{t("students.noStudents")}</p>
       ) : (
-        <Pagination totalPages={totalStudents / 30} />
+        <Pagination totalPages={totalStudents / studentsLimit} />
       )}
     </>
   );

@@ -21,11 +21,9 @@ export default async function Page({
 }) {
   const locale = getCurrentLocale();
   const t = await getI18n();
-  const getServiceRequestResponse = await getServiceRequestById(
-    `${serviceRequestId}`
-  );
+  const { serviceRequest } = await getServiceRequestById(`${serviceRequestId}`);
 
-  if (getServiceRequestResponse.status !== 200) {
+  if (!serviceRequest) {
     return (
       <>
         <h1>{t("serviceRequests.details")}</h1>
@@ -33,8 +31,6 @@ export default async function Page({
       </>
     );
   }
-
-  const { serviceRequest } = getServiceRequestResponse.data;
 
   return (
     <>

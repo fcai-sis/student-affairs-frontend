@@ -20,13 +20,11 @@ export default async function Page({
   const locale = getCurrentLocale();
   const page = getCurrentPage(searchParams);
 
-  const { data } = await getServiceRequests({
+  const { serviceRequests, totalServiceRequests } = await getServiceRequests({
     page,
     limit: requestsLimit,
     status: searchParams.status,
   });
-
-  const { serviceRequests, totalServiceRequests } = data;
 
   const statusOptions = [
     {
